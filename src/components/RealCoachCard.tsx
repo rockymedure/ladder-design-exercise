@@ -13,15 +13,19 @@ export function RealCoachCard({
   videoSrc,
   imageSrc = "/remi/portrait.png",
   muted = false,
+  onEnded,
 }: {
   text: string;
   videoSrc?: string;
   imageSrc?: string;
   muted?: boolean;
+  onEnded?: () => void;
 }) {
   const [videoOk, setVideoOk] = useState(false);
   const ref = useRef<HTMLVideoElement | null>(null);
 
+  // The video carries the real coach's native audio — just play it. When it
+  // ends, it tells the sequence to move on. No separate track, no manual sync.
   useEffect(() => {
     const v = ref.current;
     if (!v || !videoSrc) return;
@@ -60,6 +64,7 @@ export function RealCoachCard({
               autoPlay
               muted={muted}
               onCanPlay={() => setVideoOk(true)}
+              onEnded={onEnded}
               onError={() => setVideoOk(false)}
               className="absolute inset-0 h-full w-full object-cover"
               style={{ opacity: videoOk ? 1 : 0, transition: "opacity 500ms" }}

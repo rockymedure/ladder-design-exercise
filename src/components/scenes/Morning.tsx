@@ -17,7 +17,7 @@ export function Morning({
   onComplete: () => void;
   muted: boolean;
 }) {
-  const { current } = useLineSequence(SEQ, {
+  const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
     onComplete: () => setTimeout(onComplete, 1400),
@@ -40,6 +40,7 @@ export function Morning({
               text={current!.text}
               videoSrc="/video/remi-morning.mp4"
               muted={muted}
+              onEnded={next}
             />
           ) : (
             <motion.div

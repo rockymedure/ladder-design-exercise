@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Line } from "./script";
 
 type Options = {
@@ -10,17 +10,39 @@ type Options = {
   onComplete?: () => void;
 };
 
+function useLatest<T>(value: T) {
+  const ref = useRef(value);
+  ref.current = value;
+  return ref;
+}
+
 /**
- * Steps through a list of spoken lines. For each line it tries to play
- * /audio/{id}.mp3; when the clip ends (or, if no audio is available, after
- * the line's fallback `ms`) it advances. Captions stay in sync either way.
+ * Steps through a list of spoken lines.
+ *
+ * - "real" lines are delivered by a talking-head VIDEO that carries its own
+ *   native audio. The hook plays no audio for them and waits for the scene to
+ *   call `next()` when the video ends (with a safety timeout as a backstop).
+ * - All other lines are voice-only: the hook plays /audio/{id}.mp3 and advances
+ *   after the line's exact `ms` duration. The aura is a generic visual, so no
+ *   media-event syncing is needed.
  */
 export function useLineSequence(lines: Line[], opts: Options) {
   const { active, muted, gap = 450, onComplete } = opts;
   const [index, setIndex] = useState(-1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const advancedRef = useRef(false);
   const completedRef = useRef(false);
+  const onCompleteRef = useLatest(onComplete);
+  const linesRef = useLatest(lines);
+
+  // Advance to the next line — at most once per line.
+  const next = useCallback(() => {
+    if (advancedRef.current) return;
+    advancedRef.current = true;
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setIndex((i) => i + 1);
+  }, []);
 
   // Kick off when activated
   useEffect(() => {
@@ -30,67 +52,41 @@ export function useLineSequence(lines: Line[], opts: Options) {
   useEffect(() => {
     if (!active || index < 0) return;
 
+    const lines = linesRef.current;
     if (index >= lines.length) {
       if (!completedRef.current) {
         completedRef.current = true;
-        onComplete?.();
+        onCompleteRef.current?.();
       }
       return;
     }
 
     const line = lines[index];
-    let cancelled = false;
-    let advanced = false;
-    let fellBack = false;
-    let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+    advancedRef.current = false;
 
-    // Move to the next line exactly once per line.
-    const advance = () => {
-      if (cancelled || advanced) return;
-      advanced = true;
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        if (!cancelled) setIndex((i) => i + 1);
-      }, gap);
-    };
-
-    // When audio is unavailable, hold the caption for its scripted duration.
-    const fallback = () => {
-      if (cancelled || advanced || fellBack) return;
-      fellBack = true;
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(advance, line.ms);
-    };
-
-    if (muted) {
-      fallback();
+    if (line.speaker === "real") {
+      // The video owns playback + sound and calls next() on `ended`.
+      // Safety net only, in case the media event never arrives.
+      timerRef.current = setTimeout(next, line.ms + 2500);
     } else {
-      const audio = new Audio(`/audio/${line.id}.mp3`);
-      audioRef.current = audio;
-      audio.onended = advance;
-      audio.onerror = fallback;
-      const p = audio.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => fallback());
+      if (!muted) {
+        const audio = new Audio(`/audio/${line.id}.mp3`);
+        audioRef.current = audio;
+        const p = audio.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
       }
-      // Safety: if the clip never starts, fall back on the scripted duration.
-      safetyTimer = setTimeout(() => {
-        if (!cancelled && audio.paused && audio.currentTime === 0) fallback();
-      }, 350);
+      timerRef.current = setTimeout(next, line.ms + gap);
     }
 
     return () => {
-      cancelled = true;
       if (timerRef.current) clearTimeout(timerRef.current);
-      if (safetyTimer) clearTimeout(safetyTimer);
       if (audioRef.current) {
-        audioRef.current.onended = null;
-        audioRef.current.onerror = null;
         audioRef.current.pause();
+        audioRef.current = null;
       }
     };
-  }, [index, active, muted, lines, gap, onComplete]);
+  }, [index, active, muted, gap, next, linesRef, onCompleteRef]);
 
   const current = index >= 0 && index < lines.length ? lines[index] : null;
-  return { current, index };
+  return { current, index, next };
 }

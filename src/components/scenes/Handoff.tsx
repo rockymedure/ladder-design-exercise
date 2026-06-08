@@ -18,7 +18,7 @@ export function Handoff({
   onComplete: () => void;
   muted: boolean;
 }) {
-  const { current } = useLineSequence(SEQ, {
+  const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
     onComplete: () => setTimeout(onComplete, 1600),
@@ -44,6 +44,7 @@ export function Handoff({
               text={current!.text}
               videoSrc="/video/remi-handoff.mp4"
               muted={muted}
+              onEnded={next}
             />
           ) : done ? (
             <CoachNote
