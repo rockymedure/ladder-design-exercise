@@ -1,5 +1,6 @@
-// "Coach in My Pocket" — a day with Remi (real) + Remi AI (augmented).
-// Real coach moments are recorded video messages; the AI twin is the always-on voice.
+// "Coach in My Pocket" — a day with Remi (your human coach) + Rung (Ladder's assistant).
+// Real coach moments are recorded video messages. Rung is the always-on assistant that
+// scales every coach — and does the things the app's UI can't.
 
 export const USER = { name: "Rocky", week: 3 };
 
@@ -14,12 +15,13 @@ export type Line = {
 };
 
 // `ms` values match the exact generated audio durations (public/audio/*.mp3).
+// speaker "ai" = Rung (voice "sal"). speaker "real" = Remi (her voice lives in the videos).
 export const LINES = {
   // B1 — Morning
   amGreet: {
     id: "am-greet",
-    text: "Morning, Rocky. Remi left you something.",
-    ms: 2616,
+    text: "Morning, Rocky. Your coach Remi left you something.",
+    ms: 3072,
     speaker: "ai",
   },
   amReal: {
@@ -28,24 +30,31 @@ export const LINES = {
     ms: 6648,
     speaker: "real",
   },
+  amSuggest: {
+    id: "am-suggest",
+    text: "Remi's got you on an easy push today. The Sunrise crew is running a 12-minute mobility finisher — your shoulders would thank you. Want me to add it?",
+    ms: 8568,
+    speaker: "ai",
+    accent: "volt",
+  },
   amClose: {
     id: "am-close",
-    text: "I'll be right here the whole way. Want to start now or after coffee?",
-    ms: 3936,
+    text: "Either way, I'm right here. Start now, or after coffee?",
+    ms: 3768,
     speaker: "ai",
   },
 
   // B2 — Eat
   eatYou: {
     id: "eat-you",
-    text: "Hey Remi — what should I eat?",
+    text: "Hey Rung — what should I eat?",
     ms: 1896,
     speaker: "you",
   },
   eatOffer: {
     id: "eat-offer",
     text: "You moved this morning, so let's get some protein in. Want ideas from nearby, or what's in your fridge?",
-    ms: 5952,
+    ms: 5760,
     speaker: "ai",
     accent: "leaf",
   },
@@ -57,8 +66,8 @@ export const LINES = {
   },
   eatPlan: {
     id: "eat-plan",
-    text: "Eggs, spinach, that leftover rice. Six-minute high-protein rice bowl — 32 grams. Want the steps?",
-    ms: 7560,
+    text: "Eggs, spinach, that leftover rice. A six-minute high-protein rice bowl — 32 grams. Want the steps?",
+    ms: 7296,
     speaker: "ai",
     accent: "leaf",
   },
@@ -73,7 +82,7 @@ export const LINES = {
   hoAi: {
     id: "ho-ai",
     text: "I'm not going to guess on a knee. Let me loop in Remi — she should see this.",
-    ms: 4056,
+    ms: 4296,
     speaker: "ai",
     accent: "volt",
   },
@@ -85,8 +94,8 @@ export const LINES = {
   },
   hoDone: {
     id: "ho-done",
-    text: "Done — your plan's already updated. I've got the rest.",
-    ms: 3912,
+    text: "Done — Remi updated your plan. I've got the rest.",
+    ms: 3600,
     speaker: "ai",
     accent: "volt",
   },
@@ -94,14 +103,14 @@ export const LINES = {
   // B4 — Evening
   pmClose: {
     id: "pm-close",
-    text: "Good day, Rocky. You showed up and you ate well — that's the streak that matters.",
-    ms: 4752,
+    text: "Good day, Rocky. You showed up, and you ate well. That's the streak that matters.",
+    ms: 5136,
     speaker: "ai",
   },
   pmLoop: {
     id: "pm-loop",
-    text: "I softened tomorrow for the knee. Same time — I'll be here.",
-    ms: 4056,
+    text: "Remi softened tomorrow for the knee. Same time — I'll be here.",
+    ms: 3792,
     speaker: "ai",
     accent: "volt",
   },

@@ -9,7 +9,7 @@ const ACCENT: Record<string, string> = {
   ember: "var(--color-ember)",
 };
 
-/** The breathing aura — Remi's ambient presence. */
+/** The breathing aura — Rung's ambient presence. */
 export function CoachAura({
   size = 220,
   color = "var(--color-volt)",
@@ -53,7 +53,7 @@ export function CoachAura({
   );
 }
 
-/** A live voice waveform that animates while Remi speaks. */
+/** A live voice waveform that animates while Rung speaks. */
 export function Waveform({
   color = "var(--color-volt)",
   bars = 5,
@@ -89,8 +89,8 @@ export function Waveform({
 
 /**
  * Caption rail. Three speakers:
- *  - "ai"   → Remi AI (the augmented twin) — accent color, waveform
- *  - "real" → the human coach — handled by RealCoachCard, but supported here too
+ *  - "ai"   → Rung (Ladder's assistant) — accent color, waveform
+ *  - "real" → Remi, the human coach — handled by RealCoachCard, but supported here too
  *  - "you"  → the member, right-aligned with a mic glyph
  * Voice for action — this is the main UI mid-flow.
  */
@@ -104,7 +104,7 @@ export function Captions({
   const speaker = line?.speaker ?? "ai";
   const accent = line?.accent ? ACCENT[line.accent] : "var(--color-volt)";
   const isYou = speaker === "you";
-  const label = isYou ? "You" : speaker === "real" ? "Remi" : "Remi AI";
+  const label = isYou ? "You" : speaker === "real" ? "Remi" : "Rung";
 
   return (
     <div className="min-h-[120px] w-full px-7">

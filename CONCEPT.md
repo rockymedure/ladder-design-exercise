@@ -1,7 +1,7 @@
 # Coach in My Pocket — Ladder Design Exercise
 
-> Your Ladder coach is a **real person**. Their **AI twin** is with you the other 23 hours.
-> Real + augmented = a coach who never leaves your side — for training *and* nutrition.
+> Your Ladder coach is a **real person**. **Rung** — Ladder's assistant — is with you the other 23 hours.
+> Human coach + Rung = a coach who never leaves your side, for training *and* nutrition.
 
 ---
 
@@ -15,78 +15,96 @@ tweaky knee on a Tuesday night.
 
 ## The concept
 
-Give every member a coach that is **both real and augmented**:
+Don't clone the coach. **Give every member an assistant that carries the coach with them.**
 
-- **The real coach** programs your plan, records real check-ins, and handles the human moments. The soul
-  and the moat.
-- **Her AI twin** — trained on her voice, style, and your shared history (with her consent) — is in your
-  pocket 24/7. It answers at midnight, helps you eat, nudges you to move, and **hands the important stuff
-  back to the real her.**
+- **The human coach (Remi)** programs your plan, records real check-ins, and handles the human moments.
+  The soul and the moat. She is never impersonated.
+- **Rung** — one Ladder-wide assistant, personalized by *your* coach's plan and *your* shared history —
+  is in your pocket 24/7. It answers at midnight, helps you eat, nudges you to move, and **hands the
+  important stuff back to your real coach.**
 
-The UI recedes; the coach (real + augmented) becomes the interface. One relationship, all day, spanning
+The UI recedes; the relationship becomes the interface. One coach, one assistant, all day, spanning
 **workout and nutrition**.
 
-## Why this is the right version
+## Why an assistant, not an AI twin
 
-- **Honest about humans.** AI doesn't replace the coach — it scales her presence. That protects Ladder's
-  moat and avoids the cold-bot trap.
-- **Designed for the unmotivated.** The pocket coach lowers the bar ("15 minutes, just show up"). For a
-  skeptic, *showing up* is the win — not a PR.
-- **Both domains, all day.** It shows up exactly where life happens — especially food, which everyone has
-  a daily, emotional relationship with.
+We deliberately moved *away* from cloning the coach into an "AI twin." An assistant is the stronger model:
+
+- **Honest.** Rung never pretends to be your coach. When the human voice matters, it's actually Remi —
+  on video, in her own words. No uncanny impersonation, no eroded trust.
+- **Protects the moat.** Coaches stay the irreplaceable human layer. Rung scales their *presence*, not
+  their identity — so coaches do what only they can, and Rung covers the in-between for everyone.
+- **One Rung, infinitely personalized.** A single assistant the whole company can improve, that adapts to
+  each member through their coach's plan and their own history. Scale every coach without diluting any.
+- **A clearer design problem.** "Build a great assistant that defers to a human" is honest and shippable.
+  "Build a convincing fake human" is neither.
+
+## Rung's superpower: do what the UI can't
+
+Because Rung is a relationship, not a screen, it can reach past the rigid app:
+
+- **Borrow across teams.** *"The Sunrise crew is running a 12-min mobility finisher today — want me to add
+  it?"* The structured plan UI would never surface another team's work. Rung can.
+- **Adapt on the fly.** Swap a movement, soften tomorrow after a bad night, slot in something special —
+  without making you navigate menus.
+- **Bring the right human in.** Rung knows the edge of its competence and escalates to your coach.
+
+This is where Rung scales every coach: it delivers the flexible, generous moves a limited UI can't afford.
 
 ## Design law
 
-**Face for emotion · Voice for action · Text for proof.** A persistent, low-profile **coach presence**
-is always one tap or one word away — that's the "in my pocket" feeling.
+**Face for emotion · Voice for action · Text for proof.** Faces are reserved for **real humans** (the
+coach). Rung is **voice + ambient presence** — never a fake face. A persistent, low-profile dock keeps
+Rung one tap or one word away — that's the "in my pocket" feeling.
 
 ---
 
-## Meet Remi (real) + Remi AI (augmented)
+## Cast
 
-- **Remi** — a real coach: calm veteran with a captain's warmth. Tough enough to push, warm enough to
-  trust. Appears as **recorded video messages** (the human moments).
-- **Remi AI** — her twin: same voice and style, available instantly, always present (ambient aura +
-  voice). Visibly **defers to the real Remi** for anything that needs a human.
-- **Continuity is the spine:** what you do/say today changes what she gives you tomorrow — and she tells
-  you so.
+- **Remi (human coach)** — calm veteran with a captain's warmth. Tough enough to push, warm enough to
+  trust. Appears as **recorded video messages** (the human moments). Voice: her own.
+- **Rung (Ladder's assistant)** — capable, warm, always present (ambient aura + voice, distinct from any
+  coach's voice). Visibly **defers to the human coach** for anything that needs judgment.
+- **Continuity is the spine:** what you do/say today changes what you get tomorrow — and Rung tells you so.
 
 ## The demo: "A day in your pocket"
 
-A persistent coach presence threads every screen. ~75–90s.
+A persistent Rung presence threads every screen. ~75–90s.
 
-**B0 · Cold open** — "Your coach. In your pocket. Always."
+**B0 · Cold open** — "Your coach Remi, scaled by Rung — with you all day."
 
-**B1 · Morning** *(real + augmented, up front)*
-- Remi AI greets you, then plays a **real recorded message from human Remi**: *"Week 3, Rocky. Keep it
-  simple — 15 minutes, I just want you to show up."* The combo is established immediately.
+**B1 · Morning** *(human + assistant, up front)*
+- Rung greets you, then plays a **real recorded message from Remi**: *"Week 3, Rocky. Keep it simple — 15
+  minutes, just show up."* Then Rung does the **beyond-the-UI** move: offers the Sunrise crew's mobility
+  finisher as a cross-team add-on — Remi's plan untouched.
 
 **B2 · Eat** *(the 24/7 value — replaces the nutrition logging maze)*
-- 12:40pm. You ask *"what should I eat?"* → Remi AI helps from what's nearby / in your fridge, tied to how
-  you moved this morning. A generated dish makes it crave-able. Logging happens invisibly.
+- 12:40pm. You ask *"what should I eat?"* → Rung helps from what's in your fridge, tied to how you moved
+  this morning. A generated dish makes it crave-able. Logging happens invisibly.
 
-**B3 · The handoff** *(why real+augmented is trustworthy)*
-- You mention your knee. Remi AI: *"I won't guess on that — looping in Remi."* → the **real coach replies**
-  (recorded) and your plan updates itself. Human judgment, AI presence.
+**B3 · The handoff** *(why human + assistant is trustworthy)*
+- You mention your knee. Rung: *"I won't guess on a knee — looping in Remi."* → the **real coach replies**
+  (recorded) and your plan updates itself. Human judgment, assistant presence.
 
 **B4 · Evening** *(the loop)*
-- She closes the day, references what happened, and adapts tomorrow — already done. The relationship never
-  resets.
+- Rung closes the day, references what happened, and notes Remi softened tomorrow — already done. The
+  relationship never resets.
 
 ## Presence system
 
 | State | Looks like | When |
 |---|---|---|
-| **Ambient** | Soft breathing aura + a persistent pocket dock | Always — "she's here" |
-| **Voice** | Waveform + live captions | Mid-action (asking, logging) |
+| **Ambient** | Soft breathing aura + a persistent Rung dock | Always — "Rung's here" |
+| **Voice** | Waveform + live captions (labeled *Rung*) | Mid-action (asking, logging) |
 | **Face** | Full-screen / card video — *the real coach* | Human moments (morning note, handoff reply) |
 | **Text** | One line / the "why" | Proof + record only |
 
 ## What we generate (fal + image tools)
 
 1. **Remi's look** — portrait identity (done).
-2. **Real coach videos** — talking-head, lip-synced messages (image + voice → Kling AI Avatar / OmniHuman).
-3. **Remi AI voice lines** — greetings, food help, handoff, evening (TTS; voice-cloned for consistency).
+2. **Real coach videos** — talking-head, lip-synced messages from Remi (image + voice → OmniHuman).
+3. **Rung's voice lines** — greeting, cross-team suggestion, food help, handoff, evening (TTS, voice
+   "sal" — deliberately distinct from any coach).
 4. **A generated dish image** for the Eat beat.
 
 ## Brand tokens (from the Figma)
@@ -103,4 +121,4 @@ A persistent coach presence threads every screen. ~75–90s.
 
 ## Deliverable
 
-Shareable URL + a tight Loom by **Wednesday evening**.
+Shareable URL + a tight Loom.

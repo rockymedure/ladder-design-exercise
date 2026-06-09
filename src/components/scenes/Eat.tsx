@@ -46,7 +46,7 @@ export function Eat({
             >
               <span className="text-[44px]">🍽️</span>
               <span className="max-w-[220px] text-[13px] leading-snug text-ash">
-                You moved this morning. Remi&apos;s already thinking about fuel.
+                You moved this morning. Rung&apos;s already thinking about fuel.
               </span>
             </motion.div>
           )}

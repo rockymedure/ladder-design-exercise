@@ -47,7 +47,7 @@ export function ColdOpen({
             Coach in your pocket
           </span>
           <span className="max-w-[230px] text-[13px] leading-snug text-ash">
-            Your real coach — with you all day.
+            Your coach Remi, scaled by Rung — with you all day.
           </span>
         </motion.div>
       </div>
@@ -59,7 +59,7 @@ export function ColdOpen({
         transition={{ delay: 2.4, duration: 1.4 }}
       >
         <span className="text-[12px] uppercase tracking-[0.25em] text-ash-dark">
-          A day with Remi
+          A day with Remi &amp; Rung
         </span>
       </motion.div>
     </div>

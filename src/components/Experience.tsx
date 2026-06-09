@@ -104,8 +104,9 @@ function StartGate({ onStart }: { onStart: () => void }) {
           <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-volt">
             Coach in your pocket
           </span>
-          <span className="max-w-[230px] text-[14px] leading-snug text-ash-light">
-            A day with Remi — your real coach, with you all day.
+          <span className="max-w-[250px] text-[14px] leading-snug text-ash-light">
+            Remi is your coach. Rung is the assistant that carries her with you
+            all day.
           </span>
         </div>
         <motion.span
@@ -134,8 +135,8 @@ function EndCard({ onReplay }: { onReplay: () => void }) {
     >
       <div className="flex flex-col items-center gap-6 text-center">
         <LadderMark size={38} />
-        <p className="max-w-[250px] text-[20px] font-semibold leading-snug text-paper">
-          One coach. Real and always there.
+        <p className="max-w-[270px] text-[20px] font-semibold leading-snug text-paper">
+          Your coach, human. Rung, always there.
         </p>
         <button
           onClick={onReplay}
