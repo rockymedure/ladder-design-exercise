@@ -3,12 +3,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Captions, CoachAura } from "@/components/Presence";
 import { RealCoachCard } from "@/components/RealCoachCard";
+import { DayAhead } from "@/components/DayAhead";
 import { CoachDock } from "@/components/CoachDock";
 import { TimeChip } from "@/components/ui";
 import { useLineSequence } from "@/lib/useLineSequence";
 import { LINES } from "@/lib/script";
 
-const SEQ = [LINES.amGreet, LINES.amReal, LINES.amSuggest, LINES.amClose];
+const SEQ = [
+  LINES.amGreet,
+  LINES.amNote,
+  LINES.amReal,
+  LINES.amSuggest,
+  LINES.amClose,
+];
 
 export function Morning({
   onComplete,
@@ -25,6 +32,7 @@ export function Morning({
 
   const speaker = current?.speaker ?? "ai";
   const isReal = speaker === "real";
+  const isDay = current?.id === LINES.amGreet.id;
   const isSuggest = current?.id === LINES.amSuggest.id;
 
   return (
@@ -43,6 +51,8 @@ export function Morning({
               muted={muted}
               onEnded={next}
             />
+          ) : isDay ? (
+            <DayAhead key="day" />
           ) : isSuggest ? (
             <RungSuggestion key="suggest" />
           ) : (

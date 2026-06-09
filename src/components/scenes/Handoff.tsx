@@ -79,7 +79,7 @@ export function Handoff({
   );
 }
 
-/** AI twin visibly looping in the real human coach. */
+/** Rung visibly looping in the real human coach. */
 function Escalation() {
   return (
     <motion.div

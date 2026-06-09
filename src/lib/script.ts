@@ -20,8 +20,14 @@ export const LINES = {
   // B1 — Morning
   amGreet: {
     id: "am-greet",
-    text: "Morning, Rocky. Your coach Remi left you something.",
-    ms: 3072,
+    text: "Morning, Rocky. Here's your day — easy push, protein focus. You're booked till noon, so I'll fit training after six, and lunch in your 12:30 gap.",
+    ms: 9720,
+    speaker: "ai",
+  },
+  amNote: {
+    id: "am-note",
+    text: "And your coach Remi left you a note for week three.",
+    ms: 3120,
     speaker: "ai",
   },
   amReal: {
