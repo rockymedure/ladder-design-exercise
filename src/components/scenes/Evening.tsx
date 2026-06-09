@@ -19,7 +19,8 @@ export function Evening({
   const { current } = useLineSequence(SEQ, {
     active: true,
     muted,
-    onComplete: () => setTimeout(onComplete, 1800),
+    endDelay: 1800,
+    onComplete,
   });
 
   const showTomorrow = current?.id === LINES.pmLoop.id;

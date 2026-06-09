@@ -27,7 +27,8 @@ export function Morning({
   const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
-    onComplete: () => setTimeout(onComplete, 1400),
+    endDelay: 1400,
+    onComplete,
   });
 
   const speaker = current?.speaker ?? "ai";

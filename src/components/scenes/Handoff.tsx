@@ -21,7 +21,8 @@ export function Handoff({
   const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
-    onComplete: () => setTimeout(onComplete, 1600),
+    endDelay: 1600,
+    onComplete,
   });
 
   const id = current?.id;

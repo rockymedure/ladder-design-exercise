@@ -7,6 +7,7 @@ type Options = {
   active: boolean;
   muted: boolean;
   gap?: number; // ms pause between lines
+  endDelay?: number; // ms to hold the last frame before onComplete
   onComplete?: () => void;
 };
 
@@ -27,7 +28,7 @@ function useLatest<T>(value: T) {
  *   media-event syncing is needed.
  */
 export function useLineSequence(lines: Line[], opts: Options) {
-  const { active, muted, gap = 450, onComplete } = opts;
+  const { active, muted, gap = 450, endDelay = 1200, onComplete } = opts;
   const [index, setIndex] = useState(-1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -56,9 +57,16 @@ export function useLineSequence(lines: Line[], opts: Options) {
     if (index >= lines.length) {
       if (!completedRef.current) {
         completedRef.current = true;
-        onCompleteRef.current?.();
+        // Hold the final frame, then signal completion. Tracked here so that
+        // navigating away (unmount) clears it — no stale advance into the next
+        // scene.
+        timerRef.current = setTimeout(() => {
+          onCompleteRef.current?.();
+        }, endDelay);
       }
-      return;
+      return () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+      };
     }
 
     const line = lines[index];
@@ -85,7 +93,7 @@ export function useLineSequence(lines: Line[], opts: Options) {
         audioRef.current = null;
       }
     };
-  }, [index, active, muted, gap, next, linesRef, onCompleteRef]);
+  }, [index, active, muted, gap, endDelay, next, linesRef, onCompleteRef]);
 
   const current = index >= 0 && index < lines.length ? lines[index] : null;
   return { current, index, next };
