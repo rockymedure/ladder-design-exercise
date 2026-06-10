@@ -13,12 +13,14 @@ export function RealCoachCard({
   videoSrc,
   imageSrc = "/remi/portrait.png",
   muted = false,
+  paused = false,
   onEnded,
 }: {
   text: string;
   videoSrc?: string;
   imageSrc?: string;
   muted?: boolean;
+  paused?: boolean;
   onEnded?: () => void;
 }) {
   const [videoOk, setVideoOk] = useState(false);
@@ -26,13 +28,18 @@ export function RealCoachCard({
 
   // The video carries the real coach's native audio — just play it. When it
   // ends, it tells the sequence to move on. No separate track, no manual sync.
+  // Honors the global pause so the coach freezes with everything else.
   useEffect(() => {
     const v = ref.current;
     if (!v || !videoSrc) return;
     v.muted = muted;
+    if (paused) {
+      v.pause();
+      return;
+    }
     const p = v.play();
     if (p && typeof p.catch === "function") p.catch(() => {});
-  }, [videoSrc, muted, videoOk]);
+  }, [videoSrc, muted, paused, videoOk]);
 
   return (
     <motion.div

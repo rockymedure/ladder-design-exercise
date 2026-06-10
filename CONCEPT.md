@@ -1,7 +1,7 @@
 # Coach in My Pocket — Ladder Design Exercise
 
-> Your Ladder coach is a **real person**. **Rung** — Ladder's assistant — is with you the other 23 hours.
-> Human coach + Rung = a coach who never leaves your side, for training *and* nutrition.
+> Your coach is a **real person**. **Ladder** — the assistant — is with you the other 23 hours.
+> Human coach + Ladder = a coach who never leaves your side, for training *and* nutrition.
 
 ---
 
@@ -19,7 +19,7 @@ Don't clone the coach. **Give every member an assistant that carries the coach w
 
 - **The human coach (Remi)** programs your plan, records real check-ins, and handles the human moments.
   The soul and the moat. She is never impersonated.
-- **Rung** — one Ladder-wide assistant, personalized by *your* coach's plan and *your* shared history —
+- **Ladder** — one app-wide assistant, personalized by *your* coach's plan and *your* shared history —
   is in your pocket 24/7. It answers at midnight, helps you eat, nudges you to move, and **hands the
   important stuff back to your real coach.**
 
@@ -30,32 +30,32 @@ The UI recedes; the relationship becomes the interface. One coach, one assistant
 
 We deliberately moved *away* from cloning the coach into an "AI twin." An assistant is the stronger model:
 
-- **Honest.** Rung never pretends to be your coach. When the human voice matters, it's actually Remi —
+- **Honest.** Ladder never pretends to be your coach. When the human voice matters, it's actually Remi —
   on video, in her own words. No uncanny impersonation, no eroded trust.
-- **Protects the moat.** Coaches stay the irreplaceable human layer. Rung scales their *presence*, not
-  their identity — so coaches do what only they can, and Rung covers the in-between for everyone.
-- **One Rung, infinitely personalized.** A single assistant the whole company can improve, that adapts to
+- **Protects the moat.** Coaches stay the irreplaceable human layer. Ladder scales their *presence*, not
+  their identity — so coaches do what only they can, and Ladder covers the in-between for everyone.
+- **One assistant, infinitely personalized.** A single assistant the whole company can improve, that adapts to
   each member through their coach's plan and their own history. Scale every coach without diluting any.
 - **A clearer design problem.** "Build a great assistant that defers to a human" is honest and shippable.
   "Build a convincing fake human" is neither.
 
-## Rung's superpower: do what the UI can't
+## Ladder's superpower: do what the UI can't
 
-Because Rung is a relationship, not a screen, it can reach past the rigid app:
+Because Ladder is a relationship, not a screen, it can reach past the rigid app:
 
 - **Borrow across teams.** *"The Sunrise crew is running a 12-min mobility finisher today — want me to add
-  it?"* The structured plan UI would never surface another team's work. Rung can.
+  it?"* The structured plan UI would never surface another team's work. Ladder can.
 - **Adapt on the fly.** Swap a movement, soften tomorrow after a bad night, slot in something special —
   without making you navigate menus.
-- **Bring the right human in.** Rung knows the edge of its competence and escalates to your coach.
+- **Bring the right human in.** Ladder knows the edge of its competence and escalates to your coach.
 
-This is where Rung scales every coach: it delivers the flexible, generous moves a limited UI can't afford.
+This is where Ladder scales every coach: it delivers the flexible, generous moves a limited UI can't afford.
 
 ## Design law
 
 **Face for emotion · Voice for action · Text for proof.** Faces are reserved for **real humans** (the
-coach). Rung is **voice + ambient presence** — never a fake face. A persistent, low-profile dock keeps
-Rung one tap or one word away — that's the "in my pocket" feeling.
+coach). Ladder is **voice + ambient presence** — never a fake face. A persistent, low-profile dock keeps
+Ladder one tap or one word away — that's the "in my pocket" feeling.
 
 ---
 
@@ -63,39 +63,39 @@ Rung one tap or one word away — that's the "in my pocket" feeling.
 
 - **Remi (human coach)** — calm veteran with a captain's warmth. Tough enough to push, warm enough to
   trust. Appears as **recorded video messages** (the human moments). Voice: her own.
-- **Rung (Ladder's assistant)** — capable, warm, always present (ambient aura + voice, distinct from any
+- **Ladder (the assistant)** — capable, warm, always present (ambient aura + voice, distinct from any
   coach's voice). Visibly **defers to the human coach** for anything that needs judgment.
-- **Continuity is the spine:** what you do/say today changes what you get tomorrow — and Rung tells you so.
+- **Continuity is the spine:** what you do/say today changes what you get tomorrow — and Ladder tells you so.
 
 ## The demo: "A day in your pocket"
 
-A persistent Rung presence threads every screen. ~75–90s.
+A persistent Ladder presence threads every screen. ~75–90s.
 
-**B0 · Cold open** — "Your coach Remi, scaled by Rung — with you all day."
+**B0 · Cold open** — "Your coach Remi, scaled by Ladder — with you all day."
 
 **B1 · Morning** *(human + assistant, up front)*
-- Rung greets you, then plays a **real recorded message from Remi**: *"Week 3, Rocky. Keep it simple — 15
-  minutes, just show up."* Then Rung does the **beyond-the-UI** move: offers the Sunrise crew's mobility
+- Ladder greets you, then plays a **real recorded message from Remi**: *"Week 3, Rocky. Keep it simple — 15
+  minutes, just show up."* Then Ladder does the **beyond-the-UI** move: offers the Sunrise crew's mobility
   finisher as a cross-team add-on — Remi's plan untouched.
 
 **B2 · Eat** *(the 24/7 value — replaces the nutrition logging maze)*
-- 12:40pm. You ask *"what should I eat?"* → Rung helps from what's in your fridge, tied to how you moved
+- 12:40pm. You ask *"what should I eat?"* → Ladder helps from what's in your fridge, tied to how you moved
   this morning. A generated dish makes it crave-able. Logging happens invisibly.
 
 **B3 · The handoff** *(why human + assistant is trustworthy)*
-- You mention your knee. Rung: *"I won't guess on a knee — looping in Remi."* → the **real coach replies**
+- You mention your knee. Ladder: *"I won't guess on a knee — looping in Remi."* → the **real coach replies**
   (recorded) and your plan updates itself. Human judgment, assistant presence.
 
 **B4 · Evening** *(the loop)*
-- Rung closes the day, references what happened, and notes Remi softened tomorrow — already done. The
+- Ladder closes the day, references what happened, and notes Remi softened tomorrow — already done. The
   relationship never resets.
 
 ## Presence system
 
 | State | Looks like | When |
 |---|---|---|
-| **Ambient** | Soft breathing aura + a persistent Rung dock | Always — "Rung's here" |
-| **Voice** | Waveform + live captions (labeled *Rung*) | Mid-action (asking, logging) |
+| **Ambient** | Soft breathing aura + a persistent Ladder dock | Always — "Ladder's here" |
+| **Voice** | Waveform + live captions (labeled *Ladder*) | Mid-action (asking, logging) |
 | **Face** | Full-screen / card video — *the real coach* | Human moments (morning note, handoff reply) |
 | **Text** | One line / the "why" | Proof + record only |
 
@@ -103,8 +103,8 @@ A persistent Rung presence threads every screen. ~75–90s.
 
 1. **Remi's look** — portrait identity (done).
 2. **Real coach videos** — talking-head, lip-synced messages from Remi (image + voice → OmniHuman).
-3. **Rung's voice lines** — greeting, cross-team suggestion, food help, handoff, evening (TTS, voice
-   "sal" — deliberately distinct from any coach).
+3. **Ladder's voice lines** — greeting, cross-team suggestion, food help, handoff, evening (fal ·
+   ElevenLabs Multilingual v2, voice "Jessica" — deliberately distinct from any coach).
 4. **A generated dish image** for the Eat beat.
 
 ## Brand tokens (from the Figma)

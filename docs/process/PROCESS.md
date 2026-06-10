@@ -39,12 +39,12 @@ idea showed up. The path:
    with her generated voice and talking-head video). Then we challenged it honestly: cloning a
    human is uncanny, erodes trust, and cannibalizes Ladder's moat. **We pivoted to an assistant.**
 
-4. **Meet Rung.** The coach stays **human**. **Rung** is one Ladder-wide assistant that *scales*
+4. **Meet Ladder.** The coach stays **human**. **Ladder** is one app-wide assistant that *scales*
    every coach — personalized by your coach's plan and your history. Coaches do what only they
-   can; Rung covers the in-between for everyone. Faces are reserved for real humans; Rung is voice
+   can; Ladder covers the in-between for everyone. Faces are reserved for real humans; Ladder is voice
    + ambient presence (never a fake face).
 
-5. **Rung's superpower: do what the UI can't.** The clearest articulation of Rung's value — it can
+5. **Ladder's superpower: do what the UI can't.** The clearest articulation of Ladder's value — it can
    reach past the rigid app: *borrow another team's finisher for a day, swap a movement on the fly,
    slot training into a calendar gap.* Things the structured UI would never surface.
 
@@ -58,7 +58,7 @@ idea showed up. The path:
 
 ## The product, in one line
 
-**Your coach is human (Remi). Rung is the assistant that carries her with you all day — and does
+**Your coach is human (Remi). Ladder is the assistant that carries her with you all day — and does
 the generous things the app's UI can't afford.**
 
 ---
@@ -70,15 +70,16 @@ Everything in the demo is real playback, not faked:
 | Layer | Tool | What it does |
 |---|---|---|
 | **App** | Next.js + Tailwind + Framer Motion | iPhone-framed, scene-based interactive prototype |
-| **Rung's voice** | fal · xAI TTS (voice `sal`) | Every Rung line, in a voice deliberately distinct from any coach |
+| **Ladder's voice** | fal · ElevenLabs Multilingual v2 (voice `Jessica`) | Every Ladder line, in a voice deliberately distinct from any coach |
 | **Coach's voice** | fal · xAI TTS (voice `ara`) | Remi's lines, used to drive her video |
+| **Member's voice** | fal · xAI TTS (voice `rex`) | Rocky's spoken replies in the demo |
 | **Coach on video** | fal · ByteDance OmniHuman | Talking-head, lip-synced video from Remi's portrait + audio |
 | **Coach's look** | image gen | Photoreal portrait identity for Remi |
 | **Food** | image gen | The crave-able dish for the nutrition beat |
 
 A small sequencer (`useLineSequence`) paces each beat to the **exact measured audio duration**, so
 voice, captions, and visuals stay in sync. Human-coach moments play the **video with its native
-audio**; Rung moments are voice + ambient aura.
+audio**; Ladder moments are voice + ambient aura.
 
 ---
 
@@ -87,12 +88,12 @@ audio**; Rung moments are voice + ambient aura.
 A single day — "A day in your pocket." Each frame is a beat in the live prototype.
 
 ### 1 · Open — coach in your pocket
-The premise up front: Remi is your coach; Rung carries her with you all day.
+The premise up front: Remi is your coach; Ladder carries her with you all day.
 
 ![Start](screens/01-start.png)
 
 ### 2 · Morning — your day ahead *(the latest iteration)*
-Rung leads with **how you'll move and eat**, fit to your **real calendar** — easy push *after 6pm*,
+Ladder leads with **how you'll move and eat**, fit to your **real calendar** — easy push *after 6pm*,
 protein focus in your *12:30 gap*, working around a booked 9–12 and 2–5. Practical first, before any
 message.
 
@@ -103,20 +104,20 @@ Then the soul: a **real recorded message from Remi** (generated talking-head). F
 
 ![Morning — Remi](screens/04-morning-remi.png)
 
-### 4 · Morning — Rung does what the UI can't
-The signature move: Rung offers a **cross-team add-on** — the Sunrise Crew's 12-minute mobility
+### 4 · Morning — Ladder does what the UI can't
+The signature move: Ladder offers a **cross-team add-on** — the Sunrise Crew's 12-minute mobility
 finisher — *"Remi's plan stays exactly as is."* Generous, flexible, beyond the rigid UI.
 
-![Morning — Rung cross-team suggestion](screens/05-morning-rung-suggest.png)
+![Morning — Ladder cross-team suggestion](screens/05-morning-ladder-suggest.png)
 
 ### 5 · Midday — eat
-12:41pm, "what should I eat?" Rung answers from **what's in your fridge**, tied to how you moved.
+12:41pm, "what should I eat?" Ladder answers from **what's in your fridge**, tied to how you moved.
 Logging happens invisibly; the dish is crave-able.
 
 ![Eat — dish](screens/07-eat-dish.png)
 
 ### 6 · Evening — the handoff to a human
-You mention your knee. Rung **won't guess** — it loops in Remi, and the **real coach replies** on
+You mention your knee. Ladder **won't guess** — it loops in Remi, and the **real coach replies** on
 video. Human judgment, assistant presence.
 
 ![Handoff — Remi reply](screens/09-handoff-remi.png)
@@ -132,7 +133,7 @@ One line that holds the whole idea.
 
 ![End](screens/12-end.png)
 
-> *Two brief beats — Rung visibly looping in Remi, and the auto-updated "Back Squat → Step-ups"
+> *Two brief beats — Ladder visibly looping in Remi, and the auto-updated "Back Squat → Step-ups"
 > plan card — play in the live flow and aren't captured as stills yet.*
 
 ---
@@ -140,9 +141,9 @@ One line that holds the whole idea.
 ## Decisions worth defending
 
 - **Assistant, not AI twin.** Honesty over illusion. Protects coaches as the irreplaceable layer.
-- **One Rung, infinitely personalized.** Scale every coach without diluting any; the whole company
+- **One assistant, infinitely personalized.** Scale every coach without diluting any; the whole company
   improves one assistant.
-- **Faces only for humans.** Rung never wears a face. Trust by design.
+- **Faces only for humans.** Ladder never wears a face. Trust by design.
 - **Lead mornings with utility (the day ahead), then humanity.** Respect the user's time and life
   (calendar-aware) before the emotional beat.
 - **Real assets, real pacing.** Built as a working prototype with generated voice/video so the

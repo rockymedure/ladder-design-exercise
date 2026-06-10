@@ -12,13 +12,16 @@ const SEQ = [LINES.pmClose, LINES.pmLoop];
 export function Evening({
   onComplete,
   muted,
+  paused,
 }: {
   onComplete: () => void;
   muted: boolean;
+  paused: boolean;
 }) {
   const { current } = useLineSequence(SEQ, {
     active: true,
     muted,
+    paused,
     endDelay: 1800,
     onComplete,
   });

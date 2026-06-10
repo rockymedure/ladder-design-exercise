@@ -1,20 +1,33 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { LadderMark } from "@/components/Logo";
 import { CoachAura } from "@/components/Presence";
 
 export function ColdOpen({
   onComplete,
+  paused = false,
 }: {
   onComplete: () => void;
   muted?: boolean;
+  paused?: boolean;
 }) {
+  const remainingRef = useRef(3600);
+  const startedAtRef = useRef(0);
+
   useEffect(() => {
-    const t = setTimeout(onComplete, 3600);
-    return () => clearTimeout(t);
-  }, [onComplete]);
+    if (paused) return;
+    startedAtRef.current = Date.now();
+    const t = setTimeout(onComplete, remainingRef.current);
+    return () => {
+      clearTimeout(t);
+      remainingRef.current = Math.max(
+        0,
+        remainingRef.current - (Date.now() - startedAtRef.current),
+      );
+    };
+  }, [onComplete, paused]);
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-ink">
@@ -47,7 +60,7 @@ export function ColdOpen({
             Coach in your pocket
           </span>
           <span className="max-w-[230px] text-[13px] leading-snug text-ash">
-            Your coach Remi, scaled by Rung — with you all day.
+            Your coach Remi, scaled by Ladder — with you all day.
           </span>
         </motion.div>
       </div>
@@ -59,7 +72,7 @@ export function ColdOpen({
         transition={{ delay: 2.4, duration: 1.4 }}
       >
         <span className="text-[12px] uppercase tracking-[0.25em] text-ash-dark">
-          A day with Remi &amp; Rung
+          A day with Remi &amp; Ladder
         </span>
       </motion.div>
     </div>

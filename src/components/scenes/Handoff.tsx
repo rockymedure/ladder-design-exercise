@@ -14,13 +14,16 @@ const SEQ = [LINES.hoYou, LINES.hoAi, LINES.hoReal, LINES.hoDone];
 export function Handoff({
   onComplete,
   muted,
+  paused,
 }: {
   onComplete: () => void;
   muted: boolean;
+  paused: boolean;
 }) {
   const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
+    paused,
     endDelay: 1600,
     onComplete,
   });
@@ -45,6 +48,7 @@ export function Handoff({
               text={current!.text}
               videoSrc="/video/remi-handoff.mp4"
               muted={muted}
+              paused={paused}
               onEnded={next}
             />
           ) : done ? (
@@ -80,7 +84,7 @@ export function Handoff({
   );
 }
 
-/** Rung visibly looping in the real human coach. */
+/** Ladder visibly looping in the real human coach. */
 function Escalation() {
   return (
     <motion.div

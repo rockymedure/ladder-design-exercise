@@ -40,7 +40,7 @@ export function CoachDock({
       </span>
 
       <div className="flex flex-1 flex-col">
-        <span className="text-[12px] font-semibold text-paper">Rung</span>
+        <span className="text-[12px] font-semibold text-paper">Ladder</span>
         <span className="text-[10px] uppercase tracking-[0.18em] text-ash">
           {listening ? "Listening…" : speaking ? "Speaking" : "Always here"}
         </span>

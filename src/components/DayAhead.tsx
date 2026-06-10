@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 /**
- * The morning open: a calendar-aware look at the day ahead. Rung reads your
+ * The morning open: a calendar-aware look at the day ahead. Ladder reads your
  * real schedule and fits movement + food into the gaps — the practical,
  * "works around my life" value, before any coach message.
  */

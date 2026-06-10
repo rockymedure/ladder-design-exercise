@@ -6,6 +6,7 @@ import type { Line } from "./script";
 type Options = {
   active: boolean;
   muted: boolean;
+  paused?: boolean; // freeze progression, audio, and the completion hold
   gap?: number; // ms pause between lines
   endDelay?: number; // ms to hold the last frame before onComplete
   onComplete?: () => void;
@@ -24,11 +25,20 @@ function useLatest<T>(value: T) {
  *   native audio. The hook plays no audio for them and waits for the scene to
  *   call `next()` when the video ends (with a safety timeout as a backstop).
  * - All other lines are voice-only: the hook plays /audio/{id}.mp3 and advances
- *   after the line's exact `ms` duration. The aura is a generic visual, so no
- *   media-event syncing is needed.
+ *   after the line's exact `ms` duration.
+ *
+ * Pausing freezes the active timer (banking the remaining time so resume
+ * continues mid-line), pauses any playing audio, and holds the completion beat.
  */
 export function useLineSequence(lines: Line[], opts: Options) {
-  const { active, muted, gap = 450, endDelay = 1200, onComplete } = opts;
+  const {
+    active,
+    muted,
+    paused = false,
+    gap = 450,
+    endDelay = 1200,
+    onComplete,
+  } = opts;
   const [index, setIndex] = useState(-1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,6 +46,11 @@ export function useLineSequence(lines: Line[], opts: Options) {
   const completedRef = useRef(false);
   const onCompleteRef = useLatest(onComplete);
   const linesRef = useLatest(lines);
+
+  // Remaining-time bookkeeping so pause/resume continues mid-line.
+  const remainingRef = useRef(0);
+  const startedAtRef = useRef(0);
+  const stepRef = useRef<"line" | "real" | "complete">("line");
 
   // Advance to the next line — at most once per line.
   const next = useCallback(() => {
@@ -45,55 +60,82 @@ export function useLineSequence(lines: Line[], opts: Options) {
     setIndex((i) => i + 1);
   }, []);
 
-  // Kick off when activated
+  // Kick off when activated.
   useEffect(() => {
     if (active && index === -1) setIndex(0);
   }, [active, index]);
 
+  // Set up the current step (audio + how long to wait). Runs per line, not on
+  // pause toggles, so audio persists across pause/resume.
   useEffect(() => {
     if (!active || index < 0) return;
+    const seq = linesRef.current;
+    advancedRef.current = false;
 
-    const lines = linesRef.current;
-    if (index >= lines.length) {
-      if (!completedRef.current) {
-        completedRef.current = true;
-        // Hold the final frame, then signal completion. Tracked here so that
-        // navigating away (unmount) clears it — no stale advance into the next
-        // scene.
-        timerRef.current = setTimeout(() => {
-          onCompleteRef.current?.();
-        }, endDelay);
-      }
+    if (index >= seq.length) {
+      stepRef.current = "complete";
+      remainingRef.current = endDelay;
       return () => {
         if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = null;
       };
     }
 
-    const line = lines[index];
-    advancedRef.current = false;
-
+    const line = seq[index];
     if (line.speaker === "real") {
-      // The video owns playback + sound and calls next() on `ended`.
-      // Safety net only, in case the media event never arrives.
-      timerRef.current = setTimeout(next, line.ms + 2500);
+      stepRef.current = "real";
+      remainingRef.current = line.ms + 2500; // safety net behind the video
     } else {
+      stepRef.current = "line";
+      remainingRef.current = line.ms + gap;
       if (!muted) {
-        const audio = new Audio(`/audio/${line.id}.mp3`);
-        audioRef.current = audio;
-        const p = audio.play();
-        if (p && typeof p.catch === "function") p.catch(() => {});
+        audioRef.current = new Audio(`/audio/${line.id}.mp3`);
       }
-      timerRef.current = setTimeout(next, line.ms + gap);
     }
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = null;
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, [index, active, muted, gap, endDelay, next, linesRef, onCompleteRef]);
+  }, [index, active, muted, gap, endDelay, linesRef]);
+
+  // Run or freeze the current step based on `paused`.
+  useEffect(() => {
+    if (!active || index < 0) return;
+    if (paused) return;
+    if (stepRef.current === "complete" && completedRef.current) return;
+
+    if (audioRef.current) {
+      const p = audioRef.current.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    }
+
+    startedAtRef.current = Date.now();
+    timerRef.current = setTimeout(() => {
+      if (stepRef.current === "complete") {
+        if (!completedRef.current) {
+          completedRef.current = true;
+          onCompleteRef.current?.();
+        }
+      } else {
+        next();
+      }
+    }, remainingRef.current);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+        const elapsed = Date.now() - startedAtRef.current;
+        remainingRef.current = Math.max(0, remainingRef.current - elapsed);
+      }
+      if (audioRef.current) audioRef.current.pause();
+    };
+  }, [paused, index, active, next, onCompleteRef]);
 
   const current = index >= 0 && index < lines.length ? lines[index] : null;
   return { current, index, next };

@@ -15,6 +15,7 @@ import { SCENES } from "@/lib/script";
 type SceneComponent = React.ComponentType<{
   onComplete: () => void;
   muted: boolean;
+  paused: boolean;
 }>;
 
 const SCENE_COMPONENTS: SceneComponent[] = [
@@ -30,6 +31,7 @@ export function Experience() {
   const [index, setIndex] = useState(0);
   const [done, setDone] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [paused, setPaused] = useState(false);
 
   const Current = SCENE_COMPONENTS[index];
 
@@ -45,12 +47,14 @@ export function Experience() {
 
   const restart = useCallback(() => {
     setDone(false);
+    setPaused(false);
     setIndex(0);
     setStarted(true);
   }, []);
 
   const goTo = useCallback((i: number) => {
     setDone(false);
+    setPaused(false);
     setIndex(i);
     setStarted(true);
   }, []);
@@ -65,7 +69,7 @@ export function Experience() {
             <StartGate onStart={() => setStarted(true)} />
           ) : (
             <div key={`scene-${index}`} className="scene-fade absolute inset-0">
-              <Current onComplete={advance} muted={muted} />
+              <Current onComplete={advance} muted={muted} paused={paused} />
             </div>
           )}
 
@@ -78,8 +82,18 @@ export function Experience() {
       <Director
         index={index}
         started={started}
+        done={done}
         muted={muted}
+        paused={paused}
         onMute={() => setMuted((m) => !m)}
+        onTogglePlay={() => {
+          if (!started) {
+            setStarted(true);
+            setPaused(false);
+            return;
+          }
+          setPaused((p) => !p);
+        }}
         onRestart={restart}
         onGoTo={goTo}
       />
@@ -105,7 +119,7 @@ function StartGate({ onStart }: { onStart: () => void }) {
             Coach in your pocket
           </span>
           <span className="max-w-[250px] text-[14px] leading-snug text-ash-light">
-            Remi is your coach. Rung is the assistant that carries her with you
+            Remi is your coach. Ladder is the assistant that carries her with you
             all day.
           </span>
         </div>
@@ -136,7 +150,7 @@ function EndCard({ onReplay }: { onReplay: () => void }) {
       <div className="flex flex-col items-center gap-6 text-center">
         <LadderMark size={38} />
         <p className="max-w-[270px] text-[20px] font-semibold leading-snug text-paper">
-          Your coach, human. Rung, always there.
+          Your coach, human. Ladder, always there.
         </p>
         <button
           onClick={onReplay}
@@ -152,20 +166,28 @@ function EndCard({ onReplay }: { onReplay: () => void }) {
 function Director({
   index,
   started,
+  done,
   muted,
+  paused,
   onMute,
+  onTogglePlay,
   onRestart,
   onGoTo,
 }: {
   index: number;
   started: boolean;
+  done: boolean;
   muted: boolean;
+  paused: boolean;
   onMute: () => void;
+  onTogglePlay: () => void;
   onRestart: () => void;
   onGoTo: (i: number) => void;
 }) {
+  const playing = started && !paused && !done;
+
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-4">
       <div className="flex items-center gap-1.5">
         {SCENES.map((s, i) => (
           <button
@@ -184,18 +206,76 @@ function Director({
           </button>
         ))}
       </div>
-      <div className="flex items-center gap-4 text-[11px] font-medium uppercase tracking-[0.15em] text-ash">
-        <button onClick={onRestart} className="transition hover:text-paper">
-          ↺ Restart
+
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onRestart}
+          title="Restart"
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/12 text-ash transition hover:border-white/25 hover:text-paper"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
-        <span className="text-ash-dark">·</span>
-        <button onClick={onMute} className="transition hover:text-paper">
-          {muted ? "🔇 Muted" : "🔊 Sound on"}
+
+        <button
+          onClick={onTogglePlay}
+          title={playing ? "Pause" : "Play"}
+          className="grid h-12 w-12 place-items-center rounded-full bg-volt text-ink shadow-[0_8px_24px_-6px_rgba(230,255,0,0.5)] transition hover:scale-105 active:scale-95"
+        >
+          {playing ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="5" width="4" height="14" rx="1" />
+              <rect x="14" y="5" width="4" height="14" rx="1" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7 5.5Z" />
+            </svg>
+          )}
         </button>
-        <span className="text-ash-dark">·</span>
-        <span className="text-ash-dark normal-case tracking-normal">
-          {started ? SCENES[index].label : "Ready"}
-        </span>
+
+        <button
+          onClick={onMute}
+          title={muted ? "Unmute" : "Mute"}
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/12 text-ash transition hover:border-white/25 hover:text-paper"
+        >
+          {muted ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M11 5 6 9H3v6h3l5 4V5Z M22 9l-6 6M16 9l6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M11 5 6 9H3v6h3l5 4V5Z M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-ash-dark">
+        {!started
+          ? "Ready"
+          : done
+            ? "Complete"
+            : `${SCENES[index].label}${paused ? " · Paused" : ""}`}
       </div>
     </div>
   );

@@ -20,13 +20,16 @@ const SEQ = [
 export function Morning({
   onComplete,
   muted,
+  paused,
 }: {
   onComplete: () => void;
   muted: boolean;
+  paused: boolean;
 }) {
   const { current, next } = useLineSequence(SEQ, {
     active: true,
     muted,
+    paused,
     endDelay: 1400,
     onComplete,
   });
@@ -50,12 +53,13 @@ export function Morning({
               text={current!.text}
               videoSrc="/video/remi-morning.mp4"
               muted={muted}
+              paused={paused}
               onEnded={next}
             />
           ) : isDay ? (
             <DayAhead key="day" />
           ) : isSuggest ? (
-            <RungSuggestion key="suggest" />
+            <LadderSuggestion key="suggest" />
           ) : (
             <motion.div
               key="aura"
@@ -80,11 +84,11 @@ export function Morning({
 }
 
 /**
- * The "beyond-the-UI" moment. Rung reaches past your fixed plan and pulls in a
+ * The "beyond-the-UI" moment. Ladder reaches past your fixed plan and pulls in a
  * finisher from another Ladder team — something the structured app would never
- * surface on its own. This is where Rung scales every coach, not just yours.
+ * surface on its own. This is where Ladder scales every coach, not just yours.
  */
-function RungSuggestion() {
+function LadderSuggestion() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
@@ -99,7 +103,7 @@ function RungSuggestion() {
             style={{ boxShadow: "0 0 12px #e6ff00" }}
           />
           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-volt">
-            Add-on from Rung
+            Add-on from Ladder
           </span>
         </div>
         <span className="text-[10px] uppercase tracking-[0.16em] text-ash">

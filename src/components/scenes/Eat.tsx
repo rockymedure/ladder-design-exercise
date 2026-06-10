@@ -12,13 +12,16 @@ const SEQ = [LINES.eatYou, LINES.eatOffer, LINES.eatFridge, LINES.eatPlan];
 export function Eat({
   onComplete,
   muted,
+  paused,
 }: {
   onComplete: () => void;
   muted: boolean;
+  paused: boolean;
 }) {
   const { current } = useLineSequence(SEQ, {
     active: true,
     muted,
+    paused,
     endDelay: 1600,
     onComplete,
   });
@@ -47,7 +50,7 @@ export function Eat({
             >
               <span className="text-[44px]">🍽️</span>
               <span className="max-w-[220px] text-[13px] leading-snug text-ash">
-                You moved this morning. Rung&apos;s already thinking about fuel.
+                You moved this morning. Ladder&apos;s already thinking about fuel.
               </span>
             </motion.div>
           )}
