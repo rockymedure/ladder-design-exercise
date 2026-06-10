@@ -72,7 +72,7 @@ Everything in the demo is real playback, not faked:
 | **App** | Next.js + Tailwind + Framer Motion | iPhone-framed, scene-based interactive prototype |
 | **Ladder's voice** | fal · ElevenLabs Multilingual v2 (voice `Jessica`) | Every Ladder line, in a voice deliberately distinct from any coach |
 | **Coach's voice** | fal · xAI TTS (voice `ara`) | Remi's lines, used to drive her video |
-| **Member's voice** | fal · xAI TTS (voice `rex`) | Rocky's spoken replies in the demo |
+| **Member's voice** | fal · ElevenLabs Multilingual v2 (voice `Matilda`) | Rocky's spoken replies in the demo |
 | **Coach on video** | fal · ByteDance OmniHuman | Talking-head, lip-synced video from Remi's portrait + audio |
 | **Coach's look** | image gen | Photoreal portrait identity for Remi |
 | **Food** | image gen | The crave-able dish for the nutrition beat |

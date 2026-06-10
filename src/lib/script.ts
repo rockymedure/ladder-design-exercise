@@ -15,7 +15,7 @@ export type Line = {
 };
 
 // `ms` values match the exact generated audio durations (public/audio/*.mp3).
-// speaker "ai" = Ladder (ElevenLabs "Jessica"). speaker "you" = Rocky (xAI "rex").
+// speaker "ai" = Ladder (ElevenLabs "Jessica"). speaker "you" = Rocky (ElevenLabs "Matilda").
 // speaker "real" = Remi (her voice lives in the recorded videos).
 export const LINES = {
   // B1 — Morning
@@ -55,7 +55,7 @@ export const LINES = {
   eatYou: {
     id: "eat-you",
     text: "Hey Ladder — what should I eat?",
-    ms: 2184,
+    ms: 2168,
     speaker: "you",
   },
   eatOffer: {
@@ -68,7 +68,7 @@ export const LINES = {
   eatFridge: {
     id: "eat-fridge",
     text: "What's in my fridge.",
-    ms: 1512,
+    ms: 1384,
     speaker: "you",
   },
   eatPlan: {
@@ -83,7 +83,7 @@ export const LINES = {
   hoYou: {
     id: "ho-you",
     text: "One thing — my knee's been bugging me on squats.",
-    ms: 3024,
+    ms: 3370,
     speaker: "you",
   },
   hoAi: {
