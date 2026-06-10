@@ -286,11 +286,10 @@ export function CaseStudy() {
           key={b.n}
           beat={b}
           index={i}
-          nextId={i < BEATS.length - 1 ? `beat-${BEATS[i + 1].n}` : "thinking"}
+          nextId={i < BEATS.length - 1 ? `beat-${BEATS[i + 1].n}` : "build"}
         />
       ))}
-      <Thinking />
-      <Pipeline />
+      <Build />
       <Bet />
       <Validate />
       <Footer />
@@ -353,7 +352,7 @@ function Hero() {
                 />
               </svg>
             </PrimaryPill>
-            <GhostPill href="#thinking">See the thinking</GhostPill>
+            <GhostPill href="#build">See how it's built</GhostPill>
           </div>
         </Reveal>
         <Reveal delay={0.24}>
@@ -510,104 +509,68 @@ function BeatsIntro() {
   );
 }
 
-function Thinking() {
-  const pivots = [
+function Build() {
+  const layers = [
     {
-      from: "UI polish",
-      to: "Relationship",
-      d: "First instinct was to elevate the live-workout and nutrition screens. But the app is already UI-heavy. The real opportunity was less UI, not a prettier dashboard.",
+      layer: "Figma MCP",
+      tool: "Design extraction",
+      d: "Pulled Ladder's real tokens, the live-workout screen, and the nutrition kit straight from the files, so every phone uses the actual components, not lookalikes.",
     },
     {
-      from: "AI twin",
-      to: "Assistant",
-      d: "I first cloned the coach as a talking-head twin, with generated voice and video. It was uncanny, it eroded trust, and it cannibalized Ladder's moat. An assistant that defers to humans is the honest and stronger model.",
+      layer: "ElevenLabs",
+      tool: "Voice",
+      d: "Generated every spoken line, Ladder in one voice and your replies in another, so presence reads as a relationship instead of a chatbot transcript.",
     },
     {
-      from: "Coach character",
-      to: "You and Ladder",
-      d: "I even removed the human-coach character from the demo, so the relationship between you and Ladder, the part that's new, is unmistakable.",
+      layer: "Fal · Grok video",
+      tool: "Generated footage",
+      d: "Produced the workout clip that fills the home-screen widget and the in-class screen, matched so the tease and the session are unmistakably the same moment.",
+    },
+    {
+      layer: "Next + Motion",
+      tool: "The app",
+      d: "An iPhone-framed, scene-based prototype. Real playback, not slides, so the home-screen handoff and the go-quiet beat genuinely happen on screen.",
+    },
+    {
+      layer: "Line sequencer",
+      tool: "Pacing",
+      d: "A small custom hook syncs dialogue to the exact audio duration. It's the difference between a demo that plays and one that feels alive.",
     },
   ];
   return (
-    <section id="thinking" className="bg-[#FAFAFA] text-ink">
+    <section id="build" className="bg-[#FAFAFA] text-ink">
       <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
         <Reveal>
-          <Kicker tone="light">The honest part</Kicker>
+          <Kicker tone="light">How this got built</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[18ch]`}>
-            I threw away the good work twice
-          </h2>
-        </Reveal>
-
-        <div className="mt-14 flex flex-col gap-px overflow-hidden rounded-3xl border border-black/10">
-          {pivots.map((p, i) => (
-            <Reveal key={p.to} delay={i * 0.06}>
-              <div className="grid gap-4 bg-white px-7 py-9 md:grid-cols-[minmax(0,360px)_1fr] md:gap-10">
-                <div className="flex items-center gap-3">
-                  <span className="font-ek text-[1.4rem] text-[#9E9E9E] line-through decoration-[#9E9E9E]/50">
-                    {p.from}
-                  </span>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M5 12h14M13 6l6 6-6 6"
-                      stroke="#0E0E0E"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span className="font-ek text-[1.6rem] text-ink">{p.to}</span>
-                </div>
-                <p className="font-sf text-[16px] leading-relaxed text-[#444]">
-                  {p.d}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Pipeline() {
-  const rows = [
-    ["App", "Next.js · Tailwind · Motion", "iPhone-framed, scene-based prototype"],
-    ["Voice", "ElevenLabs (Jessica / Matilda)", "Every Ladder line and your replies"],
-    ["Pacing", "Custom line sequencer", "Synced to the exact audio duration"],
-    ["Design", "Ladder tokens + Nutrition kit", "The real components, not lookalikes"],
-  ];
-  return (
-    <section className="bg-[#0E0E0E] text-paper">
-      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
-        <Reveal>
-          <Kicker>How it's built</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
             A working prototype, not a mockup
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="font-sf mt-6 max-w-[56ch] text-[17px] leading-relaxed text-ash-light">
-            Everything you played is real playback in a coded app, with generated
-            voice paced so presence actually reads as presence. A flat comp can't
-            show an assistant that's with you.
+          <p className="font-sf mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
+            Everything on this page is real playback in a coded app, assembled in
+            days with generative tooling. A flat comp can't show an assistant
+            that's with you, so I built the thing instead. Here's the stack.
           </p>
         </Reveal>
 
-        <div className="mt-12 overflow-hidden rounded-2xl border border-white/10">
-          {rows.map((r, i) => (
-            <Reveal key={r[0]} delay={i * 0.05}>
-              <div
-                className={`grid grid-cols-1 gap-1 px-6 py-5 sm:grid-cols-[140px_1fr_1fr] sm:gap-6 ${
-                  i % 2 ? "bg-white/[0.02]" : "bg-white/[0.04]"
-                }`}
-              >
-                <span className="font-ek text-[1.05rem] text-volt">{r[0]}</span>
-                <span className="font-sf text-[15px] text-paper">{r[1]}</span>
-                <span className="font-sf text-[15px] text-ash">{r[2]}</span>
+        <div className="mt-14 flex flex-col gap-px overflow-hidden rounded-3xl border border-black/10">
+          {layers.map((p, i) => (
+            <Reveal key={p.layer} delay={i * 0.06}>
+              <div className="grid gap-4 bg-white px-7 py-9 md:grid-cols-[minmax(0,360px)_1fr] md:gap-10">
+                <div className="flex flex-col gap-1.5">
+                  <span className="font-ek text-[1.6rem] leading-none text-ink">
+                    {p.layer}
+                  </span>
+                  <span className="font-sf text-[12px] font-bold uppercase tracking-[0.2em] text-[#5A5A5A]">
+                    {p.tool}
+                  </span>
+                </div>
+                <p className="font-sf text-[16px] leading-relaxed text-[#444]">
+                  {p.d}
+                </p>
               </div>
             </Reveal>
           ))}
