@@ -57,6 +57,28 @@ body {
   font-feature-settings: "tnum";
 }
 
+/* Case-study marketing type, matched to Ladder's site:
+   heavy + extended uppercase headlines, SF Pro body. */
+.font-ek {
+  font-family: var(--font-ek), "Archivo", system-ui, sans-serif;
+  font-weight: 800;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.92;
+}
+.font-sf {
+  font-family: -apple-system, "SF Pro Display", "SF Pro Text", system-ui,
+    "Segoe UI", sans-serif;
+}
+
+/* Soft scroll-reveal helper baseline (motion adds the rest) */
+@media (prefers-reduced-motion: reduce) {
+  .font-ek {
+    font-stretch: 110%;
+  }
+}
+
 /* Hide scrollbars inside the phone */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

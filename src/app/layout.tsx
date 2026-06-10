@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Oswald, Inter } from "next/font/google";
+import { Oswald, Inter, Archivo } from "next/font/google";
 import "./globals.css";
 
 const display = Oswald({
@@ -13,10 +13,19 @@ const body = Inter({
   subsets: ["latin"],
 });
 
+// Heavy, extended grotesque for the case-study marketing surface, standing in
+// for Ladder's headline face (EK Modena Extended Heavy). The phone prototype
+// keeps Oswald/Inter; this only powers the case study.
+const ek = Archivo({
+  variable: "--font-ek",
+  subsets: ["latin"],
+  axes: ["wdth"],
+});
+
 export const metadata: Metadata = {
-  title: "Ladder · Coach in your pocket",
+  title: "A Day with Ladder · Coach in your pocket",
   description:
-    "Ladder is an assistant that's with you all day, so the relationship, not the software, is the interface.",
+    "A design-exercise concept for Ladder: an always-on assistant that carries your coach all day and bridges training and nutrition, so the relationship, not the software, is the interface.",
 };
 
 export default function RootLayout({
@@ -25,7 +34,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${ek.variable} h-full`}
+    >
       <body className="min-h-full antialiased">{children}</body>
     </html>
   );

@@ -1,124 +1,116 @@
-# Coach in My Pocket — Ladder Design Exercise
+# A Day with Ladder — Design Exercise
 
-> Your coach is a **real person**. **Ladder** — the assistant — is with you the other 23 hours.
-> Human coach + Ladder = a coach who never leaves your side, for training *and* nutrition.
+> **Less app. More coach. All day.**
+> Ladder becomes an always-on assistant that carries your training and nutrition through the whole day,
+> so the **relationship**, not the software, is the interface.
 
 ---
 
-## The problem
+## The opportunity
 
-Ladder's app is UI-heavy (feeds, logging tables, dashboards) and built, in its own words, for people
-"already motivated to work out." Its rarest asset is **real human coaches** — but those coaches are
-one-to-many and only present in recorded videos. The moments that actually make or break a habit happen
-when the coach *isn't* there: the 12:40pm "what do I eat," the "I really don't feel like it today," the
-tweaky knee on a Tuesday night.
+Ladder is genuinely great at the workout. But the app is also **UI-heavy** (feeds, logging tables,
+dashboards) and, in its own words, built for people "already motivated to work out." Two gaps follow:
+
+- **The coach can't scale.** One human, many members, mostly present through pre-recorded video.
+- **Nutrition feels separate.** Training and food live in different tabs, and different headspaces.
+
+And the moments that actually make or break a habit happen **between screens**: the 1pm "what do I
+eat," the skip-it morning, the after-set decision. No one is there for those.
 
 ## The concept
 
-Don't clone the coach. **Give every member an assistant that carries the coach with them.**
+Meet **Ladder** — one always-on assistant, personalized by your plan and your history, voice-first and
+ambient. It does the generous things the rigid UI can't, and it is the **bridge** that finally connects
+strength training and nutrition inside a single relationship.
 
-- **The human coach (Remi)** programs your plan, records real check-ins, and handles the human moments.
-  The soul and the moat. She is never impersonated.
-- **Ladder** — one app-wide assistant, personalized by *your* coach's plan and *your* shared history —
-  is in your pocket 24/7. It answers at midnight, helps you eat, nudges you to move, and **hands the
-  important stuff back to your real coach.**
+- **Voice for action** — Ladder speaks; you move. No menu-diving.
+- **Text for proof** — the record, the macros, the plan, shown only when it helps.
+- **Memory for trust** — every day compounds on the last; it never resets to zero.
 
-The UI recedes; the relationship becomes the interface. One coach, one assistant, all day, spanning
-**workout and nutrition**.
+A persistent, low-profile dock keeps Ladder one tap or one word away. That's the "in my pocket" feeling.
 
-## Why an assistant, not an AI twin
+## Ladder is the sherpa, not the coach
 
-We deliberately moved *away* from cloning the coach into an "AI twin." An assistant is the stronger model:
+Ladder's job is to **guide**, not to perform the coaching. During the work it goes quiet and hands the
+room to the session, then picks you back up after. It knows the edge of its competence. This is the
+honest, stronger model: an assistant that **defers** rather than a fake human that impersonates.
 
-- **Honest.** Ladder never pretends to be your coach. When the human voice matters, it's actually Remi —
-  on video, in her own words. No uncanny impersonation, no eroded trust.
-- **Protects the moat.** Coaches stay the irreplaceable human layer. Ladder scales their *presence*, not
-  their identity — so coaches do what only they can, and Ladder covers the in-between for everyone.
-- **One assistant, infinitely personalized.** A single assistant the whole company can improve, that adapts to
-  each member through their coach's plan and their own history. Scale every coach without diluting any.
-- **A clearer design problem.** "Build a great assistant that defers to a human" is honest and shippable.
-  "Build a convincing fake human" is neither.
+> We deliberately moved *away* from an "AI twin." Cloning the coach as a talking-head was uncanny, it
+> eroded trust, and it cannibalized Ladder's moat. We even removed the human-coach character from the
+> demo entirely, so the new thing — the relationship between **you and Ladder** — is unmistakable.
 
-## Ladder's superpower: do what the UI can't
+## The bet
 
-Because Ladder is a relationship, not a screen, it can reach past the rigid app:
-
-- **Borrow across teams.** *"The Sunrise crew is running a 12-min mobility finisher today — want me to add
-  it?"* The structured plan UI would never surface another team's work. Ladder can.
-- **Adapt on the fly.** Swap a movement, soften tomorrow after a bad night, slot in something special —
-  without making you navigate menus.
-- **Bring the right human in.** Ladder knows the edge of its competence and escalates to your coach.
-
-This is where Ladder scales every coach: it delivers the flexible, generous moves a limited UI can't afford.
-
-## Design law
-
-**Face for emotion · Voice for action · Text for proof.** Faces are reserved for **real humans** (the
-coach). Ladder is **voice + ambient presence** — never a fake face. A persistent, low-profile dock keeps
-Ladder one tap or one word away — that's the "in my pocket" feeling.
+**Ladder is alive.** Not a container for coaches and teams, but a guide that's genuinely with you:
+aware of your biometrics, training stats, and nutrition logs, moving you easily between strength and
+food so wellness stays top of mind all day.
 
 ---
 
+## The day, beat by beat
+
+A continuous day with one persistent Ladder presence. Each beat is a live, coded scene with generated
+voice.
+
+**B0 · Cold open** — "A day with Ladder."
+
+**01 · Kickoff** *(7:02 AM)* — Mornings open on your **day**, not a message to answer. Ladder celebrates
+a three-day streak, lays out how you'll move and eat, fits it to your real calendar, and places today's
+workout on your home screen.
+
+**02 · Handoff** *(1:00 PM)* — The workout **finds you**. Ladder pings your home screen; tap the widget
+and you're in. Ladder lives outside the app, too.
+
+**03 · Workout** *(1:02 PM)* — Ladder goes **quiet**. The real Ladder workout screen (reps, pace, weight)
+runs the set; Ladder steps back, then returns the moment you finish.
+
+**04 · Fuel & eat** *(1:46 PM)* — Training **decides dinner**. The set you just finished sets your
+recovery fuel, turns into a meal from what's in your fridge, and Ladder walks you through cooking it.
+Strength and nutrition on one thread. *(This is the bridge.)*
+
+**05 · Reflect** *(9:30 PM)* — The relationship **remembers**. A quiet recap, and tomorrow already
+adjusted before you ask.
+
 ## Cast
 
-- **Remi (human coach)** — calm veteran with a captain's warmth. Tough enough to push, warm enough to
-  trust. Appears as **recorded video messages** (the human moments). Voice: her own.
-- **Ladder (the assistant)** — capable, warm, always present (ambient aura + voice, distinct from any
-  coach's voice). Visibly **defers to the human coach** for anything that needs judgment.
-- **Continuity is the spine:** what you do/say today changes what you get tomorrow — and Ladder tells you so.
-
-## The demo: "A day in your pocket"
-
-A persistent Ladder presence threads every screen. ~75–90s.
-
-**B0 · Cold open** — "Your coach Remi, scaled by Ladder — with you all day."
-
-**B1 · Morning** *(human + assistant, up front)*
-- Ladder greets you, then plays a **real recorded message from Remi**: *"Week 3, Rocky. Keep it simple — 15
-  minutes, just show up."* Then Ladder does the **beyond-the-UI** move: offers the Sunrise crew's mobility
-  finisher as a cross-team add-on — Remi's plan untouched.
-
-**B2 · Eat** *(the 24/7 value — replaces the nutrition logging maze)*
-- 12:40pm. You ask *"what should I eat?"* → Ladder helps from what's in your fridge, tied to how you moved
-  this morning. A generated dish makes it crave-able. Logging happens invisibly.
-
-**B3 · The handoff** *(why human + assistant is trustworthy)*
-- You mention your knee. Ladder: *"I won't guess on a knee — looping in Remi."* → the **real coach replies**
-  (recorded) and your plan updates itself. Human judgment, assistant presence.
-
-**B4 · Evening** *(the loop)*
-- Ladder closes the day, references what happened, and notes Remi softened tomorrow — already done. The
-  relationship never resets.
+- **Maya (member)** — busy, motivated, the person Ladder is built for. Voice: "Matilda."
+- **Ladder (the assistant)** — capable, warm, ambient (presence dock + voice). Voice: "Jessica,"
+  deliberately its own. No fake face, ever.
+- **Continuity is the spine** — what you do today changes what you get tomorrow, and Ladder tells you so.
 
 ## Presence system
 
 | State | Looks like | When |
 |---|---|---|
-| **Ambient** | Soft breathing aura + a persistent Ladder dock | Always — "Ladder's here" |
-| **Voice** | Waveform + live captions (labeled *Ladder*) | Mid-action (asking, logging) |
-| **Face** | Full-screen / card video — *the real coach* | Human moments (morning note, handoff reply) |
-| **Text** | One line / the "why" | Proof + record only |
+| **Ambient** | A persistent Ladder dock | Always — "Ladder's here" |
+| **Speaking** | Waveform + live captions (labeled *Ladder*) | Mid-action (brief, fuel, recap) |
+| **Quiet** | Dock recedes; the session UI leads | During the set — Ladder steps back |
+| **Text** | One line / the "why" / the macros | Proof and record only |
 
-## What we generate (fal + image tools)
+## Brand tokens (matched to Ladder)
 
-1. **Remi's look** — portrait identity (done).
-2. **Real coach videos** — talking-head, lip-synced messages from Remi (image + voice → OmniHuman).
-3. **Ladder's voice lines** — greeting, cross-team suggestion, food help, handoff, evening (fal ·
-   ElevenLabs Multilingual v2, voice "Jessica" — deliberately distinct from any coach).
-4. **A generated dish image** for the Eat beat.
-
-## Brand tokens (from the Figma)
+Pulled from Ladder's live site and the Figma file:
 
 - `Ladder Black #0E0E0E` · `Ladder White #FAFAFA`
-- `Lemonade #E6FF00` (workout accent) · `Green Nutrition #54F46D` · `Vermillion #FF5349` (alerts)
-- Heavy condensed uppercase display + clean sans body.
+- `Volt #E6FF00` (the exact CTA green) · `Leaf #54F46D` (nutrition) · `Vermillion #FF5349` (alerts)
+- Headlines: **heavy, extended, uppercase** (standing in for EK Modena Extended Heavy). Body: SF Pro.
+- Fully-rounded volt pills with black uppercase labels; alternating black / near-white sections.
+
+## What we generate (fal + tools)
+
+1. **Ladder's voice lines** — every beat (fal · ElevenLabs Multilingual v2, voice "Jessica").
+2. **Maya's replies** — voice "Matilda."
+3. **The workout hero video** — image-to-video for the in-class moment.
 
 ## Build approach
 
 - **Stack:** Next.js + Tailwind + Framer Motion, in an iPhone frame, deployed to a shareable URL.
-- Real audio/video playback; hero assets pre-generated so the Loom is flawless.
-- **Scope:** one happy path, the four beats, canned user ("Rocky"). Depth over breadth.
+- Real audio/video playback, paced by a custom line sequencer to the exact audio duration, so presence
+  reads as presence.
+- **Two surfaces:** the scrollable case study (`/`) and the full interactive day (`/play`).
+- **Scope:** one happy path, five beats, one member (Maya). Depth over breadth.
 
 ## Deliverable
 
-Shareable URL + a tight Loom.
+A shareable URL: a case-study page the Ladder team can scroll, with every beat playable in the phone,
+plus the full day end to end at `/play`.
