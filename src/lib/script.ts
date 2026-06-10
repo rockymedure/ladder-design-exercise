@@ -53,11 +53,34 @@ export const LINES = {
     accent: "volt",
   },
 
+  // B2.5 — In class: eyes-off, Ladder coaching you through the borrowed class in your ear.
+  icOpen: {
+    id: "ic-open",
+    text: "You're in. Phone down — I'll talk you through it. Sunrise picks the moves; I keep them yours.",
+    ms: 6531,
+    speaker: "ai",
+    accent: "volt",
+  },
+  icCue: {
+    id: "ic-cue",
+    text: "Halfway — round three of five. Reach long, open the chest, breathe into it. That's your pace.",
+    ms: 7001,
+    speaker: "ai",
+    accent: "volt",
+  },
+  icPush: {
+    id: "ic-push",
+    text: "Last ten seconds... hold it long, and release. Smooth the whole way through.",
+    ms: 4833,
+    speaker: "ai",
+    accent: "volt",
+  },
+
   // B3 — Afternoon: reflect on the workout, tie it to fuel (water + food), then a meal.
   pmReflect: {
     id: "pm-reflect",
-    text: "That's a wrap. Sunrise ran you harder than your usual easy day — your heart rate sat ten beats higher, and you still finished every round. Strong showing.",
-    ms: 8908,
+    text: "Nice work in there. Sunrise ran you harder than your usual easy day — your heart rate sat ten beats higher, and you finished every round.",
+    ms: 8255,
     speaker: "ai",
   },
   pmFuel: {
@@ -101,6 +124,7 @@ export type SceneId =
   | "coldopen"
   | "morning"
   | "midmorning"
+  | "inclass"
   | "afternoon"
   | "evening";
 
@@ -108,6 +132,7 @@ export const SCENES: { id: SceneId; label: string; time: string }[] = [
   { id: "coldopen", label: "Cold open", time: "" },
   { id: "morning", label: "Morning", time: "7:02 AM" },
   { id: "midmorning", label: "Mid-morning", time: "10:24 AM" },
+  { id: "inclass", label: "In class", time: "1:02 PM" },
   { id: "afternoon", label: "Afternoon", time: "1:46 PM" },
   { id: "evening", label: "Evening", time: "9:30 PM" },
 ];

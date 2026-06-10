@@ -8,6 +8,7 @@ import { CoachAura } from "./Presence";
 import { ColdOpen } from "./scenes/ColdOpen";
 import { Morning } from "./scenes/Morning";
 import { MidMorning } from "./scenes/MidMorning";
+import { InClass } from "./scenes/InClass";
 import { Afternoon } from "./scenes/Afternoon";
 import { Evening } from "./scenes/Evening";
 import { SCENES } from "@/lib/script";
@@ -22,6 +23,7 @@ const SCENE_COMPONENTS: SceneComponent[] = [
   ColdOpen,
   Morning,
   MidMorning,
+  InClass,
   Afternoon,
   Evening,
 ];
