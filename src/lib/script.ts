@@ -27,9 +27,20 @@ export const LINES = {
   },
   amClose: {
     id: "am-close",
-    text: "That's the shape of your day. I'll check in before you train.",
-    ms: 2952,
+    text: "I've put today's workout on your home screen — just tap the widget when it's time.",
+    ms: 4493,
     speaker: "ai",
+  },
+
+  // B1.5 — Home screen: at workout time, Ladder pings you on your home screen.
+  // Tapping the Foundation Day widget launches you straight into the session —
+  // Ladder works outside the app too.
+  hwReady: {
+    id: "hw-ready",
+    text: "Foundation Day's ready, Maya. Tap your widget and let's get into it.",
+    ms: 3709,
+    speaker: "ai",
+    accent: "volt",
   },
 
   // B2 — Workout (In class): Ladder is the sherpa, not the coach. It gets you in,
@@ -105,6 +116,7 @@ export const LINES = {
 export type SceneId =
   | "coldopen"
   | "morning"
+  | "home"
   | "inclass"
   | "afternoon"
   | "evening";
@@ -117,6 +129,7 @@ export const SCENES: {
 }[] = [
   { id: "coldopen", label: "Cold open", time: "", moment: "Coach in my pocket" },
   { id: "morning", label: "Kickoff", time: "7:02 AM", moment: "Morning" },
+  { id: "home", label: "Home screen", time: "1:00 PM", moment: "Midday" },
   { id: "inclass", label: "Workout", time: "1:02 PM", moment: "Midday" },
   { id: "afternoon", label: "Fuel & eat", time: "1:46 PM", moment: "Afternoon" },
   { id: "evening", label: "Reflect", time: "9:30 PM", moment: "Night" },

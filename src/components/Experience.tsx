@@ -6,6 +6,7 @@ import { PhoneFrame, StatusBar } from "./PhoneFrame";
 import { LadderMark } from "./Logo";
 import { ColdOpen } from "./scenes/ColdOpen";
 import { Morning } from "./scenes/Morning";
+import { HomeScreen } from "./scenes/HomeScreen";
 import { InClass } from "./scenes/InClass";
 import { Afternoon } from "./scenes/Afternoon";
 import { Evening } from "./scenes/Evening";
@@ -20,6 +21,7 @@ type SceneComponent = React.ComponentType<{
 const SCENE_COMPONENTS: SceneComponent[] = [
   ColdOpen,
   Morning,
+  HomeScreen,
   InClass,
   Afternoon,
   Evening,
