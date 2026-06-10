@@ -10,7 +10,7 @@ const SEQ = [LINES.pmReflect, LINES.pmFuel, LINES.eatYou, LINES.eatPlan];
 
 /**
  * The afternoon chain: the workout just happened, Ladder reflects on it, ties the
- * effort to fuel (water + protein), and turns that into an actual meal — reasoning
+ * effort to fuel (water + protein), and turns that into an actual meal, reasoning
  * across activity and nutrition in one breath, which no logging UI can do.
  */
 export function Afternoon({
@@ -36,7 +36,7 @@ export function Afternoon({
 
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
-      <div className="flex flex-1 items-center justify-center px-5 pt-16">
+      <div className="flex flex-1 items-center justify-center px-7 pt-16">
         <AnimatePresence mode="wait">
           {id === LINES.pmReflect.id ? (
             <SessionCard key="session" />
@@ -65,7 +65,7 @@ function SessionCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-volt/20 bg-ink-card"
+      className="w-full overflow-hidden rounded-[20px] border border-volt/20 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-volt">
@@ -82,7 +82,7 @@ function SessionCard() {
       </div>
       <div className="border-t border-white/[0.06] px-4 py-3">
         <p className="truncate text-[12px] text-ash-light">
-          Heavier than last week — every set done.
+          Heavier than last week · every set done.
         </p>
       </div>
     </motion.div>
@@ -120,7 +120,7 @@ function FuelCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
+      className="w-full overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-leaf">
@@ -205,7 +205,7 @@ function DishCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
+      className="w-full overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
     >
       <div className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-[#1c2412] to-[#0e120a]">
         <img

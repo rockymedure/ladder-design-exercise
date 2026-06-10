@@ -30,7 +30,7 @@ export function Evening({
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
       <div className="flex flex-1 flex-col items-center justify-center gap-6 px-7 pt-16">
-        <div className="flex w-full max-w-[290px] flex-col gap-2.5">
+        <div className="flex w-full flex-col gap-2.5">
           <RecapRow label="Trained" value="Foundation Day" />
           <RecapRow label="Hydrated" value="Water in" />
           <RecapRow label="Ate well" value="Protein hit" />
@@ -42,7 +42,7 @@ export function Evening({
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full max-w-[290px] rounded-2xl border border-volt/20 bg-white/[0.04] p-4"
+              className="w-full rounded-2xl border border-volt/20 bg-white/[0.04] p-4"
             >
               <div className="mb-1 flex items-center gap-2">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-volt">
@@ -50,7 +50,7 @@ export function Evening({
                 </span>
               </div>
               <p className="truncate text-[14px] text-paper">
-                Light walk, normal meals — earned it.
+                Light walk, normal meals · earned it.
               </p>
             </motion.div>
           )}

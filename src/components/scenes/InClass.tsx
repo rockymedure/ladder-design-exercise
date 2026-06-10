@@ -16,7 +16,7 @@ const BLUE = "#6cc1ff";
  * The in-class moment, mapped onto Ladder's real coached-workout screen:
  * a full-bleed photo of the lift, a live stats row, set progress, an up-next
  * card, the volt arc timer with reps/weight, and the journal bar. Our layer is
- * the sherpa staging — Ladder gets you in, goes silent while the class runs
+ * the sherpa staging: Ladder gets you in, goes silent while the class runs
  * (the deliberate quiet where the coach has the room), then picks you back up.
  */
 export function InClass({
@@ -57,7 +57,7 @@ export function InClass({
       <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black via-black/85 to-transparent" />
 
       <div className="relative z-10 flex h-full flex-col">
-        {/* top chrome — the live class, only while it's running */}
+        {/* top chrome: the live class, only while it's running */}
         <div className="px-5 pt-14">
           <AnimatePresence>
             {working && (
@@ -80,7 +80,7 @@ export function InClass({
 
         <div className="flex-1" />
 
-        {/* bottom — class controls while Ladder is silent; Ladder otherwise */}
+        {/* bottom: class controls while Ladder is silent; Ladder otherwise */}
         <div className="px-5 pb-6">
           <AnimatePresence mode="wait">
             {working ? (
@@ -118,7 +118,7 @@ export function InClass({
   );
 }
 
-/** Live timer • progress • heart rate — one line, Druk-style numerals. */
+/** Live timer • progress • heart rate, one line, Druk-style numerals. */
 function StatsRow() {
   return (
     <div className="flex items-center gap-2.5 font-display text-[22px] font-bold tracking-tight text-paper tnum">
@@ -177,7 +177,7 @@ function RoundProgress({ total, done }: { total: number; done: number }) {
   );
 }
 
-/** Up-next card — real thumbnail, single-line label, blue load accent. */
+/** Up-next card: real thumbnail, single-line label, blue load accent. */
 function UpNext() {
   return (
     <div className="mt-4 flex items-center gap-3 rounded-[15px] border border-white/10 bg-black/40 p-2.5 backdrop-blur-md">
@@ -336,7 +336,7 @@ function StandBy() {
         ))}
       </span>
       <span className="text-[12px] font-medium text-ash">
-        Ladder stepped back — coach has the room
+        Ladder stepped back · coach has the room
       </span>
     </div>
   );

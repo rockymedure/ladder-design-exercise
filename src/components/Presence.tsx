@@ -39,9 +39,9 @@ export function Waveform({
 
 /**
  * Caption rail. Two speakers in this cut:
- *  - "ai"  → Ladder (the assistant) — attribution lives in the bottom dock
- *  - "you" → the member, right-aligned with a "You" tag + mic glyph
- * Voice for action — this is the main UI mid-flow.
+ *  - "ai"  Ladder (the assistant): attribution lives in the bottom dock
+ *  - "you" the member, right-aligned with a "You" tag + mic glyph
+ * Voice for action: this is the main UI mid-flow.
  */
 export function Captions({
   line,

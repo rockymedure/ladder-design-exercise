@@ -14,9 +14,9 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ladder — Coach in your pocket",
+  title: "Ladder · Coach in your pocket",
   description:
-    "Your human coach, scaled by Ladder — an assistant that's with you all day, so the relationship, not the software, is the interface.",
+    "Ladder is an assistant that's with you all day, so the relationship, not the software, is the interface.",
 };
 
 export default function RootLayout({

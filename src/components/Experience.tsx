@@ -148,7 +148,7 @@ function StartGate({ onStart }: { onStart: () => void }) {
             Coach in your pocket
           </span>
           <span className="max-w-[250px] text-[14px] leading-snug text-ash-light">
-            Ladder is the assistant that&apos;s with you all day — so the
+            Ladder is the assistant that&apos;s with you all day, so the
             relationship, not the app, is the interface.
           </span>
         </div>

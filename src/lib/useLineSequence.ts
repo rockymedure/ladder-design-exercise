@@ -52,7 +52,7 @@ export function useLineSequence(lines: Line[], opts: Options) {
   const startedAtRef = useRef(0);
   const stepRef = useRef<"line" | "real" | "complete">("line");
 
-  // Advance to the next line — at most once per line.
+  // Advance to the next line, at most once per line.
   const next = useCallback(() => {
     if (advancedRef.current) return;
     advancedRef.current = true;

@@ -61,7 +61,7 @@ export function ColdOpen({
             Coach in your pocket
           </span>
           <span className="max-w-[230px] text-[13px] leading-snug text-ash">
-            An assistant that&apos;s with you all day — so the relationship, not
+            An assistant that&apos;s with you all day, so the relationship, not
             the app, is the interface.
           </span>
         </motion.div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 /**
  * The morning open: a calendar-aware look at the day ahead. Ladder reads your
- * real schedule and fits movement + food into the gaps — the practical,
+ * real schedule and fits movement + food into the gaps, the practical,
  * "works around my life" value, before any coach message.
  */
 export function DayAhead() {
@@ -13,7 +13,7 @@ export function DayAhead() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[272px] overflow-hidden rounded-[20px] border border-white/10 bg-ink-card"
+      className="w-full overflow-hidden rounded-[20px] border border-white/10 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-3.5 py-2.5">
         <span className="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-paper">

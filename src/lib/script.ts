@@ -1,4 +1,4 @@
-// "Coach in My Pocket" — a day with Ladder, the always-on assistant.
+// "Coach in My Pocket": a day with Ladder, the always-on assistant.
 // This cut is just you and Ladder: no second character to explain. Ladder reads
 // your plan, your calendar, and your day, and does the things the app's UI can't.
 
@@ -17,23 +17,30 @@ export type Line = {
 // `ms` values match the exact generated audio durations (public/audio/*.mp3).
 // speaker "ai" = Ladder (ElevenLabs "Jessica"). speaker "you" = Maya (ElevenLabs "Matilda").
 export const LINES = {
-  // B1 — Kickoff (Morning): Ladder greets, lays out movement + food against the
-  // calendar, and ties back to yesterday so it feels continuous.
+  // B1, Kickoff (Morning): Ladder greets, celebrates the streak, then lays out
+  // movement + food against the calendar so it feels continuous.
+  amStreak: {
+    id: "am-streak",
+    text: "Morning, Maya. That's three days in a row now. Let's keep it going.",
+    ms: 3604,
+    speaker: "ai",
+    accent: "volt",
+  },
   amGreet: {
     id: "am-greet",
-    text: "Morning, Maya. That's three days straight now. Today is Foundation Day — a real lower-body strength session, so I've nudged your protein up to match. You're booked till noon, so I'll slot it into your one o'clock gap, and we'll eat right after.",
-    ms: 13322,
+    text: "Today is Foundation Day, a real lower-body strength session, so I've nudged your protein up to match. You're booked till noon, so I'll slot it into your one o'clock gap, and we'll eat right after.",
+    ms: 10684,
     speaker: "ai",
   },
   amClose: {
     id: "am-close",
-    text: "I've put today's workout on your home screen — just tap the widget when it's time.",
+    text: "I've put today's workout on your home screen. Just tap the widget when it's time.",
     ms: 4493,
     speaker: "ai",
   },
 
-  // B1.5 — Home screen: at workout time, Ladder pings you on your home screen.
-  // Tapping the Foundation Day widget launches you straight into the session —
+  // B1.5, Home screen: at workout time, Ladder pings you on your home screen.
+  // Tapping the Foundation Day widget launches you straight into the session.
   // Ladder works outside the app too.
   hwReady: {
     id: "hw-ready",
@@ -43,13 +50,13 @@ export const LINES = {
     accent: "volt",
   },
 
-  // B2 — Workout (In class): Ladder is the sherpa, not the coach. It gets you in,
+  // B2, Workout (In class): Ladder is the sherpa, not the coach. It gets you in,
   // hands the mic to your coach, goes quiet while you work, and picks you back up
-  // after. (icWork has no audio — it's the deliberate silence where the coach has
+  // after. (icWork has no audio; it's the deliberate silence where the coach has
   // the room.)
   icHandoff: {
     id: "ic-handoff",
-    text: "You're in. Your coach has the mic now — I'll step back and let you work.",
+    text: "You're in. Your coach has the mic now. I'll step back and let you work.",
     ms: 4075,
     speaker: "ai",
     accent: "volt",
@@ -68,11 +75,11 @@ export const LINES = {
     accent: "volt",
   },
 
-  // B3 — Prep + Eat (Afternoon): reflect on the workout, tie it to fuel (water +
+  // B3, Prep + Eat (Afternoon): reflect on the workout, tie it to fuel (water +
   // food), then turn that into an actual meal.
   pmReflect: {
     id: "pm-reflect",
-    text: "Strong session, Maya. You moved heavier than last week and finished every set — your heart rate ran higher than an easy day.",
+    text: "Strong session, Maya. You moved heavier than last week and finished every set. Your heart rate ran higher than an easy day.",
     ms: 7340,
     speaker: "ai",
   },
@@ -85,19 +92,19 @@ export const LINES = {
   },
   eatYou: {
     id: "eat-you",
-    text: "Okay — what should I eat?",
+    text: "Okay, what should I eat?",
     ms: 1698,
     speaker: "you",
   },
   eatPlan: {
     id: "eat-plan",
-    text: "Eggs, spinach, that leftover rice — a six-minute high-protein bowl, thirty-two grams. That hits your recovery target. Want the steps?",
+    text: "Eggs, spinach, that leftover rice. A six-minute high-protein bowl, thirty-two grams. That hits your recovery target. Want the steps?",
     ms: 9874,
     speaker: "ai",
     accent: "leaf",
   },
 
-  // B4 — Reflect (Evening): reflect on the day, set up tomorrow.
+  // B4, Reflect (Evening): reflect on the day, set up tomorrow.
   evClose: {
     id: "ev-close",
     text: "Good day, Maya. You trained hard, got your water in, and ate for recovery. That's four days running.",
@@ -106,7 +113,7 @@ export const LINES = {
   },
   evTomorrow: {
     id: "ev-tomorrow",
-    text: "Tomorrow's a real rest day — a light walk and normal meals. I'll keep it easy and check in.",
+    text: "Tomorrow's a real rest day. A light walk and normal meals. I'll keep it easy and check in.",
     ms: 5329,
     speaker: "ai",
     accent: "volt",
