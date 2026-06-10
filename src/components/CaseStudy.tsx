@@ -512,6 +512,11 @@ function BeatsIntro() {
 function Build() {
   const layers = [
     {
+      layer: "Cursor · Opus 4.8 High",
+      tool: "Coding agent",
+      d: "The whole thing was built agentically in Cursor, driving Claude Opus 4.8 High, from pulling designs to wiring scenes to shipping, so iteration happened in minutes, not days.",
+    },
+    {
       layer: "Figma MCP",
       tool: "Design extraction",
       d: "Pulled Ladder's real tokens, the live-workout screen, and the nutrition kit straight from the files, so every phone uses the actual components, not lookalikes.",
@@ -550,9 +555,10 @@ function Build() {
         </Reveal>
         <Reveal delay={0.12}>
           <p className="font-sf mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
-            Everything on this page is real playback in a coded app, assembled in
-            days with generative tooling. A flat comp can't show an assistant
-            that's with you, so I built the thing instead. Here's the stack.
+            Everything on this page is real playback in a coded app, built
+            agentically in Cursor with Claude Opus 4.8 High and assembled in days
+            with generative tooling. A flat comp can't show an assistant that's
+            with you, so I built the thing instead. Here's the stack.
           </p>
         </Reveal>
 
