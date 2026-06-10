@@ -1,9 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { PhoneFrame, StatusBar } from "./PhoneFrame";
-import { LadderMark } from "./Logo";
 
 type SceneComp = React.ComponentType<{
   onComplete: () => void;
@@ -13,9 +12,14 @@ type SceneComp = React.ComponentType<{
 
 /**
  * A single beat of the prototype, playable on its own. It reuses the exact same
- * PhoneFrame and scene components as the full demo. Audio never autoplays: the
- * scene only mounts after the play button is tapped. A tiny module-level bus
- * keeps a single beat playing at a time so beats never talk over each other.
+ * PhoneFrame and scene components as the full demo.
+ *
+ * Before you press play the phone shows a live, *muted* preview of the scene so
+ * there's real movement on screen (the workout video, cards animating, the
+ * presence dock). The preview only runs while the phone is in view, and pressing
+ * play restarts the scene from the top with sound. A tiny module-level bus keeps
+ * a single beat playing (with audio) at a time so beats never talk over each
+ * other.
  */
 const bus: { stop: null | (() => void) } = { stop: null };
 
@@ -33,6 +37,10 @@ export function ScenePlayer({
   const [muted, setMuted] = useState(false);
   const [done, setDone] = useState(false);
   const [runKey, setRunKey] = useState(0);
+  const [previewKey, setPreviewKey] = useState(0);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(containerRef, { margin: "-12% 0px -12% 0px" });
 
   const stopRef = useRef<() => void>(() => {});
   stopRef.current = () => {
@@ -51,9 +59,9 @@ export function ScenePlayer({
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div ref={containerRef} className="flex flex-col items-center gap-5">
       <PhoneFrame>
-        <StatusBar time={playing ? time : "9:41"} />
+        <StatusBar time={time} />
         <div className="absolute inset-0">
           {playing ? (
             <Scene
@@ -63,7 +71,19 @@ export function ScenePlayer({
               onComplete={() => setDone(true)}
             />
           ) : (
-            <Poster label={label} onPlay={start} />
+            <>
+              <div className="absolute inset-0 bg-[#070707]">
+                {inView && (
+                  <Scene
+                    key={`preview-${previewKey}`}
+                    muted
+                    paused={false}
+                    onComplete={() => setPreviewKey((k) => k + 1)}
+                  />
+                )}
+              </div>
+              <PreviewVeil label={label} onPlay={start} />
+            </>
           )}
 
           <AnimatePresence>
@@ -161,42 +181,40 @@ function CtrlButton({
   );
 }
 
-function Poster({ label, onPlay }: { label: string; onPlay: () => void }) {
+/**
+ * Sits over the live, muted scene preview: a soft vignette so the play control
+ * reads cleanly, the glowing play button, and a quiet "tap to play" cue. Tapping
+ * anywhere starts the real, sounded playback from the top.
+ */
+function PreviewVeil({ label, onPlay }: { label: string; onPlay: () => void }) {
   return (
     <button
       onClick={onPlay}
-      className="group absolute inset-0 flex flex-col items-center justify-center gap-7 bg-[#070707]"
+      aria-label={`Play ${label}`}
+      className="group absolute inset-0 z-40 flex flex-col items-center justify-center gap-6 backdrop-blur-[4px]"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-70"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 45% at 50% 38%, rgba(230,255,0,0.08), transparent 70%)",
+            "radial-gradient(70% 60% at 50% 46%, rgba(0,0,0,0.12), rgba(0,0,0,0.62) 100%)",
         }}
       />
-      <div className="relative opacity-30">
-        <LadderMark size={40} />
-      </div>
       <span className="relative grid place-items-center">
         <span
           className="animate-breathe absolute h-20 w-20 rounded-full"
           style={{ background: "radial-gradient(circle, #e6ff0033, transparent 70%)" }}
         />
-        <span className="relative grid h-16 w-16 place-items-center rounded-full bg-volt text-ink shadow-[0_10px_30px_-6px_rgba(230,255,0,0.5)] transition group-hover:scale-105">
+        <span className="relative grid h-16 w-16 place-items-center rounded-full bg-volt text-ink shadow-[0_10px_30px_-6px_rgba(230,255,0,0.55)] transition group-hover:scale-105">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M7 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 7 5.5Z" />
           </svg>
         </span>
       </span>
-      <div className="relative flex flex-col items-center gap-1.5">
-        <span className="font-display text-[15px] font-semibold uppercase tracking-[0.3em] text-paper">
-          {label}
-        </span>
-        <span className="text-[11px] uppercase tracking-[0.25em] text-ash">
-          Tap to play
-        </span>
-      </div>
+      <span className="relative rounded-full border border-white/15 bg-black/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-paper backdrop-blur-md">
+        Tap to play
+      </span>
     </button>
   );
 }
