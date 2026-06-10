@@ -103,6 +103,19 @@ export const LINES = {
     speaker: "ai",
     accent: "leaf",
   },
+  eatStepsYou: {
+    id: "eat-steps-you",
+    text: "Yeah, walk me through it.",
+    ms: 1672,
+    speaker: "you",
+  },
+  eatSteps: {
+    id: "eat-steps",
+    text: "Sauté the spinach, warm the rice in the same pan, then fold in two eggs until just set. That's it.",
+    ms: 6583,
+    speaker: "ai",
+    accent: "leaf",
+  },
 
   // B4, Reflect (Evening): reflect on the day, set up tomorrow.
   evClose: {

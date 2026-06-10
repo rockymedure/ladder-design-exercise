@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Captions } from "@/components/Presence";
 import { DayAhead } from "@/components/DayAhead";
@@ -28,8 +29,15 @@ export function Morning({
     onComplete,
   });
 
-  const showStreak = current?.id === LINES.amStreak.id;
-  const showWidget = current?.id === LINES.amClose.id;
+  // Keep the last shown line so that during the end-of-scene crossfade (when
+  // `current` is null) we hold on the widget tease and never flash Day Ahead
+  // back in between the tease and the Home screen.
+  const lastId = useRef<string>(LINES.amStreak.id);
+  if (current?.id) lastId.current = current.id;
+  const activeId = current?.id ?? lastId.current;
+
+  const showStreak = activeId === LINES.amStreak.id;
+  const showWidget = activeId === LINES.amClose.id;
 
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
@@ -61,7 +69,7 @@ export function Morning({
         <div className="min-h-[110px]">
           <Captions line={current} />
         </div>
-        <CoachDock state="speaking" />
+        <CoachDock state="speaking" paused={paused} />
       </div>
     </div>
   );

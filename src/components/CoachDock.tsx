@@ -9,8 +9,10 @@ import { Waveform } from "./Presence";
  */
 export function CoachDock({
   state = "idle",
+  paused = false,
 }: {
   state?: "idle" | "speaking" | "listening";
+  paused?: boolean;
 }) {
   const listening = state === "listening";
   const speaking = state === "speaking";
@@ -26,11 +28,19 @@ export function CoachDock({
       <span className="relative grid h-9 w-9 shrink-0 place-items-center">
         <motion.span
           className="absolute inset-0 rounded-full"
-          animate={{
-            scale: speaking ? [1, 1.25, 1] : [1, 1.12, 1],
-            opacity: [0.5, 0.2, 0.5],
-          }}
-          transition={{ duration: speaking ? 1 : 2.6, repeat: Infinity }}
+          animate={
+            paused
+              ? { scale: 1, opacity: 0.4 }
+              : {
+                  scale: speaking ? [1, 1.25, 1] : [1, 1.12, 1],
+                  opacity: [0.5, 0.2, 0.5],
+                }
+          }
+          transition={
+            paused
+              ? { duration: 0.3 }
+              : { duration: speaking ? 1 : 2.6, repeat: Infinity }
+          }
           style={{ background: "radial-gradient(circle, #e6ff0066, transparent 70%)" }}
         />
         <span
@@ -47,7 +57,7 @@ export function CoachDock({
       </div>
 
       {speaking ? (
-        <Waveform color="var(--color-volt)" bars={4} />
+        <Waveform color="var(--color-volt)" bars={4} active={!paused} />
       ) : (
         <span className={`text-ash ${listening ? "text-volt" : ""}`}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">

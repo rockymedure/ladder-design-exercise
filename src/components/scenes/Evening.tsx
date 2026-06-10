@@ -59,7 +59,7 @@ export function Evening({
 
       <div className="z-20 flex flex-col gap-4 pb-6">
         <Captions line={current} size={24} />
-        <CoachDock state="speaking" />
+        <CoachDock state="speaking" paused={paused} />
       </div>
     </div>
   );

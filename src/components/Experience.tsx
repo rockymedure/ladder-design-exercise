@@ -91,9 +91,18 @@ export function Experience() {
           {!started ? (
             <StartGate onStart={() => setStarted(true)} />
           ) : (
-            <div key={`scene-${index}`} className="scene-fade absolute inset-0">
-              <Current onComplete={advance} muted={muted} paused={paused} />
-            </div>
+            <AnimatePresence>
+              <motion.div
+                key={`scene-${index}`}
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+              >
+                <Current onComplete={advance} muted={muted} paused={paused} />
+              </motion.div>
+            </AnimatePresence>
           )}
 
           <AnimatePresence>

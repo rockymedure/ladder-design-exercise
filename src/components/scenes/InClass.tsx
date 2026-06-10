@@ -108,7 +108,7 @@ export function InClass({
                 <div className="min-h-[110px]">
                   <Captions line={current} size={24} />
                 </div>
-                <CoachDock state="speaking" />
+                <CoachDock state="speaking" paused={paused} />
               </motion.div>
             )}
           </AnimatePresence>
