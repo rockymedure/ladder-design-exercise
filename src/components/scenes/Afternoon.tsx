@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Captions, CoachAura } from "@/components/Presence";
+import { Captions } from "@/components/Presence";
 import { CoachDock } from "@/components/CoachDock";
-import { TimeChip } from "@/components/ui";
 import { useLineSequence } from "@/lib/useLineSequence";
 import { LINES } from "@/lib/script";
 
@@ -37,27 +36,14 @@ export function Afternoon({
 
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
-      <div className="absolute left-0 right-0 top-16 z-20 flex justify-center">
-        <TimeChip time="1:46 PM" label="Post-workout" />
-      </div>
-
-      <div className="flex flex-1 items-center justify-center px-5 pt-24">
+      <div className="flex flex-1 items-center justify-center px-5 pt-16">
         <AnimatePresence mode="wait">
           {id === LINES.pmReflect.id ? (
             <SessionCard key="session" />
-          ) : id === LINES.pmFuel.id ? (
-            <FuelCard key="fuel" />
           ) : id === LINES.eatPlan.id ? (
             <DishCard key="dish" />
           ) : (
-            <motion.div
-              key="aura"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-            >
-              <CoachAura size={150} speaking={false} />
-            </motion.div>
+            <FuelCard key="fuel" />
           )}
         </AnimatePresence>
       </div>
@@ -79,24 +65,24 @@ function SessionCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[24px] border border-volt/20 bg-ink-card"
+      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-volt/20 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-volt">
           Session complete
         </span>
         <span className="text-[10px] uppercase tracking-[0.16em] text-ash">
-          Sunrise · Mobility
+          Foundation Day
         </span>
       </div>
       <div className="grid grid-cols-3 divide-x divide-white/[0.06]">
         <Stat value="12:04" label="Time" />
-        <Stat value="5/5" label="Rounds" accent />
+        <Stat value="5/5" label="Sets" accent />
         <Stat value="+10" label="Avg HR" />
       </div>
       <div className="border-t border-white/[0.06] px-4 py-3">
-        <p className="text-[12px] leading-snug text-ash-light">
-          Harder than your usual easy day — and you finished every round.
+        <p className="truncate text-[12px] text-ash-light">
+          Heavier than last week — every set done.
         </p>
       </div>
     </motion.div>
@@ -115,7 +101,7 @@ function Stat({
   return (
     <div className="flex flex-col items-center gap-1 py-3.5">
       <span
-        className="text-[20px] font-bold leading-none"
+        className="font-display text-[22px] font-bold leading-none tracking-tight"
         style={{ color: accent ? "var(--color-volt)" : "var(--color-paper)" }}
       >
         {value}
@@ -134,7 +120,7 @@ function FuelCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[24px] border border-leaf/20 bg-ink-card"
+      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-leaf">
@@ -145,19 +131,8 @@ function FuelCard() {
         </span>
       </div>
       <div className="flex flex-col gap-2.5 p-4">
-        <FuelRow
-          icon="💧"
-          title="Water"
-          detail="16 oz now"
-          note="+8 oz vs a rest day"
-        />
-        <FuelRow
-          icon="🍗"
-          title="Protein"
-          detail="bumped to 130g"
-          note="+10g to recover"
-          leaf
-        />
+        <FuelRow icon={<WaterIcon />} title="Water" detail="16 oz now" />
+        <FuelRow icon={<ProteinIcon />} title="Protein" detail="130g today" leaf />
       </div>
     </motion.div>
   );
@@ -167,31 +142,60 @@ function FuelRow({
   icon,
   title,
   detail,
-  note,
   leaf,
 }: {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   detail: string;
-  note: string;
   leaf?: boolean;
 }) {
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-white/[0.04] px-3.5 py-3">
-      <span className="text-[22px]">{icon}</span>
-      <div className="flex flex-1 flex-col">
-        <div className="flex items-baseline gap-2">
-          <span className="text-[14px] font-semibold text-paper">{title}</span>
-          <span
-            className="text-[13px] font-semibold"
-            style={{ color: leaf ? "var(--color-leaf)" : "var(--color-paper)" }}
-          >
-            {detail}
-          </span>
-        </div>
-        <span className="text-[11px] text-ash">{note}</span>
-      </div>
+      <span
+        className="grid h-8 w-8 shrink-0 place-items-center rounded-full"
+        style={{
+          background: leaf
+            ? "color-mix(in srgb, var(--color-leaf) 18%, transparent)"
+            : "color-mix(in srgb, #6cc1ff 18%, transparent)",
+        }}
+      >
+        {icon}
+      </span>
+      <span className="flex-1 truncate text-[14px] font-semibold text-paper">
+        {title}
+      </span>
+      <span
+        className="shrink-0 text-[13px] font-semibold"
+        style={{ color: leaf ? "var(--color-leaf)" : "#6cc1ff" }}
+      >
+        {detail}
+      </span>
     </div>
+  );
+}
+
+function WaterIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"
+        fill="#6cc1ff"
+      />
+    </svg>
+  );
+}
+
+function ProteinIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M6.5 6.5l11 11M4 9a5 5 0 0 1 7-7l9 9a5 5 0 0 1-7 7L4 9Z"
+        stroke="var(--color-leaf)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -201,18 +205,12 @@ function DishCard() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[290px] overflow-hidden rounded-[24px] border border-leaf/20 bg-ink-card"
+      className="w-full max-w-[290px] overflow-hidden rounded-[20px] border border-leaf/20 bg-ink-card"
     >
       <div className="relative aspect-[5/4] w-full overflow-hidden bg-gradient-to-br from-[#1c2412] to-[#0e120a]">
-        <div className="absolute inset-0 grid place-items-center text-[64px] opacity-80">
-          🥗
-        </div>
         <img
           src="/food/ricebowl.png"
           alt=""
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).style.display = "none";
-          }}
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-card via-transparent to-transparent" />
@@ -221,13 +219,13 @@ function DishCard() {
         </div>
       </div>
       <div className="p-4">
-        <p className="text-[16px] font-semibold text-paper">
-          6-Minute High-Protein Rice Bowl
+        <p className="truncate text-[16px] font-semibold text-paper">
+          High-Protein Rice Bowl
         </p>
         <div className="mt-2 flex items-center gap-2">
           <Tag>32g protein</Tag>
           <Tag>6 min</Tag>
-          <Tag>covers recovery</Tag>
+          <Tag>recovery</Tag>
         </div>
       </div>
     </motion.div>

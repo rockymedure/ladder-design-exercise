@@ -4,10 +4,8 @@ import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "./PhoneFrame";
 import { LadderMark } from "./Logo";
-import { CoachAura } from "./Presence";
 import { ColdOpen } from "./scenes/ColdOpen";
 import { Morning } from "./scenes/Morning";
-import { MidMorning } from "./scenes/MidMorning";
 import { InClass } from "./scenes/InClass";
 import { Afternoon } from "./scenes/Afternoon";
 import { Evening } from "./scenes/Evening";
@@ -22,7 +20,6 @@ type SceneComponent = React.ComponentType<{
 const SCENE_COMPONENTS: SceneComponent[] = [
   ColdOpen,
   Morning,
-  MidMorning,
   InClass,
   Afternoon,
   Evening,
@@ -36,6 +33,8 @@ export function Experience() {
   const [paused, setPaused] = useState(false);
 
   const Current = SCENE_COMPONENTS[index];
+  const statusTime = started && SCENES[index].time ? SCENES[index].time : "9:41";
+  const moment = started && !done ? SCENES[index].moment : "Coach in my pocket";
 
   const advance = useCallback(() => {
     setIndex((i) => {
@@ -63,8 +62,28 @@ export function Experience() {
 
   return (
     <div className="flex flex-col items-center gap-7">
+      <header className="flex flex-col items-center gap-2 text-center">
+        <h1 className="font-display text-[15px] font-semibold uppercase tracking-[0.35em] text-ash">
+          A Day with Ladder
+        </h1>
+        <div className="h-[18px] overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={moment}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[11px] uppercase tracking-[0.25em] text-volt"
+            >
+              {moment}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      </header>
+
       <PhoneFrame>
-        <StatusBar />
+        <StatusBar time={statusTime} />
 
         <div className="absolute inset-0">
           {!started ? (
@@ -111,11 +130,17 @@ function StartGate({ onStart }: { onStart: () => void }) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="absolute inset-0 grid -translate-y-24 place-items-center opacity-40">
-        <CoachAura size={360} speaking />
-      </div>
       <div className="relative flex flex-col items-center gap-7">
-        <LadderMark size={44} />
+        <div className="relative grid place-items-center">
+          <div
+            className="pointer-events-none absolute h-[300px] w-[300px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-volt) 14%, transparent), transparent 62%)",
+            }}
+          />
+          <LadderMark size={44} />
+        </div>
         <div className="flex flex-col items-center gap-2 text-center">
           <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-volt">
             Coach in your pocket
@@ -133,8 +158,20 @@ function StartGate({ onStart }: { onStart: () => void }) {
         >
           Tap to begin
         </motion.span>
-        <span className="text-[10px] uppercase tracking-[0.2em] text-ash-dark">
-          Sound on 🔊
+        <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-ash-dark">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M4 9v6h4l5 4V5L8 9H4Z"
+              fill="currentColor"
+            />
+            <path
+              d="M16 9a3 3 0 0 1 0 6M18.5 6.5a6.5 6.5 0 0 1 0 11"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+          Sound on
         </span>
       </div>
     </motion.button>

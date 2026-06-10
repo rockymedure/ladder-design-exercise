@@ -2,13 +2,19 @@
 
 import { ReactNode } from "react";
 
-export function StatusBar({ dark = false }: { dark?: boolean }) {
+export function StatusBar({
+  dark = false,
+  time = "9:41",
+}: {
+  dark?: boolean;
+  time?: string;
+}) {
   const color = dark ? "text-ink" : "text-paper";
   return (
     <div
       className={`absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-7 pt-3.5 text-[15px] font-semibold ${color} pointer-events-none select-none`}
     >
-      <span className="tnum tracking-tight">9:41</span>
+      <span className="tnum tracking-tight">{time}</span>
       <div className="flex items-center gap-1.5">
         {/* signal */}
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none">

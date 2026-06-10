@@ -13,7 +13,7 @@ export function DayAhead() {
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[272px] overflow-hidden rounded-[22px] border border-white/10 bg-ink-card"
+      className="w-full max-w-[272px] overflow-hidden rounded-[20px] border border-white/10 bg-ink-card"
     >
       <div className="flex items-center justify-between border-b border-white/[0.06] px-3.5 py-2.5">
         <span className="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-paper">
@@ -27,8 +27,8 @@ export function DayAhead() {
       <div className="flex flex-col gap-1.5 p-3">
         <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] px-2.5 py-1.5">
           <CheckGlyph />
-          <span className="text-[11px] leading-snug text-ash">
-            Yesterday: pull day done ·{" "}
+          <span className="truncate text-[11px] text-ash">
+            Yesterday complete ·{" "}
             <span className="font-semibold text-paper">3-day streak</span>
           </span>
         </div>
@@ -36,22 +36,15 @@ export function DayAhead() {
         <Row
           accent="var(--color-volt)"
           kind="Move"
-          title="Easy push · 15 min"
+          title="Foundation Day"
           slot="1 PM"
         />
         <Row
           accent="var(--color-leaf)"
           kind="Eat"
-          title="Protein focus · 120g"
+          title="Protein · 130g"
           slot="1:30"
         />
-
-        <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] px-2.5 py-1.5">
-          <CalendarGlyph />
-          <span className="text-[11px] leading-snug text-ash">
-            Booked 9–12 &amp; 2–5 — I worked around it.
-          </span>
-        </div>
       </div>
     </motion.div>
   );
@@ -81,7 +74,7 @@ function Row({
         >
           {kind}
         </span>
-        <span className="text-[12.5px] font-semibold text-paper">{title}</span>
+        <span className="truncate text-[12.5px] font-semibold text-paper">{title}</span>
       </div>
       <span className="rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-medium text-ash-light">
         {slot}
@@ -109,24 +102,3 @@ function CheckGlyph() {
   );
 }
 
-function CalendarGlyph() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="shrink-0">
-      <rect
-        x="3"
-        y="5"
-        width="18"
-        height="16"
-        rx="2"
-        stroke="var(--color-ash)"
-        strokeWidth="2"
-      />
-      <path
-        d="M3 9h18M8 3v4M16 3v4"
-        stroke="var(--color-ash)"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}

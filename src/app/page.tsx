@@ -13,15 +13,6 @@ export default function Home() {
         }}
       />
 
-      <header className="mb-8 flex flex-col items-center gap-2 text-center">
-        <h1 className="font-display text-[15px] font-semibold uppercase tracking-[0.35em] text-ash">
-          Ladder · Concept
-        </h1>
-        <p className="text-[11px] uppercase tracking-[0.25em] text-ash-dark">
-          Coach in my pocket
-        </p>
-      </header>
-
       <Experience />
     </main>
   );

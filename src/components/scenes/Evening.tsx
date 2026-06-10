@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Captions, CoachAura } from "@/components/Presence";
+import { Captions } from "@/components/Presence";
 import { CoachDock } from "@/components/CoachDock";
-import { TimeChip } from "@/components/ui";
 import { useLineSequence } from "@/lib/useLineSequence";
 import { LINES } from "@/lib/script";
 
@@ -30,15 +29,9 @@ export function Evening({
 
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
-      <div className="absolute left-0 right-0 top-16 z-20 flex justify-center">
-        <TimeChip time="9:30 PM" label="Wind down" />
-      </div>
-
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-7 pt-24">
-        <CoachAura size={120} speaking />
-
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-7 pt-16">
         <div className="flex w-full max-w-[290px] flex-col gap-2.5">
-          <RecapRow label="Trained" value="Sunrise class" />
+          <RecapRow label="Trained" value="Foundation Day" />
           <RecapRow label="Hydrated" value="Water in" />
           <RecapRow label="Ate well" value="Protein hit" />
           <RecapRow label="Streak" value="4 days" highlight />
@@ -56,8 +49,8 @@ export function Evening({
                   Tomorrow · rest day
                 </span>
               </div>
-              <p className="text-[14px] text-paper">
-                A light walk and normal meals. Earned it.
+              <p className="truncate text-[14px] text-paper">
+                Light walk, normal meals — earned it.
               </p>
             </motion.div>
           )}

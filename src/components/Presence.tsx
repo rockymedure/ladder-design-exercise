@@ -3,56 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type { Line } from "@/lib/script";
 
-const ACCENT: Record<string, string> = {
-  volt: "var(--color-volt)",
-  leaf: "var(--color-leaf)",
-  ember: "var(--color-ember)",
-};
-
-/** The breathing aura — Ladder's ambient presence. */
-export function CoachAura({
-  size = 220,
-  color = "var(--color-volt)",
-  speaking = false,
-}: {
-  size?: number;
-  color?: string;
-  speaking?: boolean;
-}) {
-  return (
-    <div
-      className="relative grid place-items-center"
-      style={{ width: size, height: size }}
-    >
-      <div
-        className="absolute rounded-full animate-breathe-slow"
-        style={{
-          width: size,
-          height: size,
-          background: `radial-gradient(circle at 50% 50%, ${color}33, transparent 65%)`,
-        }}
-      />
-      <div
-        className={`absolute rounded-full ${speaking ? "animate-breathe" : "animate-breathe-slow"}`}
-        style={{
-          width: size * 0.6,
-          height: size * 0.6,
-          background: `radial-gradient(circle at 50% 50%, ${color}55, transparent 70%)`,
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: size * 0.16,
-          height: size * 0.16,
-          background: color,
-          boxShadow: `0 0 40px ${color}, 0 0 90px ${color}aa`,
-        }}
-      />
-    </div>
-  );
-}
-
 /** A live voice waveform that animates while Ladder speaks. */
 export function Waveform({
   color = "var(--color-volt)",
@@ -89,8 +39,8 @@ export function Waveform({
 
 /**
  * Caption rail. Two speakers in this cut:
- *  - "ai"  → Ladder (the assistant) — accent color, waveform
- *  - "you" → the member, right-aligned with a mic glyph
+ *  - "ai"  → Ladder (the assistant) — attribution lives in the bottom dock
+ *  - "you" → the member, right-aligned with a "You" tag + mic glyph
  * Voice for action — this is the main UI mid-flow.
  */
 export function Captions({
@@ -101,9 +51,7 @@ export function Captions({
   size?: number;
 }) {
   const speaker = line?.speaker ?? "ai";
-  const accent = line?.accent ? ACCENT[line.accent] : "var(--color-volt)";
   const isYou = speaker === "you";
-  const label = isYou ? "You" : "Ladder";
 
   return (
     <div className="min-h-[120px] w-full px-7">
@@ -117,24 +65,16 @@ export function Captions({
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={isYou ? "text-right" : "text-left"}
           >
-            <div
-              className={`mb-2.5 flex items-center gap-2 ${
-                isYou ? "justify-end" : "justify-start"
-              }`}
-            >
-              {!isYou && <Waveform color={accent} />}
-              <span
-                className="text-[11px] font-semibold uppercase tracking-[0.22em]"
-                style={{ color: isYou ? "var(--color-ash)" : accent }}
-              >
-                {label}
-              </span>
-              {isYou && (
+            {isYou && (
+              <div className="mb-2.5 flex items-center justify-end gap-2">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-ash">
+                  You
+                </span>
                 <span className="text-ash">
                   <MicGlyph />
                 </span>
-              )}
-            </div>
+              </div>
+            )}
             <p
               className="font-semibold leading-[1.18] tracking-[-0.01em]"
               style={{

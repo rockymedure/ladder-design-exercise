@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { LadderMark } from "@/components/Logo";
-import { CoachAura } from "@/components/Presence";
 
 export function ColdOpen({
   onComplete,
@@ -31,24 +30,26 @@ export function ColdOpen({
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-ink">
-      <div className="absolute inset-0 grid place-items-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <CoachAura size={300} speaking />
-        </motion.div>
-      </div>
-
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.9 }}
-        >
-          <LadderMark size={46} />
-        </motion.div>
+        <div className="relative grid place-items-center">
+          <motion.div
+            className="pointer-events-none absolute h-[260px] w-[260px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-volt) 16%, transparent), transparent 62%)",
+            }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.9 }}
+          >
+            <LadderMark size={46} />
+          </motion.div>
+        </div>
 
         <motion.div
           className="flex flex-col items-center gap-2 text-center"
