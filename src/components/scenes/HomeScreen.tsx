@@ -130,9 +130,13 @@ function WorkoutWidget({
         animate={tapped ? { scale: [1, 0.9, 1.02, 1] } : { scale: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <img
-          src="/photos/inclass-next.png"
-          alt=""
+        <video
+          src="/videos/inclass-hero.mp4"
+          poster="/photos/inclass-hero.png"
+          autoPlay
+          loop
+          muted
+          playsInline
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-black/20" />
