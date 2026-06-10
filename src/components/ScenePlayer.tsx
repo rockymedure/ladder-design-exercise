@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, AnimatePresence, motion, useInView } from "framer-motion";
+import type { AnimationPlaybackControls } from "framer-motion";
 import { PhoneFrame, StatusBar } from "./PhoneFrame";
 
 type SceneComp = React.ComponentType<{
@@ -27,10 +28,12 @@ export function ScenePlayer({
   scene: Scene,
   time,
   label,
+  nextId,
 }: {
   scene: SceneComp;
   time: string;
   label: string;
+  nextId?: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -41,9 +44,23 @@ export function ScenePlayer({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { margin: "-12% 0px -12% 0px" });
+  const inViewRef = useRef(inView);
+  inViewRef.current = inView;
+
+  const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scrollAnim = useRef<AnimationPlaybackControls | null>(null);
+  const clearScroll = () => {
+    if (scrollTimer.current) clearTimeout(scrollTimer.current);
+    scrollTimer.current = null;
+    if (scrollAnim.current) {
+      scrollAnim.current.stop();
+      scrollAnim.current = null;
+    }
+  };
 
   const stopRef = useRef<() => void>(() => {});
   stopRef.current = () => {
+    clearScroll();
     setPlaying(false);
     setPaused(false);
     setDone(false);
@@ -52,11 +69,33 @@ export function ScenePlayer({
   const start = () => {
     if (bus.stop && bus.stop !== stopRef.current) bus.stop();
     bus.stop = stopRef.current;
+    clearScroll();
     setRunKey((k) => k + 1);
     setDone(false);
     setPaused(false);
     setPlaying(true);
   };
+
+  // When a beat finishes, glide to the next one, but only if this phone is still
+  // on screen, so it never yanks the page if you've scrolled elsewhere.
+  const handleComplete = () => {
+    setDone(true);
+    if (!nextId) return;
+    clearScroll();
+    scrollTimer.current = setTimeout(() => {
+      if (!inViewRef.current) return;
+      const el = document.getElementById(nextId);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.scrollY - 72;
+      scrollAnim.current = animate(window.scrollY, y, {
+        duration: 1.7,
+        ease: [0.4, 0, 0.2, 1],
+        onUpdate: (v) => window.scrollTo(0, v),
+      });
+    }, 1100);
+  };
+
+  useEffect(() => () => clearScroll(), []);
 
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-5">
@@ -68,7 +107,7 @@ export function ScenePlayer({
               key={runKey}
               muted={muted}
               paused={paused}
-              onComplete={() => setDone(true)}
+              onComplete={handleComplete}
             />
           ) : (
             <>
@@ -174,7 +213,7 @@ function CtrlButton({
     <button
       onClick={onClick}
       title={title}
-      className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-ash transition hover:border-white/35 hover:text-paper"
+      className="grid h-9 w-9 cursor-pointer place-items-center rounded-full border border-white/15 text-ash transition hover:border-white/35 hover:text-paper"
     >
       {children}
     </button>
@@ -191,7 +230,7 @@ function PreviewVeil({ label, onPlay }: { label: string; onPlay: () => void }) {
     <button
       onClick={onPlay}
       aria-label={`Play ${label}`}
-      className="group absolute inset-0 z-40 flex flex-col items-center justify-center gap-6 backdrop-blur-[4px]"
+      className="group absolute inset-0 z-40 flex cursor-pointer flex-col items-center justify-center gap-6 backdrop-blur-[4px]"
     >
       <div
         aria-hidden
@@ -227,7 +266,7 @@ function ReplayVeil({ onReplay }: { onReplay: () => void }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ delay: 0.4 }}
-      className="absolute inset-0 z-50 grid place-items-center bg-ink/40 backdrop-blur-[2px]"
+      className="absolute inset-0 z-50 grid cursor-pointer place-items-center bg-ink/40 backdrop-blur-[2px]"
     >
       <span className="flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-paper backdrop-blur-md">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

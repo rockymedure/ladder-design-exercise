@@ -65,14 +65,14 @@ export function StatusBar({
 export function PhoneFrame({ children }: { children: ReactNode }) {
   return (
     <div className="relative">
-      {/* ambient glow behind the device */}
+      {/* Ambient glow behind the device. A heavily blurred solid disc rather than
+          a radial-gradient: a CSS gradient interpolates in 8-bit and shows visible
+          concentric banding on dark backgrounds, while blurring a solid shape
+          gives a smooth Gaussian falloff. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-24 -z-10 opacity-60 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(40% 40% at 50% 30%, rgba(230,255,0,0.10), transparent 70%)",
-        }}
+        className="pointer-events-none absolute left-1/2 top-[32%] -z-10 h-[55%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-[100px]"
+        style={{ background: "rgba(230,255,0,0.12)" }}
       />
       <div
         className="relative rounded-[3.2rem] bg-black p-[10px] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)]"

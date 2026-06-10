@@ -187,13 +187,22 @@ const BEATS: Beat[] = [
   },
 ];
 
-function BeatSection({ beat, index }: { beat: Beat; index: number }) {
+function BeatSection({
+  beat,
+  index,
+  nextId,
+}: {
+  beat: Beat;
+  index: number;
+  nextId?: string;
+}) {
   const dark = beat.tone === "dark";
   const flip = index % 2 === 1; // alternate phone side
   const accent = beat.accent === "leaf" ? "var(--color-leaf)" : "var(--color-volt)";
 
   return (
     <section
+      id={`beat-${beat.n}`}
       className={dark ? "bg-[#0E0E0E] text-paper" : "bg-[#FAFAFA] text-ink"}
     >
       <div className="mx-auto grid max-w-[1180px] items-center gap-10 px-6 py-24 md:grid-cols-2 md:gap-16 md:py-32">
@@ -251,6 +260,7 @@ function BeatSection({ beat, index }: { beat: Beat; index: number }) {
               scene={beat.scene}
               time={beat.statusTime}
               label={beat.title}
+              nextId={nextId}
             />
           </div>
         </Reveal>
@@ -272,7 +282,12 @@ export function CaseStudy() {
       <Concept />
       <BeatsIntro />
       {BEATS.map((b, i) => (
-        <BeatSection key={b.n} beat={b} index={i} />
+        <BeatSection
+          key={b.n}
+          beat={b}
+          index={i}
+          nextId={i < BEATS.length - 1 ? `beat-${BEATS[i + 1].n}` : "thinking"}
+        />
       ))}
       <Thinking />
       <Pipeline />
