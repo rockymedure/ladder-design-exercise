@@ -37,13 +37,13 @@ export function DayAhead() {
           accent="var(--color-volt)"
           kind="Move"
           title="Easy push · 15 min"
-          slot="6 PM"
+          slot="1 PM"
         />
         <Row
           accent="var(--color-leaf)"
           kind="Eat"
           title="Protein focus · 120g"
-          slot="12:30"
+          slot="1:30"
         />
 
         <div className="flex items-center gap-2 rounded-lg bg-white/[0.03] px-2.5 py-1.5">

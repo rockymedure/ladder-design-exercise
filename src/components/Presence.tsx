@@ -88,10 +88,9 @@ export function Waveform({
 }
 
 /**
- * Caption rail. Three speakers:
- *  - "ai"   → Ladder (the assistant) — accent color, waveform
- *  - "real" → Remi, the human coach — handled by RealCoachCard, but supported here too
- *  - "you"  → the member, right-aligned with a mic glyph
+ * Caption rail. Two speakers in this cut:
+ *  - "ai"  → Ladder (the assistant) — accent color, waveform
+ *  - "you" → the member, right-aligned with a mic glyph
  * Voice for action — this is the main UI mid-flow.
  */
 export function Captions({
@@ -104,7 +103,7 @@ export function Captions({
   const speaker = line?.speaker ?? "ai";
   const accent = line?.accent ? ACCENT[line.accent] : "var(--color-volt)";
   const isYou = speaker === "you";
-  const label = isYou ? "You" : speaker === "real" ? "Remi" : "Ladder";
+  const label = isYou ? "You" : "Ladder";
 
   return (
     <div className="min-h-[120px] w-full px-7">

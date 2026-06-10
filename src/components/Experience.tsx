@@ -7,8 +7,8 @@ import { LadderMark } from "./Logo";
 import { CoachAura } from "./Presence";
 import { ColdOpen } from "./scenes/ColdOpen";
 import { Morning } from "./scenes/Morning";
-import { Eat } from "./scenes/Eat";
-import { Handoff } from "./scenes/Handoff";
+import { MidMorning } from "./scenes/MidMorning";
+import { Afternoon } from "./scenes/Afternoon";
 import { Evening } from "./scenes/Evening";
 import { SCENES } from "@/lib/script";
 
@@ -21,8 +21,8 @@ type SceneComponent = React.ComponentType<{
 const SCENE_COMPONENTS: SceneComponent[] = [
   ColdOpen,
   Morning,
-  Eat,
-  Handoff,
+  MidMorning,
+  Afternoon,
   Evening,
 ];
 
@@ -119,8 +119,8 @@ function StartGate({ onStart }: { onStart: () => void }) {
             Coach in your pocket
           </span>
           <span className="max-w-[250px] text-[14px] leading-snug text-ash-light">
-            Remi is your coach. Ladder is the assistant that carries her with you
-            all day.
+            Ladder is the assistant that&apos;s with you all day — so the
+            relationship, not the app, is the interface.
           </span>
         </div>
         <motion.span
@@ -150,7 +150,7 @@ function EndCard({ onReplay }: { onReplay: () => void }) {
       <div className="flex flex-col items-center gap-6 text-center">
         <LadderMark size={38} />
         <p className="max-w-[270px] text-[20px] font-semibold leading-snug text-paper">
-          Your coach, human. Ladder, always there.
+          Less app. More coach. All day.
         </p>
         <button
           onClick={onReplay}

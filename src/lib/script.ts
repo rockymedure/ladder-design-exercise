@@ -1,6 +1,6 @@
-// "Coach in My Pocket" — a day with Remi (your human coach) + Ladder (the assistant).
-// Real coach moments are recorded video messages. Ladder is the always-on assistant that
-// scales every coach — and does the things the app's UI can't.
+// "Coach in My Pocket" — a day with Ladder, the always-on assistant.
+// This cut is just you and Ladder: no second character to explain. Ladder reads
+// your plan, your calendar, and your day, and does the things the app's UI can't.
 
 export const USER = { name: "Rocky", week: 3 };
 
@@ -16,119 +16,98 @@ export type Line = {
 
 // `ms` values match the exact generated audio durations (public/audio/*.mp3).
 // speaker "ai" = Ladder (ElevenLabs "Jessica"). speaker "you" = Rocky (ElevenLabs "Matilda").
-// speaker "real" = Remi (her voice lives in the recorded videos).
 export const LINES = {
-  // B1 — Morning
+  // B1 — Morning: Ladder greets, lays out movement + food against the calendar.
   amGreet: {
     id: "am-greet",
-    text: "Morning, Rocky. Strong pull yesterday — that's three days straight now. Today's lighter: an easy push and a protein focus. You're booked till noon, so I'll fit training after six, and lunch in your 12:30 gap.",
-    ms: 12251,
+    text: "Morning, Rocky. Strong pull yesterday — that's three days straight now. Today's lighter: an easy push and a protein focus. You're booked till noon, so I'll slot your workout into the one o'clock gap, and we'll eat right after.",
+    ms: 12304,
     speaker: "ai",
-  },
-  amNote: {
-    id: "am-note",
-    text: "And your coach Remi left you a note for week three.",
-    ms: 2638,
-    speaker: "ai",
-  },
-  amReal: {
-    id: "am-real",
-    text: "Week three, Rock. Keep it simple today — fifteen minutes, I just want you to show up. That's the whole job.",
-    ms: 6648,
-    speaker: "real",
-  },
-  amSuggest: {
-    id: "am-suggest",
-    text: "Remi's got you on an easy push today. The Sunrise crew is running a 12-minute mobility finisher — your shoulders would thank you. Want me to add it?",
-    ms: 8725,
-    speaker: "ai",
-    accent: "volt",
   },
   amClose: {
     id: "am-close",
-    text: "Either way, I'm right here. Start now, or after coffee?",
-    ms: 3344,
+    text: "That's the shape of your day. I'll check in before you train.",
+    ms: 2952,
     speaker: "ai",
   },
 
-  // B2 — Eat
-  eatYou: {
-    id: "eat-you",
-    text: "Hey Ladder — what should I eat?",
-    ms: 2168,
+  // B2 — Mid-morning: the beyond-the-UI move. Ladder pitches another team's class.
+  mmPitch: {
+    id: "mm-pitch",
+    text: "One idea before one o'clock. The Sunrise crew is running a live class today — different coach, same easy-push vibe. Want to drop in for today instead of your usual?",
+    ms: 10475,
+    speaker: "ai",
+    accent: "volt",
+  },
+  mmYou: {
+    id: "mm-you",
+    text: "Yeah, let's do it.",
+    ms: 1437,
     speaker: "you",
   },
-  eatOffer: {
-    id: "eat-offer",
-    text: "You moved this morning, so let's get some protein in. Want ideas from nearby, or what's in your fridge?",
-    ms: 5564,
+  mmAdd: {
+    id: "mm-add",
+    text: "You're in with Sunrise. Back to your own plan tomorrow — today you train in a new room.",
+    ms: 5277,
+    speaker: "ai",
+    accent: "volt",
+  },
+
+  // B3 — Afternoon: reflect on the workout, tie it to fuel (water + food), then a meal.
+  pmReflect: {
+    id: "pm-reflect",
+    text: "That's a wrap. Sunrise ran you harder than your usual easy day — your heart rate sat ten beats higher, and you still finished every round. Strong showing.",
+    ms: 8908,
+    speaker: "ai",
+  },
+  pmFuel: {
+    id: "pm-fuel",
+    text: "You sweated more than a normal session, so two things. Get sixteen ounces of water in now, and let's add some protein at lunch to help you recover.",
+    ms: 8124,
     speaker: "ai",
     accent: "leaf",
   },
-  eatFridge: {
-    id: "eat-fridge",
-    text: "What's in my fridge.",
-    ms: 1384,
+  eatYou: {
+    id: "eat-you",
+    text: "Okay — what should I eat?",
+    ms: 1698,
     speaker: "you",
   },
   eatPlan: {
     id: "eat-plan",
-    text: "Eggs, spinach, that leftover rice. A six-minute high-protein rice bowl — 32 grams. Want the steps?",
-    ms: 7184,
+    text: "Eggs, spinach, that leftover rice — a six-minute high-protein bowl, thirty-two grams. That hits your recovery target. Want the steps?",
+    ms: 9874,
     speaker: "ai",
     accent: "leaf",
   },
 
-  // B3 — The handoff
-  hoYou: {
-    id: "ho-you",
-    text: "One thing — my knee's been bugging me on squats.",
-    ms: 3370,
-    speaker: "you",
-  },
-  hoAi: {
-    id: "ho-ai",
-    text: "I'm not going to guess on a knee. Let me loop in Remi — she should see this.",
-    ms: 4911,
-    speaker: "ai",
-    accent: "volt",
-  },
-  hoReal: {
-    id: "ho-real",
-    text: "Saw your note on the knee. Swapped squats for step-ups this week and pulled the load back. We'll reassess Friday — don't push it.",
-    ms: 7152,
-    speaker: "real",
-  },
-  hoDone: {
-    id: "ho-done",
-    text: "Done — Remi updated your plan. I've got the rest.",
-    ms: 3579,
-    speaker: "ai",
-    accent: "volt",
-  },
-
-  // B4 — Evening
-  pmClose: {
-    id: "pm-close",
-    text: "Good day, Rocky. You showed up, and you ate well. That's the streak that matters.",
-    ms: 5146,
+  // B4 — Evening: reflect on the day, set up tomorrow.
+  evClose: {
+    id: "ev-close",
+    text: "Good day, Rocky. You tried a new room with Sunrise, got your water in, and ate for recovery. That's four days running.",
+    ms: 6766,
     speaker: "ai",
   },
-  pmLoop: {
-    id: "pm-loop",
-    text: "Remi softened tomorrow for the knee. Same time — I'll be here.",
-    ms: 4206,
+  evTomorrow: {
+    id: "ev-tomorrow",
+    text: "Tomorrow's a real rest day — a light walk and normal meals. I'll keep it easy and check in.",
+    ms: 5329,
     speaker: "ai",
     accent: "volt",
   },
 } satisfies Record<string, Line>;
 
-export type SceneId = "coldopen" | "morning" | "eat" | "handoff" | "evening";
+export type SceneId =
+  | "coldopen"
+  | "morning"
+  | "midmorning"
+  | "afternoon"
+  | "evening";
 
 export const SCENES: { id: SceneId; label: string; time: string }[] = [
   { id: "coldopen", label: "Cold open", time: "" },
   { id: "morning", label: "Morning", time: "7:02 AM" },
-  { id: "eat", label: "Eat", time: "12:41 PM" },
-  { id: "handoff", label: "The Handoff", time: "6:18 PM" },
+  { id: "midmorning", label: "Mid-morning", time: "10:24 AM" },
+  { id: "afternoon", label: "Afternoon", time: "1:46 PM" },
   { id: "evening", label: "Evening", time: "9:30 PM" },
 ];

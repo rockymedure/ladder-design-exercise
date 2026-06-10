@@ -7,7 +7,7 @@ import { TimeChip } from "@/components/ui";
 import { useLineSequence } from "@/lib/useLineSequence";
 import { LINES } from "@/lib/script";
 
-const SEQ = [LINES.pmClose, LINES.pmLoop];
+const SEQ = [LINES.evClose, LINES.evTomorrow];
 
 export function Evening({
   onComplete,
@@ -26,7 +26,7 @@ export function Evening({
     onComplete,
   });
 
-  const showTomorrow = current?.id === LINES.pmLoop.id;
+  const showTomorrow = current?.id === LINES.evTomorrow.id;
 
   return (
     <div className="relative flex h-full w-full flex-col bg-[#070707]">
@@ -37,10 +37,11 @@ export function Evening({
       <div className="flex flex-1 flex-col items-center justify-center gap-6 px-7 pt-24">
         <CoachAura size={120} speaking />
 
-        <div className="flex w-full max-w-[300px] flex-col gap-2.5">
-          <RecapRow label="Showed up" value="15 min · done" />
+        <div className="flex w-full max-w-[290px] flex-col gap-2.5">
+          <RecapRow label="Trained" value="Sunrise class" />
+          <RecapRow label="Hydrated" value="Water in" />
           <RecapRow label="Ate well" value="Protein hit" />
-          <RecapRow label="Streak" value="3 days" highlight />
+          <RecapRow label="Streak" value="4 days" highlight />
         </div>
 
         <AnimatePresence>
@@ -48,15 +49,15 @@ export function Evening({
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full max-w-[300px] rounded-2xl border border-volt/20 bg-white/[0.04] p-4"
+              className="w-full max-w-[290px] rounded-2xl border border-volt/20 bg-white/[0.04] p-4"
             >
               <div className="mb-1 flex items-center gap-2">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-volt">
-                  Tomorrow · already adjusted
+                  Tomorrow · rest day
                 </span>
               </div>
               <p className="text-[14px] text-paper">
-                Softer landings for the knee. Step-ups, not jumps.
+                A light walk and normal meals. Earned it.
               </p>
             </motion.div>
           )}
