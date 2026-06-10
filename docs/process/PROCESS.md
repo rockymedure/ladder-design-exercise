@@ -9,13 +9,13 @@
 
 The exercise asked to **improve or re-imagine 1–2 screens/flows** of the Ladder app and demonstrate
 "visual craft" and being a "true builder." Rather than reskin existing screens, I treated the brief as
-a question: *what is Ladder's most valuable, least-scaled asset, and how do we put it everywhere?*
+a question: *where does Ladder's relationship with a member break down, and how do we make it whole?*
 
-The answer was **the coaching relationship**. Today the coach lives inside recorded video and a
-UI-heavy app (feeds, logging tables, dashboards) built, in its own words, for people "already
-motivated." The habit-making moments happen **between screens**, when no one is there. So instead of
-polishing a dashboard, I built the thing the dashboard can't be: **an assistant that's with you all day,
-for training _and_ nutrition.**
+The answer was **the everyday relationship**. The workout, the coach, and the team are already great.
+What's missing is the connective layer: nutrition sits in a separate headspace, and the choices that
+decide the day happen **between sessions**, when no one is there. So instead of polishing a dashboard,
+I built the thing the dashboard can't be: **an always-on guide that's with you all day, stitching
+training _and_ nutrition into one relationship.**
 
 This is a coded, interactive prototype (Next.js) with **real generated voice**, not static mockups,
 because the whole idea is about presence and pacing, which a flat comp can't show.
@@ -54,7 +54,7 @@ The strongest part of this exercise was throwing away good work twice when a bet
 
 ## The product, in one line
 
-**Less app. More coach. All day.** Ladder is an always-on assistant that carries your training and
+**Less app. More relationship. All day.** Ladder is an always-on guide that carries your training and
 nutrition through the whole day, and does the generous things the app's UI can't afford.
 
 ---

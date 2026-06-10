@@ -1,21 +1,22 @@
 # A Day with Ladder — Design Exercise
 
-> **Less app. More coach. All day.**
-> Ladder becomes an always-on assistant that carries your training and nutrition through the whole day,
+> **Less app. More relationship. All day.**
+> Ladder becomes an always-on guide that carries your training and nutrition through the whole day,
 > so the **relationship**, not the software, is the interface.
 
 ---
 
 ## The opportunity
 
-Ladder is genuinely great at the workout. But the app is also **UI-heavy** (feeds, logging tables,
-dashboards) and, in its own words, built for people "already motivated to work out." Two gaps follow:
+Ladder is genuinely great at the workout, and the coach and team make it feel like yours. Two gaps
+remain:
 
-- **The coach can't scale.** One human, many members, mostly present through pre-recorded video.
 - **Nutrition feels separate.** Training and food live in different tabs, and different headspaces.
+- **The day is unattended.** Workouts are scheduled; the choices between them are on you, alone.
 
-And the moments that actually make or break a habit happen **between screens**: the 1pm "what do I
-eat," the skip-it morning, the after-set decision. No one is there for those.
+The app is also **UI-heavy** (feeds, logging tables, dashboards), and the moments that actually decide
+the day happen **between sessions**: the 1pm "what do I eat," the skip-it morning, the after-set
+decision. No one is there for those.
 
 ## The concept
 

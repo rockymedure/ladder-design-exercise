@@ -199,8 +199,8 @@ function EndCard({ onReplay }: { onReplay: () => void }) {
     >
       <div className="flex flex-col items-center gap-6 text-center">
         <LadderMark size={38} />
-        <p className="max-w-[270px] text-[20px] font-semibold leading-snug text-paper">
-          Less app. More coach. All day.
+        <p className="max-w-[290px] text-[20px] font-semibold leading-snug text-paper">
+          Less app. More relationship. All day.
         </p>
         <button
           onClick={onReplay}

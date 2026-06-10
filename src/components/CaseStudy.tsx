@@ -124,10 +124,9 @@ const BEATS: Beat[] = [
     time: "Morning · 7:02 AM",
     statusTime: "7:02 AM",
     title: "Mornings open on your day",
-    lead: "Not a message to answer. A brief. Ladder celebrates the streak, lays out how you'll move and eat, and fits it to your real calendar.",
+    lead: "Not a message to answer, a brief: how you'll move and eat today, fit to your real calendar, with the streak worth keeping up top.",
     points: [
-      "A three-day streak, made to feel earned",
-      "Day ahead: Foundation Day at one, protein nudged up to match",
+      "A three-day streak, celebrated",
       "Today's workout placed on your home screen",
     ],
     scene: Morning,
@@ -138,10 +137,10 @@ const BEATS: Beat[] = [
     time: "Midday · 1:00 PM",
     statusTime: "1:00 PM",
     title: "The workout finds you",
-    lead: "Ladder lives outside the app, too. At go-time it pings your home screen. Tap the widget and you're in, no hunting through menus.",
+    lead: "Ladder lives outside the app, too. At go-time it pings your home screen, tap the widget and you're in.",
     points: [
-      "A home-screen widget that matches today's session",
-      "One tap from notification straight into the work",
+      "A widget that matches today's session",
+      "One tap from notification into the work",
     ],
     scene: HomeScreen,
     tone: "light",
@@ -151,11 +150,10 @@ const BEATS: Beat[] = [
     time: "Midday · 1:02 PM",
     statusTime: "1:02 PM",
     title: "Ladder knows when to go quiet",
-    lead: "Ladder is the sherpa, not the coach. It gets you in, hands the room to the session, goes silent while you work, and picks you back up after.",
+    lead: "Ladder is the sherpa, not the coach. It gets you in, then goes quiet so the work has the room, and picks you back up after.",
     points: [
-      "Steps back during the set, so the work has the room",
       "The real Ladder workout screen: reps, pace, weight",
-      "Comes back the moment you finish",
+      "Steps back during the set, returns when you finish",
     ],
     scene: InClass,
     tone: "dark",
@@ -165,11 +163,10 @@ const BEATS: Beat[] = [
     time: "Afternoon · 1:46 PM",
     statusTime: "1:46 PM",
     title: "Training decides dinner",
-    lead: "This is the bridge. The set you just finished sets your recovery fuel, turns into a meal from what's in your fridge, and Ladder walks you through cooking it. Strength and nutrition on one thread.",
+    lead: "The bridge. The set you just finished sets your recovery fuel, becomes a meal from your fridge, and Ladder walks you through making it.",
     points: [
-      "Recovery fuel based on how you actually trained",
-      "A meal you can make, then the steps to make it",
-      "Built from Ladder's own Nutrition components",
+      "Recovery fuel from how you actually trained",
+      "A meal from your fridge, then the steps to cook it",
     ],
     scene: Afternoon,
     tone: "light",
@@ -180,10 +177,10 @@ const BEATS: Beat[] = [
     time: "Night · 9:30 PM",
     statusTime: "9:30 PM",
     title: "The relationship remembers",
-    lead: "A quiet recap, and tomorrow already adjusted. Ladder never resets to zero. Every day compounds on the last.",
+    lead: "A quiet recap, and tomorrow already adjusted. Ladder never resets to zero.",
     points: [
       "Trained, hydrated, ate well, a four-day streak",
-      "Tomorrow set before you have to ask",
+      "Tomorrow set before you ask",
     ],
     scene: Evening,
     tone: "dark",
@@ -320,12 +317,11 @@ function Hero() {
           </h1>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="font-sf max-w-[60ch] text-[clamp(1.05rem,2.2vw,1.35rem)] leading-relaxed text-ash-light">
-            Ladder's app is where motivated people already are. The habit is won
-            in the moments between screens. So I built the thing a dashboard can't
-            be: an assistant that's with you all day, for training{" "}
-            <span className="text-paper">and</span> nutrition, where the
-            relationship, not the software, is the interface.
+          <p className="font-sf max-w-[58ch] text-[clamp(1.05rem,2.2vw,1.35rem)] leading-relaxed text-ash-light">
+            Ladder nails the workout. But nutrition feels like a separate app, and
+            the day between sessions has no one in it. So I built an always-on
+            guide that stitches training{" "}
+            <span className="text-paper">and</span> food into one relationship.
           </p>
         </Reveal>
         <Reveal delay={0.18}>
@@ -377,11 +373,11 @@ function Problem() {
         </Reveal>
         <Reveal delay={0.12}>
           <p className="font-sf mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
-            Ladder is genuinely great at the workout. But it is also UI-heavy,
-            feeds, logging tables, dashboards, and in its own words built for
-            people who are already motivated. The coach lives inside recorded
-            video. The make-or-break moments, the 1pm &ldquo;what do I eat,&rdquo;
-            the skip-it morning, the tweaky knee, all happen when no one is there.
+            Ladder is genuinely great at the workout, and the coach and team make
+            it feel like yours. Two gaps remain. Nutrition lives in a separate tab,
+            and a separate headspace. And the moments that actually decide the day,
+            the 1pm &ldquo;what do I eat,&rdquo; the skip-it morning, happen between
+            sessions, where the app isn&rsquo;t.
           </p>
         </Reveal>
 
@@ -400,16 +396,16 @@ function Problem() {
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {[
             {
-              t: "The UI is the wall",
-              d: "Every action is a screen to find. Motivation leaks out between taps.",
-            },
-            {
-              t: "The coach can't scale",
-              d: "One human, many members, mostly through pre-recorded video.",
-            },
-            {
               t: "Nutrition feels separate",
               d: "Training and food live in different tabs, and different headspaces.",
+            },
+            {
+              t: "The day is unattended",
+              d: "Workouts are scheduled; the choices between them are on you, alone.",
+            },
+            {
+              t: "The UI is the wall",
+              d: "Every action is a screen to find. Motivation leaks out between taps.",
             },
           ].map((c, i) => (
             <Reveal key={c.t} delay={0.1 + i * 0.07}>
@@ -443,8 +439,8 @@ function Concept() {
           <Kicker>The concept</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
-          <h2 className={`${H} mx-auto mt-6 max-w-[14ch] text-[clamp(2.8rem,8vw,6rem)]`}>
-            Less app. More coach. All day.
+          <h2 className={`${H} mx-auto mt-6 max-w-[15ch] text-[clamp(2.8rem,8vw,6rem)]`}>
+            Less app. More relationship. All day.
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
@@ -647,11 +643,11 @@ function Validate() {
   const qs = [
     {
       q: "Where would you focus?",
-      a: "The moments between screens, and the seam where training meets nutrition.",
+      a: "The moments between sessions, and the seam where training meets nutrition.",
     },
     {
       q: "Why this area?",
-      a: "It pairs Ladder's least-scaled asset, the coach, with its weakest seam, nutrition. That's where the leverage is.",
+      a: "It builds on what already works, the workout and the team, and closes Ladder's real gaps: nutrition and the unattended day. That's the leverage.",
     },
     {
       q: "How would you elevate it?",
@@ -696,8 +692,8 @@ function Footer() {
     <footer className="border-t border-white/10 bg-[#0E0E0E] text-paper">
       <div className="mx-auto flex max-w-[1180px] flex-col items-center gap-8 px-6 py-20 text-center">
         <LadderMark size={40} />
-        <h2 className={`${H} max-w-[18ch] text-[clamp(2rem,5vw,3.4rem)]`}>
-          Less app. More coach. All day.
+        <h2 className={`${H} max-w-[20ch] text-[clamp(2rem,5vw,3.4rem)]`}>
+          Less app. More relationship. All day.
         </h2>
         <PrimaryPill href="/play">
           Live the full day
