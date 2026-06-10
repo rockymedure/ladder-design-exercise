@@ -88,8 +88,8 @@ export function ScenePlayer({
       if (!el) return;
       const y = el.getBoundingClientRect().top + window.scrollY - 72;
       scrollAnim.current = animate(window.scrollY, y, {
-        duration: 2,
-        ease: [0.4, 0, 0.2, 1],
+        duration: 1.75,
+        ease: [0.65, 0, 0.35, 1],
         onUpdate: (v) => window.scrollTo(0, v),
       });
     }, 1100);
