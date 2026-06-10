@@ -21,8 +21,8 @@ export const LINES = {
   // B1 — Morning
   amGreet: {
     id: "am-greet",
-    text: "Morning, Rocky. Here's your day — easy push, protein focus. You're booked till noon, so I'll fit training after six, and lunch in your 12:30 gap.",
-    ms: 9326,
+    text: "Morning, Rocky. Strong pull yesterday — that's three days straight now. Today's lighter: an easy push and a protein focus. You're booked till noon, so I'll fit training after six, and lunch in your 12:30 gap.",
+    ms: 12251,
     speaker: "ai",
   },
   amNote: {
