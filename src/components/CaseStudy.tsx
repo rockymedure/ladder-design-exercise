@@ -377,6 +377,135 @@ function Hero() {
   );
 }
 
+function ScreenCard({
+  src,
+  alt,
+  label,
+  title,
+  has,
+  warm,
+}: {
+  src: string;
+  alt: string;
+  label: string;
+  title: string;
+  has: { ok: boolean; t: string }[];
+  warm: boolean;
+}) {
+  const accent = warm ? "var(--color-volt)" : "#B0B0B0";
+  return (
+    <div className="flex flex-col gap-5 rounded-3xl border border-black/10 bg-white p-5 sm:p-6">
+      <div className="flex items-center justify-between">
+        <span
+          className="text-[12px] font-bold uppercase tracking-[0.22em]"
+          style={{ color: warm ? "#3A3A3A" : "#8A8A8A" }}
+        >
+          {label}
+        </span>
+        <span
+          className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]"
+          style={{
+            background: warm ? "var(--color-volt)" : "#EDEDED",
+            color: warm ? "#0E0E0E" : "#6A6A6A",
+          }}
+        >
+          {title}
+        </span>
+      </div>
+
+      <div className="overflow-hidden rounded-[26px] border border-black/10 bg-black shadow-[0_24px_60px_-24px_rgba(0,0,0,0.5)]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
+      </div>
+
+      <ul className="flex flex-col gap-2.5">
+        {has.map((h) => (
+          <li key={h.t} className="flex items-center gap-2.5">
+            <span
+              className="grid h-4 w-4 shrink-0 place-items-center rounded-full"
+              style={{
+                background: h.ok ? accent : "transparent",
+                border: h.ok ? "none" : "1.5px solid #C9C9C9",
+              }}
+            >
+              {h.ok ? (
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M20 6 9 17l-5-5"
+                    stroke="#0E0E0E"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 6l12 12M18 6 6 18"
+                    stroke="#C9C9C9"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </span>
+            <span
+              className={`font-sf text-[14px] ${h.ok ? "text-ink" : "text-[#9A9A9A]"}`}
+            >
+              {h.t}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SplitEvidence() {
+  return (
+    <Reveal delay={0.14}>
+      <div className="mt-12">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <ScreenCard
+            src="/screens/app-b.png"
+            alt="Ladder workout screen, with a coach, teams, journal, and an active session"
+            label="Training"
+            title="A relationship"
+            warm
+            has={[
+              { ok: true, t: "A coach on every session" },
+              { ok: true, t: "Teams, Chat, and a Journal" },
+              { ok: true, t: "An active workout to resume" },
+            ]}
+          />
+          <ScreenCard
+            src="/screens/app-a.png"
+            alt="Ladder nutrition screen, a dashboard of calories, protein, water, and steps"
+            label="Nutrition"
+            title="A dashboard"
+            warm={false}
+            has={[
+              { ok: true, t: "Calories, protein, water, steps" },
+              { ok: false, t: "No coach, no team" },
+              { ok: false, t: "No tie back to your training" },
+            ]}
+          />
+        </div>
+
+        <p className="font-sf mt-6 text-[15px] leading-relaxed text-[#666]">
+          The tab bar says it out loud:{" "}
+          <span className="font-semibold text-ink">Workout</span>,{" "}
+          <span className="font-semibold text-ink">Chat</span>,{" "}
+          <span className="font-semibold text-ink">Teams</span> &mdash; three sides
+          of one relationship &mdash; and then{" "}
+          <span className="font-semibold text-ink">Nutrition</span>, alone at the
+          end. One pillar has a soul. The other has a spreadsheet.
+        </p>
+      </div>
+    </Reveal>
+  );
+}
+
 function Problem() {
   return (
     <section className="bg-[#FAFAFA] text-ink">
@@ -398,6 +527,8 @@ function Problem() {
             sessions, where the app isn&rsquo;t.
           </p>
         </Reveal>
+
+        <SplitEvidence />
 
         <Reveal delay={0.16}>
           <blockquote className="mt-12 border-l-2 border-volt pl-6">
