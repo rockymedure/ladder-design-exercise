@@ -511,7 +511,7 @@ function Problem() {
     <section className="bg-[#FAFAFA] text-ink">
       <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
         <Reveal>
-          <Kicker tone="light">The opportunity</Kicker>
+          <Kicker tone="light">The gap</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
