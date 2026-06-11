@@ -515,7 +515,7 @@ function Problem() {
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
-            The app is the easy part
+            One pillar has a coach. The other has a calculator.
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
