@@ -512,8 +512,8 @@ function BeatsIntro() {
 function Build() {
   const layers = [
     {
-      layer: "Cursor · Opus 4.8 High",
-      tool: "Coding agent",
+      layer: "Cursor",
+      tool: "Coding Agent · Opus 4.8",
       d: "The whole thing was built agentically in Cursor, driving Claude Opus 4.8 High, from pulling designs to wiring scenes to shipping, so iteration happened in minutes, not days.",
     },
     {
