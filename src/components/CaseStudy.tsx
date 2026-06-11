@@ -74,15 +74,19 @@ function PrimaryPill({
 function GhostPill({
   href,
   tone = "dark",
+  external = false,
   children,
 }: {
   href: string;
   tone?: "dark" | "light";
+  external?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <a
       href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
       className={`inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] transition ${
         tone === "dark"
           ? "border-white/20 text-paper hover:border-white/45"
@@ -581,6 +585,30 @@ function Build() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <GhostPill
+              href="https://github.com/rockymedure/ladder-design-exercise"
+              tone="light"
+              external
+            >
+              View the source
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 17 17 7M9 7h8v8"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </GhostPill>
+            <span className="font-sf text-[13px] text-[#5A5A5A]">
+              Public on GitHub, every commit from this build.
+            </span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
