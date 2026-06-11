@@ -530,9 +530,8 @@ function Problem() {
 
         <Reveal delay={0.16}>
           <blockquote className="mt-12 border-l-2 border-volt pl-6">
-            <p className="font-ek max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.6rem)] leading-tight text-ink">
-              Already motivated means they don&rsquo;t need another tracker. They
-              need someone in the day with them.
+            <p className="font-ek text-[clamp(1.6rem,3.6vw,2.6rem)] leading-tight text-ink">
+              Not another tracker. Someone in the day with them.
             </p>
           </blockquote>
         </Reveal>
