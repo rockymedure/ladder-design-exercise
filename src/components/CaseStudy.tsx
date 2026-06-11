@@ -303,7 +303,7 @@ export function CaseStudy() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0E0E0E]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-[60] border-b border-white/10 bg-[#0E0E0E]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-3.5">
         <Wordmark />
         <PrimaryPill href="/play">Live the day</PrimaryPill>
