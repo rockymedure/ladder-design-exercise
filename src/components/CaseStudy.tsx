@@ -602,7 +602,7 @@ function Problem() {
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
-            Coach versus calculator
+            The coach and the calculator
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
