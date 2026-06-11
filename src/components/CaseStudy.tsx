@@ -354,7 +354,7 @@ function Hero() {
         </Reveal>
         <Reveal delay={0.18}>
           <div className="flex flex-wrap items-center gap-3">
-            <PrimaryPill href="/play">
+            <PrimaryPill href="#beat-01">
               Live the full day
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <path
