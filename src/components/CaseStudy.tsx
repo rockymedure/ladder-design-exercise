@@ -519,12 +519,10 @@ function Problem() {
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="font-sf mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
-            Ladder is genuinely great at the workout, and the coach and team make
-            it feel like yours. Two gaps remain. Nutrition lives in a separate tab,
-            and a separate headspace. And the moments that actually decide the day,
-            the 1pm &ldquo;what do I eat,&rdquo; the skip-it morning, happen between
-            sessions, where the app isn&rsquo;t.
+          <p className="font-sf mt-6 max-w-[54ch] text-[18px] leading-relaxed text-[#444]">
+            Ladder is genuinely great at the workout, the coach and the team make
+            it feel like yours. Put the two screens side by side, though, and the
+            gap is obvious.
           </p>
         </Reveal>
 
@@ -532,45 +530,12 @@ function Problem() {
 
         <Reveal delay={0.16}>
           <blockquote className="mt-12 border-l-2 border-volt pl-6">
-            <p className="font-sf text-[15px] leading-relaxed text-[#6A6A6A]">
-              Ladder is &ldquo;built for busy people who are already motivated to
-              work out.&rdquo;{" "}
-              <span className="uppercase tracking-[0.14em] text-[#9A9A9A]">
-                &mdash; joinladder.com
-              </span>
-            </p>
-            <p className="font-ek mt-3 text-[clamp(1.5rem,3.4vw,2.4rem)] leading-tight text-ink">
+            <p className="font-ek max-w-[20ch] text-[clamp(1.6rem,3.6vw,2.6rem)] leading-tight text-ink">
               Already motivated means they don&rsquo;t need another tracker. They
               need someone in the day with them.
             </p>
           </blockquote>
         </Reveal>
-
-        <div className="mt-14 grid gap-4 md:grid-cols-3">
-          {[
-            {
-              t: "Nutrition feels separate",
-              d: "Training and food live in different tabs, and different headspaces.",
-            },
-            {
-              t: "The day is unattended",
-              d: "Workouts are scheduled; the choices between them are on you, alone.",
-            },
-            {
-              t: "The UI is the wall",
-              d: "Every action is a screen to find. Motivation leaks out between taps.",
-            },
-          ].map((c, i) => (
-            <Reveal key={c.t} delay={0.1 + i * 0.07}>
-              <div className="h-full rounded-2xl border border-black/10 bg-white p-6">
-                <h3 className="font-ek text-[1.25rem] text-ink">{c.t}</h3>
-                <p className="font-sf mt-2 text-[15px] leading-relaxed text-[#555]">
-                  {c.d}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </section>
   );
