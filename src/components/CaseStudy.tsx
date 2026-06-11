@@ -1,7 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, animate } from "framer-motion";
+
+function smoothScrollTo(e: React.MouseEvent, href: string) {
+  if (!href.startsWith("#")) return;
+  const el = document.getElementById(href.slice(1));
+  if (!el) return;
+  e.preventDefault();
+  const y = el.getBoundingClientRect().top + window.scrollY;
+  animate(window.scrollY, y, {
+    duration: 1.1,
+    ease: [0.65, 0, 0.35, 1],
+    onUpdate: (v) => window.scrollTo(0, v),
+  });
+}
 import { LadderMark, Wordmark } from "./Logo";
 import { ScenePlayer } from "./ScenePlayer";
 import { Morning } from "./scenes/Morning";
@@ -64,7 +77,8 @@ function PrimaryPill({
   return (
     <Link
       href={href}
-      className="inline-flex items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
+      onClick={(e) => smoothScrollTo(e, href)}
+      className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
     >
       {children}
     </Link>
@@ -87,7 +101,8 @@ function GhostPill({
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
-      className={`inline-flex items-center gap-2 rounded-full border px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] transition ${
+      onClick={external ? undefined : (e) => smoothScrollTo(e, href)}
+      className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] transition ${
         tone === "dark"
           ? "border-white/20 text-paper hover:border-white/45"
           : "border-black/15 text-ink hover:border-black/40"
