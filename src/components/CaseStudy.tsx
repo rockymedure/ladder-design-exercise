@@ -568,22 +568,6 @@ function Concept() {
             training and nutrition inside a single relationship.
           </p>
         </Reveal>
-        <Reveal delay={0.18}>
-          <div className="mx-auto mt-12 flex max-w-[760px] flex-col gap-px overflow-hidden rounded-2xl border border-white/10 sm:flex-row">
-            {[
-              ["Voice", "for action"],
-              ["Text", "for proof"],
-              ["Memory", "for trust"],
-            ].map(([a, b]) => (
-              <div key={a} className="flex-1 bg-white/[0.03] px-6 py-7">
-                <div className="font-ek text-[1.6rem] text-volt">{a}</div>
-                <div className="font-sf mt-1 text-[14px] uppercase tracking-[0.16em] text-ash">
-                  {b}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
       </div>
     </section>
   );
