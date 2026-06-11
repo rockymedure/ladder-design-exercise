@@ -532,13 +532,17 @@ function Problem() {
 
         <Reveal delay={0.16}>
           <blockquote className="mt-12 border-l-2 border-volt pl-6">
-            <p className="font-ek text-[clamp(1.5rem,3.4vw,2.4rem)] leading-tight text-ink">
-              &ldquo;Built for busy people who are already motivated to work
-              out.&rdquo;
+            <p className="font-sf text-[15px] leading-relaxed text-[#6A6A6A]">
+              Ladder is &ldquo;built for busy people who are already motivated to
+              work out.&rdquo;{" "}
+              <span className="uppercase tracking-[0.14em] text-[#9A9A9A]">
+                &mdash; joinladder.com
+              </span>
             </p>
-            <cite className="font-sf mt-3 block text-[13px] not-italic uppercase tracking-[0.18em] text-[#5A5A5A]">
-              joinladder.com
-            </cite>
+            <p className="font-ek mt-3 text-[clamp(1.5rem,3.4vw,2.4rem)] leading-tight text-ink">
+              Already motivated means they don&rsquo;t need another tracker. They
+              need someone in the day with them.
+            </p>
           </blockquote>
         </Reveal>
 
