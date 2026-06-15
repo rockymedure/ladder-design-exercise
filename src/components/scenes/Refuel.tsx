@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
 import { PrimaryButton } from "@/components/ui";
@@ -225,15 +226,15 @@ function CheckIn({
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-leaf">
+        <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-leaf">
           Refuel · Foundation Day
         </span>
-        <h2 className="font-display text-[33px] font-bold uppercase leading-[0.95] text-paper">
+        <h2 className="font-display text-[40px] font-bold uppercase leading-none text-paper">
           What&apos;s fueled
           <br />
           you today?
         </h2>
-        <p className="text-[14px] text-ash">
+        <p className="text-[15px] text-ash">
           Tap what you&apos;ve had. Takes two seconds.
         </p>
       </div>
@@ -242,6 +243,7 @@ function CheckIn({
         <Tile
           label="Water"
           sub="A glass, a bottle, anything"
+          img="/refuel/water.png"
           on={logged.water}
           onTap={() => onToggle("water")}
           icon={<DropletIcon />}
@@ -249,6 +251,7 @@ function CheckIn({
         <Tile
           label="Protein"
           sub="Shake, bar, or a meal"
+          img="/refuel/protein.png"
           on={logged.protein}
           onTap={() => onToggle("protein")}
           icon={<ShakerIcon />}
@@ -256,15 +259,11 @@ function CheckIn({
         <Tile
           label="Meal"
           sub="Breakfast, lunch, or dinner"
+          img="/refuel/meal.png"
           on={logged.meal}
           onTap={() => onToggle("meal")}
           icon={<MealIcon />}
         />
-      </div>
-
-      <div className="mt-5 flex items-center justify-center gap-2 text-[12px] text-ash-dark">
-        <VoiceGlyph />
-        <span>Want to be precise? Add detail by voice or photo.</span>
       </div>
 
       <div className="flex-1" />
@@ -288,12 +287,14 @@ function CheckIn({
 function Tile({
   label,
   sub,
+  img,
   on,
   onTap,
   icon,
 }: {
   label: string;
   sub: string;
+  img: string;
   on: boolean;
   onTap: () => void;
   icon: React.ReactNode;
@@ -302,9 +303,32 @@ function Tile({
     <motion.button
       onClick={onTap}
       whileTap={{ scale: 0.98 }}
-      animate={{ borderColor: on ? "rgba(84,244,109,0.6)" : "rgba(255,255,255,0.10)" }}
-      className="relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-[20px] border bg-ink-card px-4 py-4 text-left"
+      animate={{
+        borderColor: on ? "rgba(84,244,109,0.75)" : "rgba(255,255,255,0.10)",
+      }}
+      className="relative flex h-[96px] w-full cursor-pointer items-center overflow-hidden rounded-[18px] border text-left"
     >
+      <Image
+        src={img}
+        alt={label}
+        fill
+        sizes="(max-width: 768px) 100vw, 360px"
+        className="object-cover"
+        style={{ objectPosition: "right center" }}
+        priority
+      />
+
+      {/* legibility scrim, left-heavy */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(7,7,7,0.94) 0%, rgba(7,7,7,0.72) 36%, rgba(7,7,7,0.12) 100%)",
+        }}
+      />
+
+      {/* leaf wash when logged */}
       <motion.span
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -313,36 +337,42 @@ function Tile({
         transition={{ duration: 0.35 }}
         style={{
           background:
-            "linear-gradient(90deg, rgba(84,244,109,0.16), rgba(84,244,109,0.03))",
+            "linear-gradient(90deg, rgba(84,244,109,0.26) 0%, rgba(84,244,109,0.05) 55%, rgba(84,244,109,0) 100%)",
         }}
       />
-      <span
-        className="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl transition-colors duration-300"
-        style={{
-          background: on ? "var(--color-leaf)" : "rgba(255,255,255,0.06)",
-          color: on ? "#0a0a0a" : "var(--color-ash-light)",
-        }}
-      >
-        {icon}
-      </span>
-      <span className="relative flex flex-1 flex-col gap-0.5">
-        <span className="text-[17px] font-semibold text-paper">{label}</span>
-        <span className="text-[12px] text-ash">{sub}</span>
-      </span>
-      <span className="relative grid h-7 w-7 shrink-0 place-items-center">
-        {on ? (
+
+      <div className="relative z-10 flex w-full items-center justify-between px-5">
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <span className="text-leaf [&>svg]:h-[18px] [&>svg]:w-[18px]">{icon}</span>
+            <span className="font-display text-[26px] font-bold uppercase leading-none tracking-[0.01em] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
+              {label}
+            </span>
+          </div>
           <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 380, damping: 16 }}
-            className="grid h-7 w-7 place-items-center rounded-full bg-leaf"
+            className="text-[12px] font-medium"
+            initial={false}
+            animate={{ color: on ? "var(--color-leaf)" : "rgba(255,255,255,0.72)" }}
           >
-            <CheckIcon />
+            {on ? "Logged" : sub}
           </motion.span>
-        ) : (
-          <span className="h-6 w-6 rounded-full border-2 border-white/20" />
-        )}
-      </span>
+        </div>
+
+        <span className="grid h-8 w-8 shrink-0 place-items-center">
+          {on ? (
+            <motion.span
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 380, damping: 16 }}
+              className="grid h-8 w-8 place-items-center rounded-full bg-leaf shadow-[0_0_22px_rgba(84,244,109,0.55)]"
+            >
+              <CheckIcon />
+            </motion.span>
+          ) : (
+            <span className="h-7 w-7 rounded-full border-2 border-white/55" />
+          )}
+        </span>
+      </div>
     </motion.button>
   );
 }
@@ -611,20 +641,6 @@ function MealIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
       <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function VoiceGlyph() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-      <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" />
-      <path
-        d="M5 11a7 7 0 0 0 14 0M12 18v3"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
