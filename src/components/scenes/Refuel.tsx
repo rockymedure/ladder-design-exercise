@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
 import { PrimaryButton } from "@/components/ui";
@@ -50,6 +50,51 @@ export function RefuelStage() {
         </button>
       </div>
     </div>
+  );
+}
+
+/**
+ * The same flow as its own full-screen "app" — edge-to-edge on phones, framed
+ * in a device on desktop. Built for a clean shareable URL that opens straight
+ * into the prototype with no surrounding case study.
+ */
+export function RefuelApp() {
+  const [mounted, setMounted] = useState(false);
+  const [desktop, setDesktop] = useState(false);
+  const [runKey, setRunKey] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const flow = (
+    <RefuelFlow key={runKey} onRestart={() => setRunKey((k) => k + 1)} />
+  );
+
+  // Avoid a hydration flash between layouts.
+  if (!mounted) return <div className="h-[100dvh] w-full bg-[#070707]" />;
+
+  if (desktop) {
+    return (
+      <main className="grid h-[100dvh] w-full place-items-center overflow-hidden bg-[#0E0E0E]">
+        <PhoneFrame>
+          <StatusBar time="1:03 PM" />
+          <div className="absolute inset-0">{flow}</div>
+        </PhoneFrame>
+      </main>
+    );
+  }
+
+  return (
+    <main className="relative h-[100dvh] w-full overflow-hidden bg-[#070707]">
+      <StatusBar time="1:03 PM" />
+      <div className="absolute inset-0">{flow}</div>
+    </main>
   );
 }
 
