@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
 import { PrimaryButton } from "@/components/ui";
@@ -248,19 +248,11 @@ function CheckIn({
           onTap={() => onToggle("water")}
           icon={<DropletIcon />}
         >
-          <DetailBlock
-            caption="Amount"
-            value={`${WATER_STEPS[waterStep]} · ${WATER_OZ[waterStep]} oz`}
-          >
-            <input
-              type="range"
-              min={0}
-              max={WATER_STEPS.length - 1}
-              step={1}
+          <DetailBlock caption="Amount" value={`${WATER_OZ[waterStep]} oz`}>
+            <LadderSlider
+              steps={WATER_OZ.length}
               value={waterStep}
-              onChange={(e) => setWaterStep(Number(e.target.value))}
-              className="mt-2.5 w-full cursor-pointer accent-leaf"
-              aria-label="Water amount"
+              onChange={setWaterStep}
             />
           </DetailBlock>
         </Tile>
@@ -293,13 +285,10 @@ function CheckIn({
           icon={<MealIcon />}
         >
           <DetailBlock caption="What did you have">
-            <button className="mt-2.5 flex w-full cursor-pointer items-center gap-2.5 rounded-full border border-leaf/40 bg-white/[0.03] px-3.5 py-2.5 text-left">
-              <span className="text-leaf [&>svg]:h-[16px] [&>svg]:w-[16px]">
-                <MicGlyph />
-              </span>
-              <span className="text-[13px] text-ash-light">Speak it aloud</span>
-              <span className="ml-auto text-[11px] text-ash-dark">or type · photo</span>
-            </button>
+            <div className="mt-2.5 flex gap-2">
+              <ActionPill icon={<MicGlyph />} label="Say it" />
+              <ActionPill icon={<CameraGlyph />} label="Show it" />
+            </div>
           </DetailBlock>
         </Tile>
       </div>
@@ -322,8 +311,7 @@ function CheckIn({
   );
 }
 
-const WATER_STEPS = ["A sip", "One glass", "Two glasses", "Three glasses", "A bottle"];
-const WATER_OZ = [4, 8, 16, 24, 32];
+const WATER_OZ = [4, 8, 16, 32];
 const PROTEIN_PICKS = ["½", "1 scoop", "2", "Bar"];
 
 function Tile({
@@ -441,6 +429,77 @@ function DetailBlock({
   );
 }
 
+/**
+ * Ladder's slider system: a slim gray track with step ticks and a wide green
+ * capsule knob (see Figma node 1:13273). Stepped + draggable.
+ */
+function LadderSlider({
+  steps,
+  value,
+  onChange,
+}: {
+  steps: number;
+  value: number;
+  onChange: (i: number) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+
+  const setFromX = (clientX: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+    onChange(Math.round(pct * (steps - 1)));
+  };
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    dragging.current = true;
+    setFromX(e.clientX);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (dragging.current) setFromX(e.clientX);
+  };
+  const onPointerUp = () => {
+    dragging.current = false;
+  };
+
+  const pct = steps > 1 ? value / (steps - 1) : 0;
+
+  return (
+    <div
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+      className="relative mt-3 h-6 w-full cursor-pointer touch-none select-none px-[19px]"
+    >
+      <div ref={ref} className="relative h-full w-full">
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 h-[6px] -translate-y-1/2 rounded-full bg-[rgba(120,120,120,0.2)]" />
+        {Array.from({ length: steps }).map((_, i) => {
+          const p = i / (steps - 1);
+          return (
+            <span
+              key={i}
+              className="pointer-events-none absolute top-1/2 h-[12px] w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9E9E9E]"
+              style={{ left: `${p * 100}%` }}
+            />
+          );
+        })}
+        <div
+          className="pointer-events-none absolute top-1/2 h-6 w-[38px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-leaf transition-[left] duration-150 ease-out"
+          style={{
+            left: `${pct * 100}%`,
+            boxShadow:
+              "0px 0.5px 4px rgba(0,0,0,0.12), 0px 6px 13px rgba(0,0,0,0.12)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function Chip({
   active,
   onClick,
@@ -466,6 +525,18 @@ function Chip({
   );
 }
 
+function ActionPill({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.96 }}
+      className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-leaf/40 bg-white/[0.03] px-3.5 py-2.5"
+    >
+      <span className="text-leaf [&>svg]:h-[16px] [&>svg]:w-[16px]">{icon}</span>
+      <span className="text-[13px] font-medium text-ash-light">{label}</span>
+    </motion.button>
+  );
+}
+
 function MicGlyph() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -476,6 +547,20 @@ function MicGlyph() {
         strokeWidth="2"
         strokeLinecap="round"
       />
+    </svg>
+  );
+}
+
+function CameraGlyph() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M3 8.5a2 2 0 0 1 2-2h1.2l.9-1.5a1 1 0 0 1 .86-.5h7.88a1 1 0 0 1 .86.5l.9 1.5H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12.5" r="3.2" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }
