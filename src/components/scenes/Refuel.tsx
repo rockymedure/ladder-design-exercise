@@ -145,6 +145,7 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
           waterStep={waterStep}
           proteinPick={proteinPick}
           mealSummary={mealSummary}
+          onEdit={() => setPhase("checkin")}
           onRestart={onRestart}
         />
       )}
@@ -942,6 +943,7 @@ function Payoff({
   waterStep,
   proteinPick,
   mealSummary,
+  onEdit,
   onRestart,
 }: {
   rating: number;
@@ -949,6 +951,7 @@ function Payoff({
   waterStep: number;
   proteinPick: number;
   mealSummary: string;
+  onEdit: () => void;
   onRestart: () => void;
 }) {
   const score = rating || 4;
@@ -974,9 +977,10 @@ function Payoff({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <Confetti />
+      {/* depth: confetti behind the content */}
+      <Confetti layer="back" count={26} seed={0} />
 
-      <div className="absolute inset-0 overflow-y-auto px-6 pb-24 pt-11">
+      <div className="absolute inset-0 z-10 overflow-y-auto px-5 pb-32 pt-12">
         {/* action chips */}
         <div className="flex justify-end">
           <div className="flex items-center gap-0.5 rounded-full bg-[#1d1d1d]/90 px-1 py-1 backdrop-blur-md">
@@ -1015,7 +1019,7 @@ function Payoff({
         </div>
 
         {/* share proof */}
-        <div className="mt-3 flex justify-center">
+        <div className="mt-3.5 flex justify-center">
           <button className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1d1d1d]/90 px-5 py-2.5 backdrop-blur-md transition hover:bg-[#262626]">
             <InstaGlyph />
             <span className="text-[15px] font-semibold text-paper">
@@ -1025,15 +1029,14 @@ function Payoff({
         </div>
 
         {/* program + title */}
-        <div className="mt-6 flex items-center gap-2 text-[14px]">
+        <div className="mt-7 flex items-center gap-2 text-[15px]">
           <span className="text-paper">
             <LadderH />
           </span>
-          <span className="font-semibold text-paper">Transform</span>
-          <span className="text-ash-dark">·</span>
-          <span className="text-ash">Jun 16, 2026</span>
+          <span className="font-bold text-paper">Transform</span>
+          <span className="font-medium text-[#c4c4c4]">• Jun 16, 2026</span>
         </div>
-        <h2 className="font-ek mt-1.5 text-[28px] uppercase leading-none tracking-[-0.01em] text-paper">
+        <h2 className="font-ek mt-2 text-[21px] uppercase leading-[1.2] text-paper">
           Pull &amp; Define
         </h2>
 
@@ -1043,14 +1046,17 @@ function Payoff({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.4 }}
-            className="mt-4 rounded-[16px] bg-[#181818] px-3.5 py-3"
+            className="mt-4 rounded-[16px] bg-[#181818] px-3.5 py-3.5"
           >
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-leaf">
                 <NutritionLeaf />
                 Refueled today
               </span>
-              <button className="cursor-pointer text-[12px] font-semibold text-ash transition hover:text-paper">
+              <button
+                onClick={onEdit}
+                className="cursor-pointer text-[12px] font-semibold text-ash transition hover:text-paper"
+              >
                 Edit
               </button>
             </div>
@@ -1091,7 +1097,7 @@ function Payoff({
         )}
 
         {/* stats */}
-        <div className="mt-4 grid grid-cols-3 gap-y-4">
+        <div className="mt-5 grid grid-cols-3 gap-y-6">
           <StatCol value="01:04" label="Total Time" delay={0.1} />
           <StatCol value="6" label="Total Calories" delay={0.16} />
           <StatCol value="––" label="Active Calories" delay={0.22} />
@@ -1101,8 +1107,11 @@ function Payoff({
         </div>
       </div>
 
+      {/* depth: confetti floating in front of the content */}
+      <Confetti layer="front" count={18} seed={41} />
+
       {/* continue */}
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#080808] via-[#080808]/92 to-transparent px-6 pb-6 pt-8">
+      <div className="absolute inset-x-0 bottom-0 z-30 bg-gradient-to-t from-[#080808] via-[#080808]/92 to-transparent px-5 pb-6 pt-8">
         <motion.button
           onClick={onRestart}
           whileTap={{ scale: 0.98 }}
@@ -1134,8 +1143,8 @@ function StatCol({
       transition={{ delay, duration: 0.4 }}
       className="flex flex-col gap-0.5"
     >
-      <span className="font-ek text-[27px] leading-none text-paper">{value}</span>
-      <span className="text-[13px] text-ash">{label}</span>
+      <span className="font-ek text-[23px] leading-none text-paper">{value}</span>
+      <span className="text-[13px] tracking-[-0.39px] text-[#c4c4c4]">{label}</span>
     </motion.div>
   );
 }
@@ -1165,7 +1174,7 @@ function Medal({ score }: { score: number }) {
       className="relative"
       style={{ filter: "drop-shadow(0 22px 44px rgba(0,0,0,0.6))" }}
     >
-      <svg width="160" height="160" viewBox="0 0 220 220">
+      <svg width="158" height="158" viewBox="0 0 220 220">
         <defs>
           <linearGradient id="rim" x1="0.12" y1="0" x2="0.88" y2="1">
             <stop offset="0" stopColor="#ffffff" />
@@ -1286,40 +1295,77 @@ function Medal({ score }: { score: number }) {
   );
 }
 
-function Confetti() {
-  const bits = [
-    { x: "12%", y: "7%", c: "#e6ff00", r: -20, w: 10, h: 4 },
-    { x: "82%", y: "5%", c: "#54f46d", r: 35, w: 5, h: 12 },
-    { x: "92%", y: "14%", c: "#e6ff00", r: 12, w: 14, h: 5 },
-    { x: "6%", y: "18%", c: "#ffffff", r: -40, w: 4, h: 4 },
-    { x: "70%", y: "9%", c: "#a3b800", r: 18, w: 6, h: 6 },
-    { x: "24%", y: "26%", c: "#54f46d", r: -15, w: 9, h: 4 },
-    { x: "88%", y: "30%", c: "#ffffff", r: 50, w: 4, h: 10 },
-    { x: "16%", y: "40%", c: "#e6ff00", r: 25, w: 5, h: 5 },
-    { x: "60%", y: "4%", c: "#e6ff00", r: -30, w: 7, h: 7 },
-    { x: "34%", y: "6%", c: "#ffffff", r: 20, w: 5, h: 11 },
-    { x: "50%", y: "37%", c: "#a3b800", r: 45, w: 6, h: 6 },
-    { x: "78%", y: "22%", c: "#54f46d", r: -10, w: 11, h: 4 },
-    { x: "4%", y: "33%", c: "#e6ff00", r: 60, w: 5, h: 13 },
-    { x: "94%", y: "42%", c: "#ffffff", r: -25, w: 4, h: 4 },
-  ];
+const CONFETTI_COLORS = ["#e6ff00", "#54f46d", "#a3b800", "#ffffff"];
+const CONFETTI_FALL = 1080;
+
+/**
+ * One drifting layer of confetti. Rendered twice in Payoff — a dim, smaller
+ * "back" layer behind the content and a brighter, larger "front" layer over it —
+ * so pieces pass both behind and in front of cards for a sense of depth.
+ */
+function Confetti({
+  layer,
+  count,
+  seed,
+}: {
+  layer: "back" | "front";
+  count: number;
+  seed: number;
+}) {
+  const front = layer === "front";
+  const bits = Array.from({ length: count }, (_, i) => {
+    const rng = (n: number) => (Math.sin((i + seed) * 99.13 + n * 7.7) + 1) / 2;
+    const base = front ? 6 : 3;
+    return {
+      x: `${rng(1) * 100}%`,
+      c: CONFETTI_COLORS[(i + seed) % CONFETTI_COLORS.length],
+      w: base + Math.round(rng(2) * (front ? 8 : 5)),
+      h: base + Math.round(rng(3) * (front ? 10 : 6)),
+      sway: (rng(4) - 0.5) * (front ? 90 : 60),
+      spin: (rng(5) > 0.5 ? 1 : -1) * (360 + Math.round(rng(8) * 360)),
+      // front falls a touch quicker than back → subtle parallax
+      duration: (front ? 6.5 : 8) + rng(6) * 3,
+      delay: rng(7) * 5,
+      opacity: front ? 1 : 0.55,
+    };
+  });
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      style={{ filter: front ? undefined : "blur(0.4px)" }}
+    >
       {bits.map((b, i) => (
         <motion.span
           key={i}
           className="absolute rounded-[1px]"
           style={{
             left: b.x,
-            top: b.y,
+            top: -40,
             width: b.w,
             height: b.h,
             background: b.c,
-            rotate: `${b.r}deg`,
           }}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: [0, 1, 0.7], y: [-10, 6, 0] }}
-          transition={{ delay: 0.2 + i * 0.05, duration: 1.1 }}
+          initial={{ y: 0, x: 0, rotate: 0, opacity: 0 }}
+          animate={{
+            y: CONFETTI_FALL,
+            x: [0, b.sway, -b.sway * 0.6, 0],
+            rotate: b.spin,
+            opacity: [0, b.opacity, b.opacity, b.opacity * 0.85, 0],
+          }}
+          transition={{
+            duration: b.duration,
+            delay: b.delay,
+            repeat: Infinity,
+            y: { duration: b.duration, delay: b.delay, repeat: Infinity, ease: "easeIn" },
+            x: { duration: b.duration, delay: b.delay, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: b.duration, delay: b.delay, repeat: Infinity, ease: "linear" },
+            opacity: {
+              duration: b.duration,
+              delay: b.delay,
+              repeat: Infinity,
+              times: [0, 0.12, 0.68, 0.9, 1],
+            },
+          }}
         />
       ))}
     </div>
@@ -1339,12 +1385,10 @@ function ChipBtn({ children }: { children: ReactNode }) {
 
 function BookGlyph() {
   return (
-    <svg viewBox="0 0 24 24" fill="none">
+    <svg viewBox="9 8 18 18" fill="none">
       <path
-        d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5v-13Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
+        d="M14.2921 26C12.7765 26 12 25.231 12 23.693V12.3444C12 10.7839 12.769 10 14.3145 10H22.2436C23.7891 10 24.5581 10.7914 24.5581 12.3444V20.9081C24.5581 21.6547 24.2147 22.0205 23.9309 22.3042C23.0051 23.2375 23.1993 24.4545 24.14 24.8278C24.3789 24.9099 24.5581 25.1414 24.5581 25.4027C24.5581 25.7387 24.2893 26 23.9608 26H14.2921ZM14.1353 21.4456C14.3668 21.4456 14.5684 21.2515 14.5684 21.0126V11.5828C14.5684 11.3439 14.3668 11.1573 14.1353 11.1573C13.9039 11.1573 13.7098 11.3439 13.7098 11.5828V21.0126C13.7098 21.2515 13.9039 21.4456 14.1353 21.4456ZM16.4648 14.7709H22.2287C22.5049 14.7709 22.7364 14.5394 22.7364 14.2632C22.7364 13.9795 22.5049 13.7555 22.2287 13.7555H16.4648C16.1885 13.7555 15.9571 13.9795 15.9571 14.2632C15.9571 14.5394 16.1885 14.7709 16.4648 14.7709ZM16.4648 16.8913H20.8399C21.1237 16.8913 21.3476 16.6598 21.3476 16.3761C21.3476 16.0999 21.1237 15.8759 20.8399 15.8759H16.4648C16.1885 15.8759 15.9571 16.0999 15.9571 16.3761C15.9571 16.6598 16.1885 16.8913 16.4648 16.8913ZM14.3593 24.7979H22.4526C22.0569 24.1559 21.9972 23.3346 22.3481 22.5581C22.2734 22.573 22.1839 22.5805 22.0868 22.5805H14.4265C13.6799 22.5805 13.2021 23.0135 13.2021 23.6855C13.2021 24.3948 13.6052 24.7979 14.3593 24.7979Z"
+        fill="currentColor"
       />
     </svg>
   );
