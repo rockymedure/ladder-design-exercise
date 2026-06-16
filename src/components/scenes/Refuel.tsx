@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
 import { PrimaryButton } from "@/components/ui";
 
@@ -216,9 +216,11 @@ function CheckIn({
   onDone: () => void;
 }) {
   const count = Object.values(logged).filter(Boolean).length;
+  const [waterStep, setWaterStep] = useState(2);
+  const [proteinPick, setProteinPick] = useState(1);
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col px-6 pb-7 pt-16"
+      className="absolute inset-0 flex flex-col overflow-y-auto px-6 pb-7 pt-16"
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
@@ -234,7 +236,7 @@ function CheckIn({
           you today?
         </h2>
         <p className="text-[15px] text-ash">
-          Tap what you&apos;ve had. Takes two seconds.
+          Tap what you&apos;ve had. Slide or pick to add detail.
         </p>
       </div>
 
@@ -245,24 +247,64 @@ function CheckIn({
           on={logged.water}
           onTap={() => onToggle("water")}
           icon={<DropletIcon />}
-        />
+        >
+          <DetailBlock
+            caption="Amount"
+            value={`${WATER_STEPS[waterStep]} · ${WATER_OZ[waterStep]} oz`}
+          >
+            <input
+              type="range"
+              min={0}
+              max={WATER_STEPS.length - 1}
+              step={1}
+              value={waterStep}
+              onChange={(e) => setWaterStep(Number(e.target.value))}
+              className="mt-2.5 w-full cursor-pointer accent-leaf"
+              aria-label="Water amount"
+            />
+          </DetailBlock>
+        </Tile>
         <Tile
           label="Protein"
           sub="Shake, bar, or a meal"
           on={logged.protein}
           onTap={() => onToggle("protein")}
           icon={<ShakerIcon />}
-        />
+        >
+          <DetailBlock caption="How much">
+            <div className="mt-2.5 flex gap-2">
+              {PROTEIN_PICKS.map((c, i) => (
+                <Chip
+                  key={c}
+                  active={i === proteinPick}
+                  onClick={() => setProteinPick(i)}
+                >
+                  {c}
+                </Chip>
+              ))}
+            </div>
+          </DetailBlock>
+        </Tile>
         <Tile
           label="Meal"
           sub="Breakfast, lunch, or dinner"
           on={logged.meal}
           onTap={() => onToggle("meal")}
           icon={<MealIcon />}
-        />
+        >
+          <DetailBlock caption="What did you have">
+            <button className="mt-2.5 flex w-full cursor-pointer items-center gap-2.5 rounded-full border border-leaf/40 bg-white/[0.03] px-3.5 py-2.5 text-left">
+              <span className="text-leaf [&>svg]:h-[16px] [&>svg]:w-[16px]">
+                <MicGlyph />
+              </span>
+              <span className="text-[13px] text-ash-light">Speak it aloud</span>
+              <span className="ml-auto text-[11px] text-ash-dark">or type · photo</span>
+            </button>
+          </DetailBlock>
+        </Tile>
       </div>
 
-      <div className="flex-1" />
+      <div className="min-h-6 flex-1" />
 
       <button onClick={onDone} className="cursor-pointer">
         <motion.div
@@ -280,25 +322,30 @@ function CheckIn({
   );
 }
 
+const WATER_STEPS = ["A sip", "One glass", "Two glasses", "Three glasses", "A bottle"];
+const WATER_OZ = [4, 8, 16, 24, 32];
+const PROTEIN_PICKS = ["½", "1 scoop", "2", "Bar"];
+
 function Tile({
   label,
   sub,
   on,
   onTap,
   icon,
+  children,
 }: {
   label: string;
   sub: string;
   on: boolean;
   onTap: () => void;
   icon: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
-    <motion.button
-      onClick={onTap}
-      whileTap={{ scale: 0.98 }}
+    <motion.div
+      layout
       animate={{ borderColor: on ? "rgba(84,244,109,0.6)" : "rgba(255,255,255,0.10)" }}
-      className="relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-[20px] border bg-ink-card px-4 py-4 text-left"
+      className="relative overflow-hidden rounded-[20px] border bg-ink-card"
     >
       <motion.span
         aria-hidden
@@ -311,34 +358,125 @@ function Tile({
             "linear-gradient(90deg, rgba(84,244,109,0.16), rgba(84,244,109,0.03))",
         }}
       />
-      <span
-        className="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl transition-colors duration-300"
-        style={{
-          background: on ? "var(--color-leaf)" : "rgba(255,255,255,0.06)",
-          color: on ? "#0a0a0a" : "var(--color-ash-light)",
-        }}
+
+      <motion.button
+        onClick={onTap}
+        whileTap={{ scale: 0.98 }}
+        className="relative flex w-full cursor-pointer items-center gap-4 px-4 py-4 text-left"
       >
-        {icon}
-      </span>
-      <span className="relative flex flex-1 flex-col gap-0.5">
-        <span className="text-[17px] font-semibold text-paper">{label}</span>
-        <span className="text-[12px] text-ash">{sub}</span>
-      </span>
-      <span className="relative grid h-7 w-7 shrink-0 place-items-center">
-        {on ? (
+        <span
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl transition-colors duration-300"
+          style={{
+            background: on ? "var(--color-leaf)" : "rgba(255,255,255,0.06)",
+            color: on ? "#0a0a0a" : "var(--color-ash-light)",
+          }}
+        >
+          {icon}
+        </span>
+        <span className="flex flex-1 flex-col gap-0.5">
+          <span className="text-[17px] font-semibold text-paper">{label}</span>
           <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 380, damping: 16 }}
-            className="grid h-7 w-7 place-items-center rounded-full bg-leaf"
+            className="text-[12px]"
+            initial={false}
+            animate={{ color: on ? "var(--color-leaf)" : "var(--color-ash)" }}
           >
-            <CheckIcon />
+            {on ? "Logged" : sub}
           </motion.span>
-        ) : (
-          <span className="h-6 w-6 rounded-full border-2 border-white/20" />
+        </span>
+        <span className="grid h-7 w-7 shrink-0 place-items-center">
+          {on ? (
+            <motion.span
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 380, damping: 16 }}
+              className="grid h-7 w-7 place-items-center rounded-full bg-leaf"
+            >
+              <CheckIcon />
+            </motion.span>
+          ) : (
+            <span className="h-6 w-6 rounded-full border-2 border-white/20" />
+          )}
+        </span>
+      </motion.button>
+
+      <AnimatePresence initial={false}>
+        {on && children && (
+          <motion.div
+            key="detail"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden"
+          >
+            <div className="mx-4 border-t border-white/10 pb-4 pt-3">{children}</div>
+          </motion.div>
         )}
-      </span>
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function DetailBlock({
+  caption,
+  value,
+  children,
+}: {
+  caption: string;
+  value?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ash-dark">
+          {caption}
+        </span>
+        {value && (
+          <span className="text-[12px] font-semibold text-paper">{value}</span>
+        )}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Chip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileTap={{ scale: 0.94 }}
+      className="cursor-pointer rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors"
+      style={{
+        background: active ? "var(--color-leaf)" : "rgba(255,255,255,0.05)",
+        color: active ? "#0a0a0a" : "var(--color-ash-light)",
+        border: active ? "1px solid transparent" : "1px solid rgba(255,255,255,0.12)",
+      }}
+    >
+      {children}
     </motion.button>
+  );
+}
+
+function MicGlyph() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" />
+      <path
+        d="M5 11a7 7 0 0 0 14 0M12 18v3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
 
