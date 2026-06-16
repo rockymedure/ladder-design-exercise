@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
 
@@ -99,6 +99,7 @@ export function RefuelApp() {
 
 function RefuelFlow({ onRestart }: { onRestart: () => void }) {
   const [phase, setPhase] = useState<Phase>("rating");
+  const [rating, setRating] = useState(0);
   const [logged, setLogged] = useState<Record<Item, boolean>>({
     water: false,
     protein: false,
@@ -113,7 +114,12 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
       className="relative h-full w-full overflow-hidden bg-[#070707]"
     >
       {phase === "rating" && (
-        <RatingScreen key="rating" onDone={() => setPhase("checkin")} />
+        <RatingScreen
+          key="rating"
+          rating={rating}
+          setRating={setRating}
+          onDone={() => setPhase("checkin")}
+        />
       )}
       {phase === "checkin" && (
         <CheckIn
@@ -124,7 +130,7 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
         />
       )}
       {phase === "payoff" && (
-        <Payoff key="payoff" logged={logged} onRestart={onRestart} />
+        <Payoff key="payoff" rating={rating} onRestart={onRestart} />
       )}
     </div>
   );
@@ -133,8 +139,15 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
 /* ------------------------------------------------------------------ *
  * 1. Rating screen — a nod to Ladder's "Complete Workout" screen.
  * ------------------------------------------------------------------ */
-function RatingScreen({ onDone }: { onDone: () => void }) {
-  const [rating, setRating] = useState(0);
+function RatingScreen({
+  rating,
+  setRating,
+  onDone,
+}: {
+  rating: number;
+  setRating: (n: number) => void;
+  onDone: () => void;
+}) {
   const rated = rating > 0;
   return (
     <motion.div
@@ -896,212 +909,410 @@ function CameraGlyph() {
 }
 
 /* ------------------------------------------------------------------ *
- * 3. Payoff — fill today's ring, bump the existing streak.
+ * 3. Payoff — the earned badge + workout summary (Ladder's complete screen).
  * ------------------------------------------------------------------ */
-const WEEK = [
-  { d: "S", done: true },
-  { d: "M", done: true },
-  { d: "T", done: true },
-  { d: "W", today: true },
-  { d: "T" },
-  { d: "F" },
-  { d: "S" },
-];
-
 function Payoff({
-  logged,
+  rating,
   onRestart,
 }: {
-  logged: Record<Item, boolean>;
+  rating: number;
   onRestart: () => void;
 }) {
-  const count = Object.values(logged).filter(Boolean).length;
+  const score = rating || 4;
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col items-center justify-center gap-7 px-7"
+      className="absolute inset-0 overflow-hidden bg-[#080808]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <StreakRing />
+      <Confetti />
 
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h2 className="font-display text-[40px] font-bold uppercase leading-none text-paper">
-          {count > 0 ? "Logged" : "Next time"}
+      <div className="absolute inset-0 overflow-y-auto px-6 pb-24 pt-12">
+        {/* action chips */}
+        <div className="flex justify-end">
+          <div className="flex items-center gap-0.5 rounded-full bg-[#1d1d1d]/90 px-1 py-1 backdrop-blur-md">
+            <ChipBtn>
+              <BookGlyph />
+            </ChipBtn>
+            <ChipBtn>
+              <HeartGlyph />
+            </ChipBtn>
+            <ChipBtn>
+              <ShareGlyph />
+            </ChipBtn>
+          </div>
+        </div>
+
+        {/* badge */}
+        <div className="-mt-1 flex justify-center">
+          <Medal score={score} />
+        </div>
+
+        {/* pager dots */}
+        <div className="mt-4 flex items-center justify-center gap-2.5">
+          <span className="grid h-[18px] w-[18px] place-items-center rounded-full bg-volt">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M20 6L9 17l-5-5"
+                stroke="#0a0a0a"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <span className="h-[16px] w-[16px] rounded-full border-[1.5px] border-white/20" />
+          <span className="h-[16px] w-[16px] rounded-full border-[1.5px] border-white/20" />
+        </div>
+
+        {/* share proof */}
+        <div className="mt-4 flex justify-center">
+          <button className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1d1d1d]/90 px-5 py-2.5 backdrop-blur-md transition hover:bg-[#262626]">
+            <InstaGlyph />
+            <span className="text-[15px] font-semibold text-paper">
+              Share Proof
+            </span>
+          </button>
+        </div>
+
+        {/* program + title */}
+        <div className="mt-7 flex items-center gap-2 text-[14px]">
+          <span className="text-paper">
+            <LadderH />
+          </span>
+          <span className="font-semibold text-paper">Transform</span>
+          <span className="text-ash-dark">·</span>
+          <span className="text-ash">Jun 16, 2026</span>
+        </div>
+        <h2 className="font-ek mt-1.5 text-[28px] uppercase leading-none tracking-[-0.01em] text-paper">
+          Pull &amp; Define
         </h2>
-        <p className="text-[15px] text-ash-light">
-          {count > 0
-            ? "Your nutrition streak's alive too."
-            : "No worries. The streak's still yours tomorrow."}
-        </p>
-      </div>
 
-      <div className="w-full overflow-hidden rounded-[20px] border border-leaf/25 bg-ink-card">
-        <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-leaf">
-            Nutrition streak
+        {/* calories nudge */}
+        <div className="mt-4 flex items-center gap-2.5 rounded-[16px] bg-[#181818] px-3 py-2.5">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.07]">
+            <FlameGlyph />
           </span>
-          <span className="text-[10px] uppercase tracking-[0.16em] text-ash">
-            Week 3
-          </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <span className="text-[14px] font-bold leading-tight text-paper">
+              Get your calories right
+            </span>
+            <span className="whitespace-nowrap text-[11px] leading-tight text-ash">
+              Add or update for this workout
+            </span>
+          </div>
+          <button className="shrink-0 cursor-pointer rounded-full bg-[#2b2b2b] px-3 py-1.5 text-[12px] font-semibold text-paper transition hover:bg-[#363636]">
+            Update
+          </button>
         </div>
-        <div className="flex items-end gap-2.5 px-4 pt-4">
-          <CountUp
-            from={3}
-            to={count > 0 ? 4 : 3}
-            className="font-display text-[44px] font-bold leading-[0.8] text-leaf"
-          />
-          <span className="pb-1.5 font-display text-[14px] font-bold uppercase leading-none text-paper">
-            days
-            <br />
-            in a row
-          </span>
-        </div>
-        <div className="grid grid-cols-7 gap-1 px-3 pb-4 pt-4">
-          {WEEK.map((d, i) => (
-            <DayDot
-              key={i}
-              d={d.d}
-              done={d.done}
-              today={d.today}
-              filled={count > 0}
-              index={i}
-            />
-          ))}
+
+        {/* stats */}
+        <div className="mt-5 grid grid-cols-3 gap-y-4">
+          <StatCol value="01:04" label="Total Time" delay={0.1} />
+          <StatCol value="6" label="Total Calories" delay={0.16} />
+          <StatCol value="––" label="Active Calories" delay={0.22} />
+          <StatCol value="0%" label="Journal" delay={0.28} />
+          <StatCol value="0" label="Cheers" delay={0.34} />
+          <StatCol value="0" label="PRs" delay={0.4} />
         </div>
       </div>
 
-      <button
-        onClick={onRestart}
-        className="flex cursor-pointer items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-ash transition hover:text-paper"
-      >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        Start over
-      </button>
+      {/* continue */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#080808] via-[#080808]/92 to-transparent px-6 pb-6 pt-8">
+        <motion.button
+          onClick={onRestart}
+          whileTap={{ scale: 0.98 }}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.4 }}
+          className="w-full cursor-pointer rounded-full bg-[#171717] py-4 text-[14px] font-bold uppercase tracking-[0.12em] text-paper transition hover:bg-[#222]"
+        >
+          Continue
+        </motion.button>
+      </div>
     </motion.div>
   );
 }
 
-function StreakRing() {
-  const R = 46;
-  const C = 2 * Math.PI * R;
-  return (
-    <div className="relative grid place-items-center">
-      <svg width="124" height="124" viewBox="0 0 124 124">
-        <circle cx="62" cy="62" r={R} fill="none" stroke="#222" strokeWidth="10" />
-        <motion.circle
-          cx="62"
-          cy="62"
-          r={R}
-          fill="none"
-          stroke="var(--color-leaf)"
-          strokeWidth="10"
-          strokeLinecap="round"
-          transform="rotate(-90 62 62)"
-          strokeDasharray={C}
-          initial={{ strokeDashoffset: C }}
-          animate={{ strokeDashoffset: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </svg>
-      <motion.span
-        className="absolute grid h-14 w-14 place-items-center rounded-full bg-leaf"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.7, type: "spring", stiffness: 320, damping: 15 }}
-      >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M20 6L9 17l-5-5"
-            stroke="#0a0a0a"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.span>
-    </div>
-  );
-}
-
-function DayDot({
-  d,
-  done,
-  today,
-  filled,
-  index,
+function StatCol({
+  value,
+  label,
+  delay,
 }: {
-  d: string;
-  done?: boolean;
-  today?: boolean;
-  filled: boolean;
-  index: number;
+  value: string;
+  label: string;
+  delay: number;
 }) {
-  const isFilled = done || (today && filled);
   return (
-    <div className="flex flex-col items-center gap-1.5">
-      <span
-        className="text-[9px] font-semibold uppercase tracking-[0.08em]"
-        style={{
-          color: done || today ? "var(--color-ash-light)" : "var(--color-ash-dark)",
-        }}
-      >
-        {d}
-      </span>
-      {isFilled ? (
-        <motion.span
-          initial={today ? { scale: 0.4 } : false}
-          animate={{ scale: 1 }}
-          transition={today ? { delay: 0.85, type: "spring", stiffness: 340, damping: 15 } : undefined}
-          className="grid h-7 w-7 place-items-center rounded-full bg-leaf"
-        >
-          <CheckIcon />
-        </motion.span>
-      ) : today ? (
-        <span className="grid h-7 w-7 place-items-center rounded-full border-2 border-leaf/70 text-[10px] font-semibold text-leaf">
-          8
-        </span>
-      ) : (
-        <span className="grid h-7 w-7 place-items-center rounded-full border border-white/10 text-[10px] text-ash-dark">
-          {index + 5}
-        </span>
-      )}
-    </div>
-  );
-}
-
-function CountUp({
-  from,
-  to,
-  className,
-}: {
-  from: number;
-  to: number;
-  className?: string;
-}) {
-  const [n, setN] = useState(from);
-  if (to !== from && n === from) {
-    setTimeout(() => setN(to), 650);
-  }
-  return (
-    <motion.span
-      key={n}
-      initial={{ scale: 0.6, opacity: 0.4 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 320, damping: 16 }}
-      className={className}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.4 }}
+      className="flex flex-col gap-0.5"
     >
-      {n}
-    </motion.span>
+      <span className="font-ek text-[27px] leading-none text-paper">{value}</span>
+      <span className="text-[13px] text-ash">{label}</span>
+    </motion.div>
+  );
+}
+
+/* The earned medal — brushed-metal disc, engraved "LADDER", volt score ring. */
+function Medal({ score }: { score: number }) {
+  const cx = 110;
+  const cy = 110;
+  const rr = 60; // ring radius
+  const C = 2 * Math.PI * rr;
+  const gap = 42; // degrees of open gap at top
+  const sweep = 360 - gap;
+  const frac = sweep / 360;
+  const start = -90 + gap / 2; // right side of the top gap
+  const pol = (deg: number, r: number) => {
+    const a = (deg * Math.PI) / 180;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)] as const;
+  };
+  const [rcx, rcy] = pol(start, rr);
+  const [lcx, lcy] = pol(start + sweep, rr);
+
+  return (
+    <motion.div
+      initial={{ scale: 0.62, opacity: 0, rotate: -6 }}
+      animate={{ scale: 1, opacity: 1, rotate: 0 }}
+      transition={{ type: "spring", stiffness: 200, damping: 16 }}
+      className="relative"
+      style={{ filter: "drop-shadow(0 22px 44px rgba(0,0,0,0.6))" }}
+    >
+      <svg width="178" height="178" viewBox="0 0 220 220">
+        <defs>
+          <linearGradient id="rim" x1="0.12" y1="0" x2="0.88" y2="1">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="0.28" stopColor="#c9cccd" />
+            <stop offset="0.5" stopColor="#7c7f81" />
+            <stop offset="0.72" stopColor="#b6b9bb" />
+            <stop offset="1" stopColor="#edeff0" />
+          </linearGradient>
+          <linearGradient id="face" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0" stopColor="#bcbfc0" />
+            <stop offset="1" stopColor="#8a8d8e" />
+          </linearGradient>
+          <radialGradient id="recess" cx="0.5" cy="0.36" r="0.72">
+            <stop offset="0" stopColor="#a7aaa8" />
+            <stop offset="0.75" stopColor="#7e817f" />
+            <stop offset="1" stopColor="#62655f" />
+          </radialGradient>
+          <linearGradient id="ring" x1="0.1" y1="0.1" x2="0.92" y2="0.95">
+            <stop offset="0" stopColor="#c2d22a" />
+            <stop offset="1" stopColor="#6c7a06" />
+          </linearGradient>
+          <filter id="capGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="2.4" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* bevelled metal rim */}
+        <circle cx={cx} cy={cy} r="104" fill="url(#rim)" />
+        <circle cx={cx} cy={cy} r="104" fill="none" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1" />
+        <circle cx={cx} cy={cy} r="88" fill="none" stroke="#5d605e" strokeWidth="2" />
+
+        {/* face */}
+        <circle cx={cx} cy={cy} r="86" fill="url(#face)" />
+
+        {/* engraved LADDER lockup */}
+        <path id="ladderTopArc" d="M 36,110 A 74,74 0 0 1 184,110" fill="none" />
+        <g opacity="0.9">
+          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#f1f3f2" opacity="0.5">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dy="1">
+              LADDER
+            </textPath>
+          </text>
+          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#5f625f">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle">
+              LADDER
+            </textPath>
+          </text>
+        </g>
+        <g transform={`rotate(180 ${cx} ${cy})`}>
+          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#f1f3f2" opacity="0.5">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dy="1">
+              LADDER
+            </textPath>
+          </text>
+          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#5f625f">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle">
+              LADDER
+            </textPath>
+          </text>
+        </g>
+
+        {/* score ring track + fill */}
+        <circle
+          cx={cx}
+          cy={cy}
+          r={rr}
+          fill="none"
+          stroke="#54573a"
+          strokeWidth="13"
+          strokeDasharray={`${C * frac} ${C}`}
+          transform={`rotate(${start} ${cx} ${cy})`}
+          strokeLinecap="round"
+        />
+        <motion.circle
+          cx={cx}
+          cy={cy}
+          r={rr}
+          fill="none"
+          stroke="url(#ring)"
+          strokeWidth="13"
+          strokeLinecap="round"
+          transform={`rotate(${start} ${cx} ${cy})`}
+          strokeDasharray={`${C * frac} ${C}`}
+          initial={{ strokeDashoffset: C * frac }}
+          animate={{ strokeDashoffset: 0 }}
+          transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        />
+        {/* bright end caps flanking the gap */}
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.3 }}
+          filter="url(#capGlow)"
+        >
+          <circle cx={rcx} cy={rcy} r="6.5" fill="#dcee4f" />
+          <circle cx={rcx} cy={rcy} r="6.5" fill="#d6ec3a" />
+          <circle cx={lcx} cy={lcy} r="6.5" fill="#d6ec3a" />
+        </motion.g>
+
+        {/* recessed inner disc */}
+        <circle cx={cx} cy={cy} r="46" fill="url(#recess)" />
+        <circle cx={cx} cy={cy} r="46" fill="none" stroke="#4f524d" strokeWidth="1.5" />
+        <circle cx={cx} cy={cy} r="46" fill="none" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="1" transform="translate(0 -1)" />
+
+        {/* score */}
+        <text x={cx} y={cy + 17} textAnchor="middle" className="font-ek" fontSize="52" fill="#3f423d" opacity="0.55">
+          {score}
+        </text>
+        <text x={cx} y={cy + 16} textAnchor="middle" className="font-ek" fontSize="52" fill="#d4d7d2">
+          {score}
+        </text>
+      </svg>
+    </motion.div>
+  );
+}
+
+function Confetti() {
+  const bits = [
+    { x: "12%", y: "7%", c: "#e6ff00", r: -20, w: 10, h: 4 },
+    { x: "82%", y: "5%", c: "#54f46d", r: 35, w: 5, h: 12 },
+    { x: "92%", y: "14%", c: "#e6ff00", r: 12, w: 14, h: 5 },
+    { x: "6%", y: "18%", c: "#ffffff", r: -40, w: 4, h: 4 },
+    { x: "70%", y: "9%", c: "#a3b800", r: 18, w: 6, h: 6 },
+    { x: "24%", y: "26%", c: "#54f46d", r: -15, w: 9, h: 4 },
+    { x: "88%", y: "30%", c: "#ffffff", r: 50, w: 4, h: 10 },
+    { x: "16%", y: "40%", c: "#e6ff00", r: 25, w: 5, h: 5 },
+    { x: "60%", y: "4%", c: "#e6ff00", r: -30, w: 7, h: 7 },
+    { x: "34%", y: "6%", c: "#ffffff", r: 20, w: 5, h: 11 },
+    { x: "50%", y: "37%", c: "#a3b800", r: 45, w: 6, h: 6 },
+    { x: "78%", y: "22%", c: "#54f46d", r: -10, w: 11, h: 4 },
+    { x: "4%", y: "33%", c: "#e6ff00", r: 60, w: 5, h: 13 },
+    { x: "94%", y: "42%", c: "#ffffff", r: -25, w: 4, h: 4 },
+  ];
+  return (
+    <div className="pointer-events-none absolute inset-0">
+      {bits.map((b, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-[1px]"
+          style={{
+            left: b.x,
+            top: b.y,
+            width: b.w,
+            height: b.h,
+            background: b.c,
+            rotate: `${b.r}deg`,
+          }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: [0, 1, 0.7], y: [-10, 6, 0] }}
+          transition={{ delay: 0.2 + i * 0.05, duration: 1.1 }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Payoff sub-icons
+ * ------------------------------------------------------------------ */
+function ChipBtn({ children }: { children: ReactNode }) {
+  return (
+    <button className="grid h-9 w-9 cursor-pointer place-items-center rounded-full text-paper transition hover:bg-white/10 [&>svg]:h-[18px] [&>svg]:w-[18px]">
+      {children}
+    </button>
+  );
+}
+
+function BookGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5v-13ZM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5v-13Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function HeartGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 20s-7-4.35-9.2-8.5C1.3 8.6 2.7 5.5 5.8 5.5c1.9 0 3.2 1.1 4.2 2.6 1-1.5 2.3-2.6 4.2-2.6 3.1 0 4.5 3.1 3 6-2.2 4.15-9.2 8.5-9.2 8.5Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ShareGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 15V3m0 0L8 7m4-4 4 4M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function InstaGlyph() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" className="text-paper" />
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" className="text-paper" />
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" className="text-paper" />
+    </svg>
+  );
+}
+
+function FlameGlyph() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 3s5 4 5 9a5 5 0 0 1-10 0c0-1.4.5-2.5 1.2-3.3.3 1 1 1.8 1.8 2.1C9.4 8.6 12 6.5 12 3Z"
+        fill="#ff7a45"
+      />
+    </svg>
   );
 }
 
