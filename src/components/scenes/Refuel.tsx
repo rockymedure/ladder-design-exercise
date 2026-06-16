@@ -400,6 +400,8 @@ function CheckIn({
 
 const WATER_OZ = [4, 8, 16, 32];
 const PROTEIN_PICKS = ["½", "1 scoop", "2", "Bar"];
+// Full, unit-clear labels for the payoff summary chips.
+const PROTEIN_LABELS = ["½ scoop protein", "1 scoop protein", "2 scoops protein", "Protein bar"];
 
 function Tile({
   label,
@@ -962,7 +964,7 @@ function Payoff({
     },
     logged.protein && {
       icon: <ShakerIcon />,
-      label: `${PROTEIN_PICKS[proteinPick]} protein`,
+      label: PROTEIN_LABELS[proteinPick] ?? `${PROTEIN_PICKS[proteinPick]} protein`,
     },
     logged.meal && {
       icon: <MealIcon />,
@@ -1067,12 +1069,12 @@ function Payoff({
                   initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.25 + i * 0.07, type: "spring", stiffness: 360, damping: 18 }}
-                  className="flex max-w-[230px] items-center gap-1.5 rounded-full bg-white/[0.06] py-1.5 pl-2 pr-3 text-[13px] text-paper"
+                  className="flex max-w-full items-center gap-1.5 rounded-full bg-white/[0.06] py-1.5 pl-2 pr-3 text-[13px] text-paper"
                 >
-                  <span className="text-leaf [&>svg]:h-[14px] [&>svg]:w-[14px]">
+                  <span className="shrink-0 text-leaf [&>svg]:h-[14px] [&>svg]:w-[14px]">
                     {f.icon}
                   </span>
-                  <span className="truncate">{f.label}</span>
+                  <span className="min-w-0 truncate">{f.label}</span>
                 </motion.span>
               ))}
             </div>
@@ -1213,28 +1215,28 @@ function Medal({ score }: { score: number }) {
         {/* face */}
         <circle cx={cx} cy={cy} r="86" fill="url(#face)" />
 
-        {/* engraved LADDER lockup */}
-        <path id="ladderTopArc" d="M 36,110 A 74,74 0 0 1 184,110" fill="none" />
+        {/* engraved LADDER lockup — centered in the rim channel */}
+        <path id="ladderTopArc" d="M 33.5,110 A 76.5,76.5 0 0 1 186.5,110" fill="none" />
         <g opacity="0.9">
-          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#f1f3f2" opacity="0.5">
-            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dy="1">
+          <text className="font-display" fontSize="16" fontWeight="700" letterSpacing="5.5" fill="#f1f3f2" opacity="0.5">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dominantBaseline="central" dy="1.2">
               LADDER
             </textPath>
           </text>
-          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#5f625f">
-            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle">
+          <text className="font-display" fontSize="16" fontWeight="700" letterSpacing="5.5" fill="#5f625f">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dominantBaseline="central">
               LADDER
             </textPath>
           </text>
         </g>
         <g transform={`rotate(180 ${cx} ${cy})`}>
-          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#f1f3f2" opacity="0.5">
-            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dy="1">
+          <text className="font-display" fontSize="16" fontWeight="700" letterSpacing="5.5" fill="#f1f3f2" opacity="0.5">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dominantBaseline="central" dy="1.2">
               LADDER
             </textPath>
           </text>
-          <text className="font-display" fontSize="17" fontWeight="700" letterSpacing="6" fill="#5f625f">
-            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle">
+          <text className="font-display" fontSize="16" fontWeight="700" letterSpacing="5.5" fill="#5f625f">
+            <textPath href="#ladderTopArc" startOffset="50%" textAnchor="middle" dominantBaseline="central">
               LADDER
             </textPath>
           </text>
