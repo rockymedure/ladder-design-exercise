@@ -105,6 +105,9 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
     protein: false,
     meal: false,
   });
+  const [waterStep, setWaterStep] = useState(2);
+  const [proteinPick, setProteinPick] = useState(1);
+  const [mealSummary, setMealSummary] = useState("");
 
   const toggle = (k: Item) => setLogged((p) => ({ ...p, [k]: !p[k] }));
 
@@ -126,11 +129,24 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
           key="checkin"
           logged={logged}
           onToggle={toggle}
+          waterStep={waterStep}
+          setWaterStep={setWaterStep}
+          proteinPick={proteinPick}
+          setProteinPick={setProteinPick}
+          onMeal={setMealSummary}
           onDone={() => setPhase("payoff")}
         />
       )}
       {phase === "payoff" && (
-        <Payoff key="payoff" rating={rating} onRestart={onRestart} />
+        <Payoff
+          key="payoff"
+          rating={rating}
+          logged={logged}
+          waterStep={waterStep}
+          proteinPick={proteinPick}
+          mealSummary={mealSummary}
+          onRestart={onRestart}
+        />
       )}
     </div>
   );
@@ -274,15 +290,23 @@ function Star({ filled }: { filled: boolean }) {
 function CheckIn({
   logged,
   onToggle,
+  waterStep,
+  setWaterStep,
+  proteinPick,
+  setProteinPick,
+  onMeal,
   onDone,
 }: {
   logged: Record<Item, boolean>;
   onToggle: (k: Item) => void;
+  waterStep: number;
+  setWaterStep: (n: number) => void;
+  proteinPick: number;
+  setProteinPick: (n: number) => void;
+  onMeal: (summary: string) => void;
   onDone: () => void;
 }) {
   const count = Object.values(logged).filter(Boolean).length;
-  const [waterStep, setWaterStep] = useState(2);
-  const [proteinPick, setProteinPick] = useState(1);
   return (
     <motion.div
       className="absolute inset-0 flex flex-col overflow-y-auto px-6 pb-7 pt-16"
@@ -350,7 +374,7 @@ function CheckIn({
           icon={<MealIcon />}
         >
           <DetailBlock caption="What did you have">
-            <MealVoice />
+            <MealVoice onResult={onMeal} />
           </DetailBlock>
         </Tile>
       </div>
@@ -624,7 +648,7 @@ type MealResult = {
 
 type VoiceState = "prompt" | "listening" | "processing" | "result";
 
-function MealVoice() {
+function MealVoice({ onResult }: { onResult?: (summary: string) => void }) {
   const [state, setState] = useState<VoiceState>("prompt");
   const [via, setVia] = useState<"voice" | "photo">("voice");
   const [result, setResult] = useState<MealResult | null>(null);
@@ -649,6 +673,7 @@ function MealVoice() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Couldn't process that");
       setResult(data as MealResult);
+      if (data?.summary) onResult?.(data.summary as string);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
@@ -913,12 +938,34 @@ function CameraGlyph() {
  * ------------------------------------------------------------------ */
 function Payoff({
   rating,
+  logged,
+  waterStep,
+  proteinPick,
+  mealSummary,
   onRestart,
 }: {
   rating: number;
+  logged: Record<Item, boolean>;
+  waterStep: number;
+  proteinPick: number;
+  mealSummary: string;
   onRestart: () => void;
 }) {
   const score = rating || 4;
+  const fuel: { icon: ReactNode; label: string }[] = [
+    logged.water && {
+      icon: <DropletIcon />,
+      label: `${WATER_OZ[waterStep]} oz water`,
+    },
+    logged.protein && {
+      icon: <ShakerIcon />,
+      label: `${PROTEIN_PICKS[proteinPick]} protein`,
+    },
+    logged.meal && {
+      icon: <MealIcon />,
+      label: mealSummary || "Meal",
+    },
+  ].filter(Boolean) as { icon: ReactNode; label: string }[];
   return (
     <motion.div
       className="absolute inset-0 overflow-hidden bg-[#080808]"
@@ -929,7 +976,7 @@ function Payoff({
     >
       <Confetti />
 
-      <div className="absolute inset-0 overflow-y-auto px-6 pb-24 pt-12">
+      <div className="absolute inset-0 overflow-y-auto px-6 pb-24 pt-11">
         {/* action chips */}
         <div className="flex justify-end">
           <div className="flex items-center gap-0.5 rounded-full bg-[#1d1d1d]/90 px-1 py-1 backdrop-blur-md">
@@ -946,12 +993,12 @@ function Payoff({
         </div>
 
         {/* badge */}
-        <div className="-mt-1 flex justify-center">
+        <div className="-mt-2 flex justify-center">
           <Medal score={score} />
         </div>
 
         {/* pager dots */}
-        <div className="mt-4 flex items-center justify-center gap-2.5">
+        <div className="mt-3 flex items-center justify-center gap-2.5">
           <span className="grid h-[18px] w-[18px] place-items-center rounded-full bg-volt">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
               <path
@@ -968,7 +1015,7 @@ function Payoff({
         </div>
 
         {/* share proof */}
-        <div className="mt-4 flex justify-center">
+        <div className="mt-3 flex justify-center">
           <button className="flex cursor-pointer items-center gap-2 rounded-full bg-[#1d1d1d]/90 px-5 py-2.5 backdrop-blur-md transition hover:bg-[#262626]">
             <InstaGlyph />
             <span className="text-[15px] font-semibold text-paper">
@@ -978,7 +1025,7 @@ function Payoff({
         </div>
 
         {/* program + title */}
-        <div className="mt-7 flex items-center gap-2 text-[14px]">
+        <div className="mt-6 flex items-center gap-2 text-[14px]">
           <span className="text-paper">
             <LadderH />
           </span>
@@ -990,26 +1037,63 @@ function Payoff({
           Pull &amp; Define
         </h2>
 
-        {/* calories nudge */}
-        <div className="mt-4 flex items-center gap-2.5 rounded-[16px] bg-[#181818] px-3 py-2.5">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.07]">
-            <FlameGlyph />
-          </span>
-          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-            <span className="text-[14px] font-bold leading-tight text-paper">
-              Get your calories right
+        {/* refuel summary — celebrates what was logged on the fueling screen */}
+        {fuel.length > 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.4 }}
+            className="mt-4 rounded-[16px] bg-[#181818] px-3.5 py-3"
+          >
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-leaf">
+                <span className="grid h-4 w-4 place-items-center rounded-full bg-leaf [&>svg]:h-[10px] [&>svg]:w-[10px]">
+                  <CheckIcon />
+                </span>
+                Refueled today
+              </span>
+              <button className="cursor-pointer text-[12px] font-semibold text-ash transition hover:text-paper">
+                Edit
+              </button>
+            </div>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {fuel.map((f, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.25 + i * 0.07, type: "spring", stiffness: 360, damping: 18 }}
+                  className="flex max-w-[230px] items-center gap-1.5 rounded-full bg-white/[0.06] py-1.5 pl-2 pr-3 text-[13px] text-paper"
+                >
+                  <span className="text-leaf [&>svg]:h-[14px] [&>svg]:w-[14px]">
+                    {f.icon}
+                  </span>
+                  <span className="truncate">{f.label}</span>
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
+          <div className="mt-4 flex items-center gap-2.5 rounded-[16px] bg-[#181818] px-3 py-2.5">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.07]">
+              <FlameGlyph />
             </span>
-            <span className="whitespace-nowrap text-[11px] leading-tight text-ash">
-              Add or update for this workout
-            </span>
+            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span className="text-[14px] font-bold leading-tight text-paper">
+                Get your calories right
+              </span>
+              <span className="whitespace-nowrap text-[11px] leading-tight text-ash">
+                Add or update for this workout
+              </span>
+            </div>
+            <button className="shrink-0 cursor-pointer rounded-full bg-[#2b2b2b] px-3 py-1.5 text-[12px] font-semibold text-paper transition hover:bg-[#363636]">
+              Update
+            </button>
           </div>
-          <button className="shrink-0 cursor-pointer rounded-full bg-[#2b2b2b] px-3 py-1.5 text-[12px] font-semibold text-paper transition hover:bg-[#363636]">
-            Update
-          </button>
-        </div>
+        )}
 
         {/* stats */}
-        <div className="mt-5 grid grid-cols-3 gap-y-4">
+        <div className="mt-4 grid grid-cols-3 gap-y-4">
           <StatCol value="01:04" label="Total Time" delay={0.1} />
           <StatCol value="6" label="Total Calories" delay={0.16} />
           <StatCol value="––" label="Active Calories" delay={0.22} />
@@ -1083,7 +1167,7 @@ function Medal({ score }: { score: number }) {
       className="relative"
       style={{ filter: "drop-shadow(0 22px 44px rgba(0,0,0,0.6))" }}
     >
-      <svg width="178" height="178" viewBox="0 0 220 220">
+      <svg width="160" height="160" viewBox="0 0 220 220">
         <defs>
           <linearGradient id="rim" x1="0.12" y1="0" x2="0.88" y2="1">
             <stop offset="0" stopColor="#ffffff" />
@@ -1272,10 +1356,11 @@ function HeartGlyph() {
   return (
     <svg viewBox="0 0 24 24" fill="none">
       <path
-        d="M12 20s-7-4.35-9.2-8.5C1.3 8.6 2.7 5.5 5.8 5.5c1.9 0 3.2 1.1 4.2 2.6 1-1.5 2.3-2.6 4.2-2.6 3.1 0 4.5 3.1 3 6-2.2 4.15-9.2 8.5-9.2 8.5Z"
+        d="M12 20.5C5.5 15.5 3 12.4 3 9 3 6.5 5 4.5 7.5 4.5 9 4.5 10.5 5.3 12 6.8 13.5 5.3 15 4.5 16.5 4.5 19 4.5 21 6.5 21 9 21 12.4 18.5 15.5 12 20.5Z"
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinejoin="round"
+        strokeLinecap="round"
       />
     </svg>
   );
