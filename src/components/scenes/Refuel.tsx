@@ -225,15 +225,15 @@ function CheckIn({
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="flex flex-col gap-2">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-leaf">
+        <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-leaf">
           Refuel · Foundation Day
         </span>
-        <h2 className="font-display text-[33px] font-bold uppercase leading-[0.95] text-paper">
+        <h2 className="font-display text-[40px] font-bold uppercase leading-none text-paper">
           What&apos;s fueled
           <br />
           you today?
         </h2>
-        <p className="text-[14px] text-ash">
+        <p className="text-[15px] text-ash">
           Tap what you&apos;ve had. Takes two seconds.
         </p>
       </div>
@@ -260,11 +260,6 @@ function CheckIn({
           onTap={() => onToggle("meal")}
           icon={<MealIcon />}
         />
-      </div>
-
-      <div className="mt-5 flex items-center justify-center gap-2 text-[12px] text-ash-dark">
-        <VoiceGlyph />
-        <span>Want to be precise? Add detail by voice or photo.</span>
       </div>
 
       <div className="flex-1" />
@@ -611,20 +606,6 @@ function MealIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
       <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function VoiceGlyph() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-      <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" />
-      <path
-        d="M5 11a7 7 0 0 0 14 0M12 18v3"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
