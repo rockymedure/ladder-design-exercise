@@ -285,10 +285,7 @@ function CheckIn({
           icon={<MealIcon />}
         >
           <DetailBlock caption="What did you have">
-            <div className="mt-2.5 flex gap-2">
-              <ActionPill icon={<MicGlyph />} label="Say it" />
-              <ActionPill icon={<CameraGlyph />} label="Show it" />
-            </div>
+            <MealVoice />
           </DetailBlock>
         </Tile>
       </div>
@@ -525,15 +522,257 @@ function Chip({
   );
 }
 
-function ActionPill({ icon, label }: { icon: React.ReactNode; label: string }) {
+function ActionPill({
+  icon,
+  label,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+}) {
   return (
     <motion.button
+      onClick={onClick}
       whileTap={{ scale: 0.96 }}
       className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-leaf/40 bg-white/[0.03] px-3.5 py-2.5"
     >
       <span className="text-leaf [&>svg]:h-[16px] [&>svg]:w-[16px]">{icon}</span>
       <span className="text-[13px] font-medium text-ash-light">{label}</span>
     </motion.button>
+  );
+}
+
+/**
+ * The "say it or show it" flow for a meal. Voice records real audio and sends
+ * it to /api/refuel/parse (Whisper transcription → LLM nutrition parse). Photo
+ * sends an image to the same endpoint (vision parse). Falls back gracefully
+ * when the mic isn't available (e.g. insecure origin on a phone).
+ */
+type MealResult = {
+  transcript?: string;
+  summary: string;
+  items: string[];
+  calories: number | null;
+  protein: number | null;
+};
+
+type VoiceState = "prompt" | "listening" | "processing" | "result";
+
+function MealVoice() {
+  const [state, setState] = useState<VoiceState>("prompt");
+  const [via, setVia] = useState<"voice" | "photo">("voice");
+  const [result, setResult] = useState<MealResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const recorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const reset = () => {
+    setResult(null);
+    setError(null);
+    setState("prompt");
+  };
+
+  const send = async (field: "audio" | "image", blob: Blob, filename: string) => {
+    setState("processing");
+    setError(null);
+    try {
+      const fd = new FormData();
+      fd.append(field, blob, filename);
+      const res = await fetch("/api/refuel/parse", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Couldn't process that");
+      setResult(data as MealResult);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong");
+    } finally {
+      setState("result");
+    }
+  };
+
+  const startVoice = async () => {
+    setVia("voice");
+    setError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mr = new MediaRecorder(stream);
+      chunksRef.current = [];
+      mr.ondataavailable = (e) => {
+        if (e.data.size) chunksRef.current.push(e.data);
+      };
+      mr.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(chunksRef.current, {
+          type: mr.mimeType || "audio/webm",
+        });
+        void send("audio", blob, "note.webm");
+      };
+      recorderRef.current = mr;
+      mr.start();
+      setState("listening");
+    } catch {
+      setVia("voice");
+      setError("Mic needs a secure origin — try this on localhost.");
+      setState("result");
+    }
+  };
+
+  const stopVoice = () => {
+    recorderRef.current?.stop();
+    recorderRef.current = null;
+  };
+
+  const onPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (file) {
+      setVia("photo");
+      void send("image", file, file.name || "meal.jpg");
+    }
+  };
+
+  if (state === "prompt") {
+    return (
+      <div className="mt-2.5 flex gap-2">
+        <ActionPill icon={<MicGlyph />} label="Say it" onClick={startVoice} />
+        <ActionPill
+          icon={<CameraGlyph />}
+          label="Show it"
+          onClick={() => fileRef.current?.click()}
+        />
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={onPhoto}
+          className="hidden"
+        />
+      </div>
+    );
+  }
+
+  if (state === "listening") {
+    return (
+      <div className="mt-3 flex items-center gap-3">
+        <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-leaf text-[#0a0a0a] [&>svg]:h-[16px] [&>svg]:w-[16px]">
+          <motion.span
+            className="absolute inset-0 rounded-full bg-leaf"
+            animate={{ scale: [1, 1.5], opacity: [0.45, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+          />
+          <span className="relative">
+            <MicGlyph />
+          </span>
+        </span>
+        <Waveform />
+        <button
+          onClick={stopVoice}
+          className="font-display ml-auto shrink-0 cursor-pointer rounded-full bg-leaf px-4 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-[#0a0a0a]"
+        >
+          Stop
+        </button>
+      </div>
+    );
+  }
+
+  if (state === "processing") {
+    return (
+      <div className="mt-3 flex items-center gap-3">
+        <Spinner />
+        <span className="text-[14px] text-ash">
+          {via === "photo" ? "Reading your photo…" : "Transcribing…"}
+        </span>
+      </div>
+    );
+  }
+
+  // result
+  if (error || !result) {
+    return (
+      <div className="mt-3 flex flex-col gap-2">
+        <p className="text-[14px] text-ash">{error || "Couldn't catch that."}</p>
+        <button
+          onClick={reset}
+          className="self-start cursor-pointer text-[12px] font-medium text-leaf"
+        >
+          Try again
+        </button>
+      </div>
+    );
+  }
+
+  const macros = [
+    result.calories != null ? `${result.calories} cal` : null,
+    result.protein != null ? `${result.protein}g protein` : null,
+  ].filter(Boolean);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-3 flex flex-col gap-3"
+    >
+      <div className="flex items-start gap-3">
+        <motion.span
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 380, damping: 16 }}
+          className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-leaf"
+        >
+          <CheckIcon />
+        </motion.span>
+        <div className="flex flex-1 flex-col gap-0.5">
+          <p className="text-[15px] leading-snug text-paper">{result.summary}</p>
+          {macros.length > 0 && (
+            <p className="text-[12px] text-ash">≈ {macros.join(" · ")}</p>
+          )}
+          {result.transcript && (
+            <p className="mt-1 text-[12px] italic text-ash-dark">
+              “{result.transcript}”
+            </p>
+          )}
+        </div>
+      </div>
+      <button
+        onClick={reset}
+        className="self-start cursor-pointer text-[12px] font-medium text-leaf"
+      >
+        {via === "photo" ? "Retake" : "Re-record"}
+      </button>
+    </motion.div>
+  );
+}
+
+function Spinner() {
+  return (
+    <motion.span
+      className="block h-5 w-5 shrink-0 rounded-full border-2 border-white/15 border-t-leaf"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+    />
+  );
+}
+
+function Waveform() {
+  return (
+    <div className="flex h-6 flex-1 items-center gap-[3px]">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <motion.span
+          key={i}
+          className="w-[3px] flex-1 rounded-full bg-leaf/70"
+          style={{ height: 6 }}
+          animate={{ height: [6, 20, 9, 16, 6] }}
+          transition={{
+            duration: 0.9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: (i % 10) * 0.06,
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
