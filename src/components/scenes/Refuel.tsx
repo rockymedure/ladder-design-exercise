@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PhoneFrame, StatusBar } from "../PhoneFrame";
-import { PrimaryButton } from "@/components/ui";
 
 /* ------------------------------------------------------------------ *
  * Refuel — the post-workout check-in, as a hands-on prototype.
@@ -135,7 +134,8 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
  * 1. Rating screen — a nod to Ladder's "Complete Workout" screen.
  * ------------------------------------------------------------------ */
 function RatingScreen({ onDone }: { onDone: () => void }) {
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
+  const rated = rating > 0;
   return (
     <motion.div
       className="absolute inset-0"
@@ -154,20 +154,19 @@ function RatingScreen({ onDone }: { onDone: () => void }) {
         className="absolute inset-0 h-full w-full object-cover"
         style={{ filter: "brightness(0.5)" }}
       />
-      <div className="absolute inset-x-0 bottom-0 h-[64%] bg-gradient-to-t from-black via-black/85 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[66%] bg-gradient-to-t from-black via-black/75 to-transparent" />
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 px-7 pb-8">
-        <div className="flex flex-col gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-volt">
+      <div className="absolute inset-x-0 bottom-[100px] flex flex-col items-center gap-5 px-5 text-center">
+        <div className="flex flex-col items-center gap-1.5">
+          <span className="text-[14px] font-medium text-volt">
             Rate to earn a badge
           </span>
-          <p className="text-[22px] font-semibold leading-tight text-paper">
-            How would you rate the
-            <br />
-            workout experience today?
-          </p>
+          <h2 className="max-w-[300px] text-[21px] font-bold leading-[1.2] text-paper">
+            How would you rate the workout experience today?
+          </h2>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {[1, 2, 3, 4, 5].map((s) => (
             <button
               key={s}
@@ -179,11 +178,64 @@ function RatingScreen({ onDone }: { onDone: () => void }) {
             </button>
           ))}
         </div>
-        <div className="pt-1">
-          <PrimaryButton onClick={onDone}>Complete Workout</PrimaryButton>
+        <motion.button
+          onClick={rated ? onDone : undefined}
+          disabled={!rated}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            backgroundColor: rated ? "var(--color-volt)" : "rgba(14,14,14,0.3)",
+            borderColor: rated ? "rgba(230,255,0,0)" : "rgba(250,250,250,0.22)",
+            color: rated ? "#0e0e0e" : "rgba(250,250,250,0.4)",
+          }}
+          whileTap={rated ? { scale: 0.97 } : undefined}
+          transition={{ duration: 0.35 }}
+          className={`font-display mt-1 w-full rounded-full border py-4 text-[15px] font-bold uppercase tracking-[0.04em] backdrop-blur-sm ${
+            rated ? "cursor-pointer" : "cursor-not-allowed"
+          }`}
+        >
+          {rated ? "Mark as Complete" : "Complete Workout"}
+        </motion.button>
+      </div>
+
+      <div className="absolute inset-x-3 bottom-3 flex items-center justify-between rounded-[28px] bg-[#1a1a1a]/95 px-5 py-3.5 backdrop-blur-md">
+        <div className="flex items-center gap-2 text-paper">
+          <LadderH />
+          <span className="text-[17px] font-bold tracking-[-0.02em]">Journal</span>
         </div>
+        <button className="flex cursor-pointer items-center gap-1.5 text-[15px] text-volt">
+          Track Results
+          <svg width="13" height="16" viewBox="0 0 24 30" fill="none">
+            <path
+              d="M6 12l6-6 6 6"
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6 22l6-6 6 6"
+              stroke="currentColor"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </motion.div>
+  );
+}
+
+function LadderH() {
+  return (
+    <svg width="18" height="17" viewBox="0 0 25 24" fill="none">
+      <path
+        d="M18.3515 3.47666C18.336 3.56021 18.29 3.63613 18.2213 3.69142C18.1494 3.74715 18.0603 3.77972 17.9671 3.78428H9.08894C9.05687 3.77463 9.0273 3.75882 9.00214 3.73785C8.97338 3.72052 8.94988 3.69653 8.93394 3.6682C8.92607 3.63965 8.92607 3.60969 8.93394 3.58114C8.92444 3.54885 8.92444 3.51476 8.93394 3.48247L9.55393 0H4.51347L0 23.9884H5.05285L5.70384 20.5059C5.72529 20.4281 5.77315 20.3588 5.84023 20.3086C5.90922 20.2521 5.99669 20.2194 6.08822 20.2157H14.9602C15.0282 20.233 15.0861 20.2747 15.1214 20.3318C15.1354 20.361 15.1427 20.3927 15.1427 20.4247C15.1427 20.4567 15.1354 20.4883 15.1214 20.5175L14.5014 24H19.5418L24.0553 0.0348244H19.0025L18.3515 3.47666ZM17.3161 9.00798L16.1877 14.9862C16.1572 15.1548 16.0625 15.3074 15.9211 15.4157C15.7828 15.5273 15.6077 15.5909 15.4252 15.5956H7.27239C7.22739 15.6042 7.181 15.6042 7.13599 15.5956C6.99978 15.5654 6.88176 15.4861 6.8074 15.3751C6.77016 15.3195 6.74545 15.2573 6.73479 15.1925C6.72413 15.1276 6.72774 15.0613 6.74541 14.9978L7.86757 9.01959C7.90473 8.85029 8.00064 8.69725 8.14037 8.58428C8.27702 8.47391 8.44979 8.41044 8.63015 8.40435H16.7767C16.8261 8.39876 16.8761 8.39876 16.9255 8.40435C16.9936 8.41691 17.0575 8.4448 17.1115 8.48561C17.1694 8.52162 17.2181 8.56919 17.2541 8.62491C17.2886 8.6804 17.3117 8.74142 17.3223 8.80484C17.3397 8.87771 17.3376 8.95348 17.3161 9.02539V9.00798Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 
@@ -191,8 +243,8 @@ function Star({ filled }: { filled: boolean }) {
   return (
     <motion.svg
       whileTap={{ scale: 0.8 }}
-      width="36"
-      height="36"
+      width="40"
+      height="40"
       viewBox="0 0 24 24"
       fill={filled ? "var(--color-volt)" : "none"}
       stroke={filled ? "none" : "rgba(255,255,255,0.35)"}
@@ -667,12 +719,14 @@ function MealVoice() {
           </span>
         </span>
         <Waveform />
-        <button
+        <motion.button
           onClick={stopVoice}
-          className="font-display ml-auto shrink-0 cursor-pointer rounded-full bg-leaf px-4 py-2 text-[12px] font-bold uppercase tracking-[0.06em] text-[#0a0a0a]"
+          whileTap={{ scale: 0.9 }}
+          aria-label="Send"
+          className="ml-auto grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full bg-leaf text-[#0a0a0a] [&>svg]:h-[18px] [&>svg]:w-[18px]"
         >
-          Stop
-        </button>
+          <SendGlyph />
+        </motion.button>
       </div>
     );
   }
@@ -716,12 +770,16 @@ function MealVoice() {
     >
       <div className="flex items-start gap-3">
         <motion.span
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 380, damping: 16 }}
-          className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-leaf"
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-leaf [&>svg]:h-[18px] [&>svg]:w-[18px]"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(84,244,109,0.22), rgba(84,244,109,0.06))",
+          }}
         >
-          <CheckIcon />
+          {via === "photo" ? <CameraGlyph /> : <SpeechGlyph />}
         </motion.span>
         <div className="flex flex-1 flex-col gap-0.5">
           <p className="text-[15px] leading-snug text-paper">{result.summary}</p>
@@ -782,6 +840,39 @@ function MicGlyph() {
       <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor" />
       <path
         d="M5 11a7 7 0 0 0 14 0M12 18v3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function SendGlyph() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 19V6M6 11l6-6 6 6"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SpeechGlyph() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v8a1.5 1.5 0 0 1-1.5 1.5H10l-4 4v-4H5.5A1.5 1.5 0 0 1 4 13.5v-8Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 8.5h7M8.5 11h4"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
