@@ -1110,7 +1110,7 @@ function Payoff({
       </div>
 
       {/* depth: confetti floating in front of the content */}
-      <Confetti layer="front" count={18} seed={41} />
+      <Confetti layer="front" count={12} seed={41} />
 
       {/* continue */}
       <div className="absolute inset-x-0 bottom-0 z-30 bg-gradient-to-t from-[#080808] via-[#080808]/92 to-transparent px-5 pb-6 pt-8">
@@ -1333,7 +1333,9 @@ function Confetti({
   });
   return (
     <div
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${
+        front ? "z-20" : "z-0"
+      }`}
       style={{ filter: front ? undefined : "blur(0.4px)" }}
     >
       {bits.map((b, i) => (
