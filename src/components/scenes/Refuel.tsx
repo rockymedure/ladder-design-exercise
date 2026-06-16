@@ -246,7 +246,6 @@ function CheckIn({
           img="/refuel/water.png"
           on={logged.water}
           onTap={() => onToggle("water")}
-          icon={<DropletIcon />}
         />
         <Tile
           label="Protein"
@@ -254,7 +253,6 @@ function CheckIn({
           img="/refuel/protein.png"
           on={logged.protein}
           onTap={() => onToggle("protein")}
-          icon={<ShakerIcon />}
         />
         <Tile
           label="Meal"
@@ -262,7 +260,6 @@ function CheckIn({
           img="/refuel/meal.png"
           on={logged.meal}
           onTap={() => onToggle("meal")}
-          icon={<MealIcon />}
         />
       </div>
 
@@ -290,14 +287,12 @@ function Tile({
   img,
   on,
   onTap,
-  icon,
 }: {
   label: string;
   sub: string;
   img: string;
   on: boolean;
   onTap: () => void;
-  icon: React.ReactNode;
 }) {
   return (
     <motion.button
@@ -343,12 +338,9 @@ function Tile({
 
       <div className="relative z-10 flex w-full items-center justify-between px-5">
         <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-leaf [&>svg]:h-[18px] [&>svg]:w-[18px]">{icon}</span>
-            <span className="font-display text-[26px] font-bold uppercase leading-none tracking-[0.01em] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
-              {label}
-            </span>
-          </div>
+          <span className="font-display text-[28px] font-bold uppercase leading-none tracking-[0.01em] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
+            {label}
+          </span>
           <motion.span
             className="text-[12px] font-medium"
             initial={false}
@@ -600,47 +592,6 @@ function CheckIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function DropletIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 3.5c3.2 3.6 6 6.8 6 10.2a6 6 0 0 1-12 0c0-3.4 2.8-6.6 6-10.2Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ShakerIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M7 8h10l-1 11a2 2 0 0 1-2 1.8H10A2 2 0 0 1 8 19L7 8Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7.5 8 8 4h8l.5 4M7.6 12h8.8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function MealIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }
