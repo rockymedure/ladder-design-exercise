@@ -380,7 +380,7 @@ function Tile({
             initial={false}
             animate={{ color: on ? "var(--color-leaf)" : "var(--color-ash)" }}
           >
-            {on ? "Logged" : sub}
+            {sub}
           </motion.span>
         </span>
         <span className="grid h-7 w-7 shrink-0 place-items-center">
