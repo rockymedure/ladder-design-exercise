@@ -717,8 +717,8 @@ function MealVoice({ onResult }: { onResult?: (summary: string) => void }) {
         <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-leaf text-[#0a0a0a] [&>svg]:h-[16px] [&>svg]:w-[16px]">
           <motion.span
             className="absolute inset-0 rounded-full bg-leaf"
-            animate={{ scale: [1, 1.5], opacity: [0.45, 0] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+            animate={{ scale: [1, 1.3, 1.6], opacity: [0, 0.45, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           />
           <span className="relative">
             <MicGlyph />
