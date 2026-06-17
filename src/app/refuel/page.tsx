@@ -67,7 +67,6 @@ export default function RefuelPage() {
       <Approaches />
       <LandedOn />
       <Walkthrough />
-      <Close />
       <Footer />
     </main>
   );
@@ -523,61 +522,6 @@ function Walkthrough() {
               />
             </svg>
           </a>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Close() {
-  return (
-    <section className="relative overflow-hidden bg-[#0E0E0E] text-paper">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(55% 50% at 50% 45%, rgba(84,244,109,0.12), transparent 70%)",
-        }}
-      />
-      <div className="mx-auto max-w-[1180px] px-6 py-28 text-center md:py-36">
-        <Reveal>
-          <Kicker>The job I want</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2
-            className={`${H} mx-auto mt-6 max-w-[16ch] text-[clamp(2.4rem,7vw,5.2rem)]`}
-            style={{ color: "var(--color-leaf)" }}
-          >
-            Make a real screen sing
-          </h2>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <p className="mx-auto mt-8 max-w-[60ch] text-[18px] leading-relaxed text-ash-light">
-            Round one showed how far I&apos;d stretch. This shows I&apos;d rather take
-            a screen millions already use and make it better. Small, shippable moves
-            that compound. If we shipped it, I&apos;d put Refuel behind a flag for a
-            cohort and watch seven day nutrition logging against control. Cheapest
-            real test first.
-          </p>
-        </Reveal>
-        <Reveal delay={0.18}>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <a
-              href="/live"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
-            >
-              Open the prototype
-            </a>
-            <Link
-              href="/"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-paper transition hover:border-white/45"
-            >
-              Back to round one
-            </Link>
-          </div>
         </Reveal>
       </div>
     </section>
