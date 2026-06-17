@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { QRCodeSVG } from "qrcode.react";
 import { Wordmark, LadderMark } from "@/components/Logo";
 import { RefuelStage } from "@/components/scenes/Refuel";
+
+const LIVE_URL = "https://ladder-production-2032.up.railway.app/live";
 
 const H = "font-ek leading-[0.9]";
 const HEAD = "text-[clamp(2.6rem,7vw,5.4rem)]";
@@ -505,23 +508,40 @@ function Walkthrough() {
           <RefuelStage />
         </Reveal>
         <Reveal delay={0.2}>
-          <a
-            href="/live"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
-          >
-            Open full screen
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M7 17 17 7M9 7h8v8"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+          <div className="flex flex-col items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:flex-row sm:gap-6">
+            <a
+              href={LIVE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="shrink-0 rounded-2xl bg-white p-3"
+              aria-label="Open the live prototype"
+            >
+              <QRCodeSVG value={LIVE_URL} size={104} bgColor="#ffffff" fgColor="#0E0E0E" level="M" />
+            </a>
+            <div className="flex flex-col items-center gap-3 sm:items-start">
+              <p className="max-w-[34ch] text-center text-[14px] leading-snug text-ash-light sm:text-left">
+                Scan with your phone to play with it on a real device, or open it
+                full screen right here.
+              </p>
+              <a
+                href="/live"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
+              >
+                Open full screen
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 17 17 7M9 7h8v8"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
