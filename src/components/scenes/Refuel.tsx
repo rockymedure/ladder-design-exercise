@@ -22,7 +22,7 @@ export function RefuelStage() {
   return (
     <div className="flex flex-col items-center gap-5">
       <PhoneFrame>
-        <StatusBar time="1:03 PM" />
+        <StatusBar time="1:03 PM" scrim="#070707" />
         <div className="absolute inset-0">
           <RefuelFlow key={runKey} onRestart={() => setRunKey((k) => k + 1)} />
         </div>
@@ -82,7 +82,7 @@ export function RefuelApp() {
     return (
       <main className="grid h-[100dvh] w-full place-items-center overflow-hidden bg-[#0E0E0E]">
         <PhoneFrame>
-          <StatusBar time="1:03 PM" />
+          <StatusBar time="1:03 PM" scrim="#070707" />
           <div className="absolute inset-0">{flow}</div>
         </PhoneFrame>
       </main>
@@ -91,7 +91,7 @@ export function RefuelApp() {
 
   return (
     <main className="relative h-[100dvh] w-full overflow-hidden bg-[#070707]">
-      <StatusBar time="1:03 PM" />
+      <StatusBar time="1:03 PM" scrim="#070707" />
       <div className="absolute inset-0">{flow}</div>
     </main>
   );
