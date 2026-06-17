@@ -223,14 +223,13 @@ function RatingScreen({
         preload="auto"
         webkit-playsinline="true"
         className="absolute inset-0 h-full w-full object-cover"
-        style={{ filter: "brightness(0.68)" }}
+        style={{ transform: "scale(1.14)", transformOrigin: "50% 0%" }}
       />
-      <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black via-black/55 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-[100px] flex flex-col items-center gap-5 px-5 text-center">
         <div className="flex flex-col items-center gap-1.5">
           <span className="text-[14px] font-medium text-volt">
-            Rate to earn a badge
+            Rate to save your stats
           </span>
           <h2 className="max-w-[300px] text-[21px] font-bold leading-[1.2] text-paper">
             How would you rate the workout experience today?
@@ -269,7 +268,7 @@ function RatingScreen({
         </motion.button>
       </div>
 
-      <div className="absolute inset-x-3 bottom-3 flex items-center justify-between rounded-[28px] bg-[#1a1a1a]/95 px-5 py-3.5 backdrop-blur-md">
+      <div className="absolute inset-x-3 bottom-5 flex items-center justify-between rounded-[28px] bg-[#1a1a1a]/95 px-5 py-3.5 backdrop-blur-md">
         <div className="flex items-center gap-2 text-paper">
           <LadderH />
           <span className="text-[17px] font-bold tracking-[-0.02em]">Journal</span>
