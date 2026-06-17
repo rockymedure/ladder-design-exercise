@@ -518,28 +518,14 @@ function Walkthrough() {
             >
               <QRCodeSVG value={LIVE_URL} size={104} bgColor="#ffffff" fgColor="#0E0E0E" level="M" />
             </a>
-            <div className="flex flex-col items-center gap-3 sm:items-start">
-              <p className="max-w-[34ch] text-center text-[14px] leading-snug text-ash-light sm:text-left">
-                Scan with your phone to play with it on a real device, or open it
-                full screen right here.
+            <div className="flex flex-col items-center gap-2 sm:items-start">
+              <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-leaf">
+                Play it on your phone
               </p>
-              <a
-                href="/live"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
-              >
-                Open full screen
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M7 17 17 7M9 7h8v8"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
+              <p className="max-w-[34ch] text-center text-[14px] leading-snug text-ash-light sm:text-left">
+                Scan the code with your camera to open the live prototype on a real
+                device.
+              </p>
             </div>
           </div>
         </Reveal>
