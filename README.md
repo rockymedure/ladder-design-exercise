@@ -12,6 +12,7 @@ not the software, becomes the interface.
 
 **[▶ Live the full day](https://ladder-production-2032.up.railway.app/play)** ·
 **[Read the case study](https://ladder-production-2032.up.railway.app)** ·
+**[Round two: Refuel](https://ladder-production-2032.up.railway.app/refuel)** ·
 **[Concept](CONCEPT.md)** ·
 **[Process](docs/process/PROCESS.md)**
 
@@ -21,15 +22,33 @@ not the software, becomes the interface.
 
 ## What this is
 
-A working, coded prototype, not a slide deck. It ships as two surfaces:
+A working, coded prototype, not a slide deck. It ships as four surfaces:
 
-- **The case study** ([`/`](https://ladder-production-2032.up.railway.app)) — a scrollable
-  story where every beat is a real, playable phone with generated voice.
-- **The full day** ([`/play`](https://ladder-production-2032.up.railway.app/play)) — the
-  five beats stitched into one continuous, end-to-end experience.
+| Route | What it is |
+|-------|------------|
+| [`/`](https://ladder-production-2032.up.railway.app) | **The case study (round one)** — a scrollable story where every beat is a real, playable phone with generated voice. |
+| [`/play`](https://ladder-production-2032.up.railway.app/play) | **The full day** — the five beats stitched into one continuous, end-to-end experience. |
+| [`/refuel`](https://ladder-production-2032.up.railway.app/refuel) | **Round two: Refuel** — a focused case study answering the feedback on round one, with before/after and craft stills. |
+| [`/live`](https://ladder-production-2032.up.railway.app/live) | **The Refuel prototype** — the standalone, tappable nutrition check-in with live voice meal logging. |
 
 Each phone is the real prototype running in an iPhone frame: real audio, real video, paced
 so an assistant's presence actually reads as presence.
+
+## Round two: Refuel
+
+Round one reimagined the whole day. The honest feedback back: it was hard to benchmark the
+**UI craft**, and the concept sat a long way from **today's app**. Both fair.
+
+So round two is the opposite move — it takes one real, currently-overlooked moment Ladder
+ships *right now* and levels it up inside Ladder's own design system. After a workout, logging
+nutrition is a two-line card you scroll past. **Refuel** promotes it into its own post-workout
+beat: rate the session, then one tap per thing you've had — water, protein, meal — with optional
+detail (a stepped water slider, a protein picker) and a **voice meal field that actually records
+and parses speech with Whisper + GPT**. It feeds Ladder's existing Complete Workout payoff rather
+than replacing it.
+
+Read it at [`/refuel`](https://ladder-production-2032.up.railway.app/refuel), or tap the live
+prototype at [`/live`](https://ladder-production-2032.up.railway.app/live).
 
 ## The idea in 30 seconds
 
@@ -66,10 +85,14 @@ Opus 4.8 High**, from pulling designs to wiring scenes to shipping.
 | Coding agent | Cursor · Opus 4.8 | Built and iterated the app end to end |
 | Design | Figma MCP | Pulled Ladder's real tokens, workout screen, and nutrition kit |
 | Voice | fal · ElevenLabs | Every Ladder line ("Jessica") and member reply ("Matilda") |
-| Video | fal · Grok Imagine | The workout clip behind the widget and in-class screen |
+| Video | fal · Grok Imagine | The workout clip behind the widget, in-class screen, and Refuel rating |
+| Meal logging | OpenAI Whisper + GPT-4o-mini | Refuel's voice field transcribes and parses speech into a structured log |
 | App | Next.js · Tailwind · Framer Motion | iPhone-framed, scene-based playback |
 | Pacing | Custom line sequencer | Dialogue synced to the exact audio duration |
 | Deploy | Railway | Continuous deploy from `main` |
+
+> **Env:** the Refuel voice meal demo needs an OpenAI key. Set `REFUEL_OPENAI_KEY`
+> (falls back to `OPENAI_API_KEY`) locally in `.env.local` and in the Railway service.
 
 ## Run it locally
 
@@ -91,22 +114,27 @@ npm run lint    # eslint
 ```
 src/
   app/
-    page.tsx            # the case study (scrollable story)
+    page.tsx            # round one case study (scrollable story)
     play/page.tsx       # the full interactive day
+    refuel/page.tsx     # round two case study (Refuel)
+    live/page.tsx       # the standalone Refuel prototype
+    api/refuel/parse/   # Whisper + GPT route for voice meal logging
     layout.tsx          # fonts + metadata
   components/
-    CaseStudy.tsx       # the marketing/case-study page
+    CaseStudy.tsx       # round one case-study page (+ round two teaser)
     Experience.tsx      # controller for the full day at /play
     ScenePlayer.tsx     # playable phone wrapper (preview, controls, auto-advance)
-    PhoneFrame.tsx      # iPhone frame + status bar
+    PhoneFrame.tsx      # iPhone frame + status bar (live local time)
     scenes/             # the five beats, one file each
       Morning · HomeScreen · InClass · Afternoon · Evening
+      Refuel            # the round-two nutrition check-in (rating + log + payoff)
     CoachDock · DayAhead · WorkoutWidget · StreakCal · Presence · ...
   lib/
     script.ts           # every line of dialogue + audio mapping
     useLineSequence.ts  # syncs captions/audio to real durations
 public/
   audio/  videos/  food/  photos/   # generated voice, video, and imagery
+  refuel/  screens/                 # Refuel craft stills and before/after assets
 ```
 
 ## Documentation

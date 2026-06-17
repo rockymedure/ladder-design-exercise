@@ -326,9 +326,6 @@ function CheckIn({
           <br />
           you today?
         </h2>
-        <p className="text-[15px] text-ash">
-          Tap what you&apos;ve had. Slide or pick to add detail.
-        </p>
       </div>
 
       <div className="mt-6 flex flex-col gap-3">

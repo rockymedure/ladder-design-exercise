@@ -311,8 +311,75 @@ export function CaseStudy() {
       <Build />
       <Bet />
       <Validate />
+      <RoundTwo />
       <Footer />
     </main>
+  );
+}
+
+function RoundTwo() {
+  return (
+    <section className="relative overflow-hidden border-t border-white/10 bg-[#0B0B0B] text-paper">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(50% 60% at 85% 50%, rgba(84,244,109,0.10), transparent 70%)",
+        }}
+      />
+      <div className="mx-auto grid max-w-[1180px] items-center gap-10 px-6 py-24 md:grid-cols-[1.3fr_1fr] md:py-28">
+        <div className="flex flex-col gap-6">
+          <Reveal>
+            <Kicker>Round two</Kicker>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h2 className={`${H} ${SUB} max-w-[18ch]`}>
+              Then I took the note and ran it back
+            </h2>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <p className="font-sf max-w-[52ch] text-[17px] leading-relaxed text-ash-light">
+              The honest read on this round was that it was hard to benchmark my
+              UI craft, and the concept sat a long way from today&apos;s app. Fair.
+              So I shipped a second, focused pass: one real post-workout screen,
+              leveled up in Ladder&apos;s own system. That&apos;s{" "}
+              <span className="text-paper">Refuel</span>.
+            </p>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <Link
+              href="/refuel"
+              className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
+            >
+              See round two: Refuel
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </Reveal>
+        </div>
+        <Reveal delay={0.12}>
+          <Link href="/refuel" className="block">
+            <div className="mx-auto w-full max-w-[230px] overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)] transition hover:scale-[1.02]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/refuel/checkin.png"
+                alt="Refuel, the round two post-workout nutrition check-in"
+                loading="lazy"
+                className="block h-auto w-full"
+              />
+            </div>
+          </Link>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 
@@ -321,17 +388,34 @@ function Nav() {
     <header className="sticky top-0 z-[60] border-b border-white/10 bg-[#0E0E0E]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-3.5">
         <Wordmark />
-        <a
-          href="https://github.com/rockymedure/ladder-design-exercise"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-            <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z" />
-          </svg>
-          View source
-        </a>
+        <div className="flex items-center gap-2.5">
+          <Link
+            href="/refuel"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-paper transition hover:border-white/45"
+          >
+            Round 2
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+          <a
+            href="https://github.com/rockymedure/ladder-design-exercise"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden cursor-pointer items-center gap-2 rounded-full bg-volt px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95 sm:inline-flex"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z" />
+            </svg>
+            View source
+          </a>
+        </div>
       </div>
     </header>
   );
