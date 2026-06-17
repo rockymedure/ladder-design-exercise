@@ -66,6 +66,7 @@ export default function RefuelPage() {
       <Feedback />
       <BeforeAfter />
       <Craft />
+      <Explorations />
       <Prototype />
       <Principles />
       <Validate />
@@ -415,6 +416,91 @@ function Craft() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+const EXPLORE = [
+  {
+    src: "/refuel/explore-waveform.png",
+    title: "The ambient waveform",
+    d: "One expressive, full-bleed item at a time with a living graph. Gorgeous \u2014 but the data viz was decoration, not signal, and logging one thing per screen is the opposite of a five-second habit.",
+  },
+  {
+    src: "/refuel/explore-bars.png",
+    title: "Slide-to-fill columns",
+    d: "Tactile vertical sliders for amount. Playful, but it forced a number on every item and the upward drag fought the thumb. Precision pretending to be speed.",
+  },
+  {
+    src: "/refuel/explore-photos.png",
+    title: "Photo-rich rows",
+    d: "Appetite-forward, with food imagery in every row. But stock photos aren\u2019t your food, and it pushed the screen toward a content feed instead of a quick check-in.",
+  },
+  {
+    src: "/refuel/explore-tiles.png",
+    title: "Compact tile grid",
+    d: "The closest miss. Fast and clean, but the small squares felt cramped against the headline and the hierarchy was off. One more pass relaxed them into the calm full-width tiles that shipped.",
+  },
+];
+
+function Explorations() {
+  return (
+    <section className="bg-[#F4F4F4] text-ink">
+      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
+        <Reveal>
+          <Kicker tone="light">The road there</Kicker>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 className={`${H} ${HEAD} mt-5 max-w-[14ch]`}>
+            I didn&apos;t land here first
+          </h2>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className="mt-6 max-w-[60ch] text-[18px] leading-relaxed text-[#444]">
+            Showing craft is also showing judgment. I explored louder, more
+            expressive directions &mdash; then deliberately pulled back to
+            something fast, calm, and native to Ladder&apos;s system. A few that
+            didn&apos;t make the cut, and why.
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2">
+          {EXPLORE.map((e, i) => (
+            <Reveal key={e.title} delay={(i % 2) * 0.08}>
+              <figure className="flex flex-col gap-5">
+                <div className="relative mx-auto w-full max-w-[260px]">
+                  <span className="absolute -left-2 -top-2 z-10 rounded-full bg-ink px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-paper">
+                    Cut
+                  </span>
+                  <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-black opacity-90 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={e.src}
+                      alt={e.title}
+                      loading="lazy"
+                      className="block h-auto w-full"
+                    />
+                  </div>
+                </div>
+                <figcaption className="flex flex-col gap-2">
+                  <h3 className="font-ek text-[1.5rem] text-ink">{e.title}</h3>
+                  <p className="max-w-[42ch] text-[15px] leading-relaxed text-[#555]">
+                    {e.d}
+                  </p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.12}>
+          <p className="mt-14 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
+            The thread through every cut: anything that added friction, vanity, or
+            distance from Ladder&apos;s existing system lost. What shipped is the
+            most restrained version &mdash; on purpose.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
