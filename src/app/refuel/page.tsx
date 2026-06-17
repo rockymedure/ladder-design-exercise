@@ -361,12 +361,6 @@ function Approaches() {
           ))}
         </div>
 
-        <Reveal delay={0.12}>
-          <p className="mt-14 max-w-[58ch] text-[18px] leading-relaxed text-ash-light">
-            The thread through every cut: anything that added friction, vanity, or
-            distance from Ladder&apos;s system lost.
-          </p>
-        </Reveal>
       </div>
     </section>
   );
@@ -562,22 +556,12 @@ function RedlineSpec() {
 
   return (
     <svg
-      viewBox="0 0 920 560"
+      viewBox="85 20 820 520"
       className="block h-auto w-full"
       role="img"
-      aria-label="Redline spec of the Water, Protein and Meal check-in tiles"
+      aria-label="Spec of the Water, Protein and Meal check-in tiles"
     >
-      <rect width="920" height="560" fill="#F4F4F5" />
-
-      {/* connector: this screen maps to this spec */}
-      <path
-        d="M380 250 C 425 250 430 150 470 140"
-        fill="none"
-        stroke={RED}
-        strokeWidth="1.5"
-        strokeDasharray="4 4"
-        opacity="0.45"
-      />
+      <rect x="85" y="20" width="820" height="520" fill="#F4F4F5" />
 
       {/* phone screen */}
       <rect x="120" y="40" width="280" height="480" rx="30" fill="#070707" />
@@ -674,22 +658,6 @@ function RedlineSpec() {
           </g>
         );
       })}
-
-      {/* ---- redlines (left margin) ---- */}
-      {/* tile height 72 */}
-      <path d="M140 186 H82 M140 258 H82" stroke={RED} strokeWidth="1" strokeDasharray="3 3" opacity="0.7" />
-      <path d="M90 186 V258 M85 186 H95 M85 258 H95" stroke={RED} strokeWidth="1.4" />
-      <text x="60" y="226" fill={RED} fontSize="14" fontWeight="600" fontFamily={MONO}>72</text>
-
-      {/* row gap 14 */}
-      <path d="M140 272 H82" stroke={RED} strokeWidth="1" strokeDasharray="3 3" opacity="0.7" />
-      <path d="M90 258 V272 M85 272 H95" stroke={RED} strokeWidth="1.4" />
-      <path d="M90 265 L60 300" stroke={RED} strokeWidth="1" opacity="0.7" />
-      <text x="34" y="312" fill={RED} fontSize="13" fontWeight="600" fontFamily={MONO}>14</text>
-
-      {/* radius */}
-      <path d="M140 186 L100 158" stroke={RED} strokeWidth="1" opacity="0.7" />
-      <text x="52" y="154" fill={RED} fontSize="13" fontWeight="600" fontFamily={MONO}>R16</text>
 
       {/* ---- spec panel (right) ---- */}
       <rect x="470" y="70" width="400" height="412" rx="20" fill="#FFFFFF" stroke="#E6E6E6" />
