@@ -209,7 +209,7 @@ function Goal() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-8">
+        <div className="mt-14 grid items-start gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-8">
           <Reveal>
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-3">
@@ -247,7 +247,7 @@ function Goal() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1} className="flex justify-center">
+          <Reveal delay={0.1} className="flex justify-center md:self-center">
             <div className="grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white text-ink shadow-sm">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="hidden md:block">
                 <path
