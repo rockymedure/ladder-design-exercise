@@ -310,15 +310,16 @@ function CheckIn({
   const count = Object.values(logged).filter(Boolean).length;
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col overflow-y-auto px-6 pb-7 pt-16"
+      className="absolute inset-0 overflow-hidden"
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
+      <div className="absolute inset-0 z-10 overflow-y-auto px-6 pb-28 pt-16">
       <div className="flex flex-col gap-2">
         <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-leaf">
-          Refuel · Foundation Day
+          Nutrition
         </span>
         <h2 className="font-display text-[40px] font-bold uppercase leading-none text-paper">
           What&apos;s fueled
@@ -379,21 +380,22 @@ function CheckIn({
           </DetailBlock>
         </Tile>
       </div>
+      </div>
 
-      <div className="min-h-6 flex-1" />
-
-      <button onClick={onDone} className="cursor-pointer">
-        <motion.div
-          className="font-display w-full rounded-full py-4 text-center text-[16px] font-bold uppercase tracking-[0.06em]"
-          animate={{
-            backgroundColor: count > 0 ? "var(--color-leaf)" : "rgba(255,255,255,0.08)",
-            color: count > 0 ? "#0a0a0a" : "var(--color-ash)",
-          }}
-          whileTap={{ scale: 0.97 }}
-        >
-          {count > 0 ? `Log ${count} and finish` : "Not today"}
-        </motion.div>
-      </button>
+      <div className="absolute inset-x-0 bottom-0 z-30 bg-gradient-to-t from-[#070707] via-[#070707]/92 to-transparent px-6 pb-7 pt-10">
+        <button onClick={onDone} className="block w-full cursor-pointer">
+          <motion.div
+            className="font-display w-full rounded-full py-4 text-center text-[16px] font-bold uppercase tracking-[0.06em]"
+            animate={{
+              backgroundColor: count > 0 ? "var(--color-leaf)" : "rgba(255,255,255,0.08)",
+              color: count > 0 ? "#0a0a0a" : "var(--color-ash)",
+            }}
+            whileTap={{ scale: 0.97 }}
+          >
+            {count > 0 ? "Continue" : "Not now"}
+          </motion.div>
+        </button>
+      </div>
     </motion.div>
   );
 }
