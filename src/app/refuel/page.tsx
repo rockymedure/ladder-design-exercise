@@ -233,19 +233,6 @@ function Goal() {
                   />
                 </div>
               </div>
-              <div className="rounded-2xl border border-black/10 bg-white p-3 shadow-sm">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/screens/before-fuel-card.png"
-                  alt="The current nutrition prompt: Get your calories right, add or update for this workout"
-                  loading="lazy"
-                  className="block h-auto w-full rounded-lg"
-                />
-                <p className="mt-3 px-1 text-[13px] leading-relaxed text-[#666]">
-                  The nutrition prompt today. One line, an Update button, easily
-                  missed.
-                </p>
-              </div>
             </div>
           </Reveal>
 
@@ -292,12 +279,6 @@ function Goal() {
                     className="block h-auto w-full"
                   />
                 </div>
-              </div>
-              <div className="rounded-2xl border border-black/10 bg-white p-4 shadow-sm">
-                <p className="text-[14px] leading-relaxed text-[#444]">
-                  Its own post workout beat. Tap to log, or expand a tile for the
-                  amount, a protein picker, or to speak your meal out loud.
-                </p>
               </div>
             </div>
           </Reveal>
@@ -358,7 +339,7 @@ function Approaches() {
                   <span className="absolute -left-2 -top-2 z-10 rounded-full bg-paper px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-ink">
                     Cut
                   </span>
-                  <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-black opacity-90 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.7)]">
+                  <div className="overflow-hidden rounded-[2rem] border border-white/25 bg-black opacity-90 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.12)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={e.src}
@@ -368,7 +349,7 @@ function Approaches() {
                     />
                   </div>
                 </div>
-                <figcaption className="flex flex-col gap-2">
+                <figcaption className="flex flex-col items-center gap-2 text-center">
                   <h3 className="font-ek text-[1.5rem] text-paper">{e.title}</h3>
                   <p className="max-w-[42ch] text-[15px] leading-relaxed text-ash-light">
                     {e.d}

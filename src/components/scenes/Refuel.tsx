@@ -19,12 +19,17 @@ type Phase = "rating" | "checkin" | "payoff";
 /** The framed, tappable prototype + a reset control. Drop this on a page. */
 export function RefuelStage() {
   const [runKey, setRunKey] = useState(0);
+  const [phase, setPhase] = useState<Phase>("rating");
   return (
     <div className="flex flex-col items-center gap-5">
       <PhoneFrame>
-        <StatusBar live scrim="#070707" />
+        <StatusBar live scrim={phase === "rating" ? undefined : "#070707"} />
         <div className="absolute inset-0">
-          <RefuelFlow key={runKey} onRestart={() => setRunKey((k) => k + 1)} />
+          <RefuelFlow
+            key={runKey}
+            onRestart={() => setRunKey((k) => k + 1)}
+            onPhase={setPhase}
+          />
         </div>
       </PhoneFrame>
 
@@ -61,6 +66,7 @@ export function RefuelApp() {
   const [mounted, setMounted] = useState(false);
   const [desktop, setDesktop] = useState(false);
   const [runKey, setRunKey] = useState(0);
+  const [phase, setPhase] = useState<Phase>("rating");
 
   useEffect(() => {
     setMounted(true);
@@ -72,7 +78,11 @@ export function RefuelApp() {
   }, []);
 
   const flow = (
-    <RefuelFlow key={runKey} onRestart={() => setRunKey((k) => k + 1)} />
+    <RefuelFlow
+      key={runKey}
+      onRestart={() => setRunKey((k) => k + 1)}
+      onPhase={setPhase}
+    />
   );
 
   // Avoid a hydration flash between layouts.
@@ -82,7 +92,7 @@ export function RefuelApp() {
     return (
       <main className="grid h-[100dvh] w-full place-items-center overflow-hidden bg-[#0E0E0E]">
         <PhoneFrame>
-          <StatusBar live scrim="#070707" />
+          <StatusBar live scrim={phase === "rating" ? undefined : "#070707"} />
           <div className="absolute inset-0">{flow}</div>
         </PhoneFrame>
       </main>
@@ -98,7 +108,13 @@ export function RefuelApp() {
   );
 }
 
-function RefuelFlow({ onRestart }: { onRestart: () => void }) {
+function RefuelFlow({
+  onRestart,
+  onPhase,
+}: {
+  onRestart: () => void;
+  onPhase?: (p: Phase) => void;
+}) {
   const [phase, setPhase] = useState<Phase>("rating");
   const [rating, setRating] = useState(0);
   const [logged, setLogged] = useState<Record<Item, boolean>>({
@@ -109,6 +125,10 @@ function RefuelFlow({ onRestart }: { onRestart: () => void }) {
   const [waterStep, setWaterStep] = useState(2);
   const [proteinPick, setProteinPick] = useState(1);
   const [mealSummary, setMealSummary] = useState("");
+
+  useEffect(() => {
+    onPhase?.(phase);
+  }, [phase, onPhase]);
 
   const toggle = (k: Item) => setLogged((p) => ({ ...p, [k]: !p[k] }));
 
@@ -167,6 +187,23 @@ function RatingScreen({
   onDone: () => void;
 }) {
   const rated = rating > 0;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // iOS only autoplays a video it sees as muted *at load*. React doesn't reliably
+  // reflect the `muted` prop as a real attribute, so we force it on the element
+  // and kick off play() ourselves (ignoring the promise rejection if the OS still
+  // blocks it, e.g. Low Power Mode).
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener("loadeddata", tryPlay);
+    return () => v.removeEventListener("loadeddata", tryPlay);
+  }, []);
+
   return (
     <motion.div
       className="absolute inset-0"
@@ -176,17 +213,19 @@ function RatingScreen({
       transition={{ duration: 0.35 }}
     >
       <video
+        ref={videoRef}
         src="/videos/shelby-refuel.mp4"
         poster="/photos/shelby-refuel.png"
         autoPlay
         loop
         muted
         playsInline
+        preload="auto"
+        webkit-playsinline="true"
         className="absolute inset-0 h-full w-full object-cover"
-        style={{ filter: "brightness(0.5)" }}
+        style={{ filter: "brightness(0.68)" }}
       />
-      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/55 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-[66%] bg-gradient-to-t from-black via-black/75 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black via-black/55 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-[100px] flex flex-col items-center gap-5 px-5 text-center">
         <div className="flex flex-col items-center gap-1.5">
