@@ -80,7 +80,14 @@ function Nav() {
   return (
     <header className="sticky top-0 z-[60] border-b border-white/10 bg-[#0E0E0E]/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-3.5">
-        <Wordmark />
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Back to top"
+          className="cursor-pointer"
+        >
+          <Wordmark />
+        </button>
         <div className="flex items-center gap-2.5">
           <Link
             href="/"
@@ -221,7 +228,7 @@ function Goal() {
         <div className="mt-14 grid items-start gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-8">
           <Reveal>
             <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3 md:justify-start">
                 <span className="rounded-full bg-[#EDEDED] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#6A6A6A]">
                   Before
                 </span>
@@ -268,7 +275,7 @@ function Goal() {
 
           <Reveal delay={0.16}>
             <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3 md:justify-start">
                 <span className="rounded-full bg-volt px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink">
                   After
                 </span>
