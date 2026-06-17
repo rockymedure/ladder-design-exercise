@@ -18,11 +18,11 @@ Three screens, one continuous flow:
    tappable 1–5 stars, `COMPLETE WORKOUT` to advance.
 2. **Check-in** *(new)* — one prompt ("What's fueled you today?") and three fat
    binary tiles: **Water · Protein · Meal**. Tap whatever applies; the CTA reacts
-   live ("Not today" → "Log 2 and finish"). A quiet line hands off to richer
-   voice/photo logging for anyone who wants precision.
-3. **Payoff** — the streak ring fills, "Logged," and the **existing** nutrition
-   streak bumps 3 → 4 days with today's dot popping in. One daily relationship, not
-   a second scorekeeper.
+   live ("Not now" → "Continue"). Expand a tile for a stepped water slider, a
+   protein picker, or a meal field you just speak to.
+3. **Payoff** — logging flows into Ladder's real `Complete Workout` payoff: the
+   medal, Share Proof, the stats, now with a quiet "Refueled today" chip row
+   showing what you logged. One daily relationship, not a second scorekeeper.
 
 ---
 
@@ -90,55 +90,57 @@ Three surfaces, all on the shareable URL:
 ## Loom walkthrough script (about 3 min)
 
 _Two tabs ready: `/refuel` (case study) and `/live` (prototype, ideally mirrored from a
-phone so the voice logging is real on camera). Warm and direct. Times are cumulative._
+phone so the voice logging is real on camera). The case study scrolls in this order —
+**hero → goal → walkthrough → landed on → approaches** — so the script follows the scroll.
+Warm and direct. Times are cumulative._
 
-### 1. Pivot from round one to two, quick (0:00)
+### 1. Pivot from round one to two (0:00)
 **On screen:** `/refuel` hero.
 > "Quick round two. The feedback on round one was fair. It was hard to read my UI craft, and
 > the concept sat too far from today's app. So I did the opposite. I took one real screen you
 > ship today and made it better. This is Refuel."
 
-### 2. Make nutrition logging easier post workout (0:20)
-**On screen:** the goal section, before and after.
+### 2. The goal (0:20)
+**On screen:** scroll to the goal section, before and after.
 > "The goal is simple. Make nutrition logging easier right after a workout. Today it's a two
 > line card wedged between your medal and your stats, easy to miss. I gave it its own beat.
 > Rate the session, then one tap per thing you've had."
 
-### 3. Approaches explored (0:50)
-**On screen:** the approaches section.
-> "I didn't land here first. I tried a few louder directions. An ambient waveform, slide to
-> fill columns, photo rich rows, a compact tile grid. Each one taught me something, but they
-> all added friction, vanity, or distance from Ladder's system. So they got cut."
+### 3. Walkthrough — use it for real (0:45)
+**On screen:** switch to `/live` (the prototype is also embedded right below the goal).
+> "This isn't a mockup. Let me use it."
 
-### 4. Landed on (1:25)
-**On screen:** the landed on section.
-> "What shipped is calm, fast, and built in Ladder's own system. Binary by default, so one tap
-> counts. Detail is there if you want it, never required. Rate first, three taps, expand for a
-> slider or a picker, and a meal field you can just speak to."
-
-### 5. Walkthrough (1:55)
-**On screen:** switch to `/live` and use it for real.
-> "Not a mockup. Let me use it."
-
-- Tap a star, hit **Complete Workout**.
-- Tap **Water**, drag the slider.
+- Tap a star, hit **Complete Workout** — note the rating screen is full-bleed live footage.
+- Tap **Water**, drag the stepped slider.
 - Tap **Meal**, hit **Say it**, and speak a real meal out loud.
 
 > "The meal field records my voice and parses it into a structured log. Live, not faked. The
-> lowest effort rung that hands off to Ladder's real logging."
+> lowest-effort rung that hands off to Ladder's real logging."
 
-- Finish, show the payoff.
+- Hit **Continue**, show the payoff.
 
-> "And it feeds the payoff you already have. The medal, the share, the stats, now with a quiet
-> Refueled today."
+> "And it feeds the payoff you already have — the medal, Share Proof, the stats — now with a
+> quiet Refueled today, showing exactly what I logged."
 
-### Close (2:40)
-**On screen:** the closing statement.
+### 4. Landed on — the craft (1:50)
+**On screen:** scroll through the landed-on section, state by state.
+> "Back in the case study, here's every state, designed and coded, not implied in a flat comp.
+> Calm, fast, and built in Ladder's own system. Binary by default so one tap counts; detail is
+> there if you want it, never required."
+
+### 5. Approaches explored (2:20)
+**On screen:** the approaches section.
+> "And I didn't land here first. I tried louder directions — an ambient waveform, slide-to-fill
+> columns, photo-rich rows, a compact tile grid. Each taught me something, but they all added
+> friction, vanity, or distance from Ladder's system. So they got cut. Showing craft is also
+> showing judgment."
+
+### Close (2:45)
 > "Round one showed how far I'd stretch. This shows I'd rather take a screen millions use and
-> make it sing. If we shipped it, I'd put it behind a flag for a cohort and watch seven day
+> make it sing. If we shipped it, I'd put it behind a flag for a cohort and watch seven-day
 > logging against control. Thanks for the second look."
 
 **End, about 3:00.**
 
 > **Tip:** if you can't mirror a phone, pre-record the voice meal moment on device and cut to
-> it, so the speech to log step is clearly real.
+> it, so the speech-to-log step is clearly real.
