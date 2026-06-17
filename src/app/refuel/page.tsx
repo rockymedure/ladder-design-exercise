@@ -503,29 +503,27 @@ function Walkthrough() {
             </p>
           </Reveal>
         </div>
-        <Reveal delay={0.16}>
-          <RefuelStage />
-        </Reveal>
-        <Reveal delay={0.2}>
-          <div className="flex flex-col items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:flex-row sm:gap-6">
-            <a
-              href={LIVE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="shrink-0 rounded-2xl bg-white p-3"
-              aria-label="Open the live prototype"
-            >
-              <QRCodeSVG value={LIVE_URL} size={104} bgColor="#ffffff" fgColor="#0E0E0E" level="M" />
-            </a>
-            <div className="flex flex-col items-center gap-2 sm:items-start">
-              <p className="text-[13px] font-bold uppercase tracking-[0.16em] text-leaf">
+        <Reveal delay={0.16} className="w-full">
+          <div className="flex flex-col items-center gap-8 md:flex-row-reverse md:items-center md:justify-center md:gap-12">
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <a
+                href={LIVE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl bg-white p-3"
+                aria-label="Open the live prototype"
+              >
+                <QRCodeSVG value={LIVE_URL} size={120} bgColor="#ffffff" fgColor="#0E0E0E" level="M" />
+              </a>
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-leaf">
                 Play it on your phone
               </p>
-              <p className="max-w-[34ch] text-center text-[14px] leading-snug text-ash-light sm:text-left">
+              <p className="max-w-[20ch] text-center text-[13px] leading-snug text-ash-light">
                 Scan the code with your camera to open the live prototype on a real
                 device.
               </p>
             </div>
+            <RefuelStage />
           </div>
         </Reveal>
       </div>
