@@ -1,18 +1,38 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+
+/** The viewer's current local time, formatted for their locale (e.g. "1:03 PM"
+ *  or "13:03"). Returns "" until mounted so SSR and the first client render
+ *  match — the real time pops in after hydration. */
+function useLocalTime() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const fmt = () =>
+      new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    setTime(fmt());
+    const id = setInterval(() => setTime(fmt()), 15000);
+    return () => clearInterval(id);
+  }, []);
+  return time;
+}
 
 export function StatusBar({
   dark = false,
-  time = "9:41",
+  time,
+  live = false,
   scrim,
 }: {
   dark?: boolean;
   time?: string;
+  /** When true, show the viewer's real local time instead of a fixed value. */
+  live?: boolean;
   /** When set, paints a top-down gradient of this color behind the bar so
    *  scrolling content cleanly disappears underneath it (iOS-style). */
   scrim?: string;
 }) {
+  const localTime = useLocalTime();
+  const shown = live ? localTime : time ?? "9:41";
   const color = dark ? "text-ink" : "text-paper";
   return (
     <div
@@ -23,7 +43,7 @@ export function StatusBar({
           : undefined
       }
     >
-      <span className="tnum tracking-tight">{time}</span>
+      <span className="tnum tracking-tight">{shown}</span>
       <div className="flex items-center gap-1.5">
         {/* signal */}
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none">

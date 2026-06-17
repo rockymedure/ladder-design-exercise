@@ -22,7 +22,7 @@ export function RefuelStage() {
   return (
     <div className="flex flex-col items-center gap-5">
       <PhoneFrame>
-        <StatusBar time="1:03 PM" scrim="#070707" />
+        <StatusBar live scrim="#070707" />
         <div className="absolute inset-0">
           <RefuelFlow key={runKey} onRestart={() => setRunKey((k) => k + 1)} />
         </div>
@@ -82,7 +82,7 @@ export function RefuelApp() {
     return (
       <main className="grid h-[100dvh] w-full place-items-center overflow-hidden bg-[#0E0E0E]">
         <PhoneFrame>
-          <StatusBar time="1:03 PM" scrim="#070707" />
+          <StatusBar live scrim="#070707" />
           <div className="absolute inset-0">{flow}</div>
         </PhoneFrame>
       </main>
@@ -91,7 +91,7 @@ export function RefuelApp() {
 
   return (
     <main className="relative h-[100dvh] w-full overflow-hidden bg-[#070707]">
-      <StatusBar time="1:03 PM" scrim="#070707" />
+      <StatusBar live scrim="#070707" />
       <div className="absolute inset-0">{flow}</div>
     </main>
   );
@@ -426,18 +426,6 @@ function Tile({
       animate={{ borderColor: on ? "rgba(84,244,109,0.6)" : "rgba(255,255,255,0.10)" }}
       className="relative overflow-hidden rounded-[20px] border bg-ink-card"
     >
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        initial={false}
-        animate={{ opacity: on ? 1 : 0 }}
-        transition={{ duration: 0.35 }}
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(84,244,109,0.16), rgba(84,244,109,0.03))",
-        }}
-      />
-
       <motion.button
         onClick={onTap}
         whileTap={{ scale: 0.98 }}
