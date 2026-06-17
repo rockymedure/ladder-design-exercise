@@ -63,13 +63,10 @@ export default function RefuelPage() {
     <main className="font-sf min-h-dvh bg-[#0E0E0E] text-paper">
       <Nav />
       <Hero />
-      <Feedback />
-      <BeforeAfter />
-      <Craft />
-      <Explorations />
-      <Prototype />
-      <Principles />
-      <Validate />
+      <Goal />
+      <Approaches />
+      <LandedOn />
+      <Walkthrough />
       <Close />
       <Footer />
     </main>
@@ -115,6 +112,10 @@ function Nav() {
 }
 
 function Hero() {
+  const notes = [
+    { tag: "On craft", q: "Hard to benchmark the UI craft. Most screens were existing screens or AI concepts." },
+    { tag: "On feasibility", q: "The solution sat a long way from today\u2019s app." },
+  ];
   return (
     <section className="relative overflow-hidden">
       <div
@@ -122,7 +123,7 @@ function Hero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(55% 45% at 50% 0%, rgba(84,244,109,0.12), transparent 65%), radial-gradient(45% 40% at 82% 90%, rgba(230,255,0,0.06), transparent 70%)",
+            "radial-gradient(55% 45% at 50% 0%, rgba(84,244,109,0.12), transparent 65%)",
         }}
       />
       <div className="mx-auto flex max-w-[1180px] flex-col items-start gap-8 px-6 pb-20 pt-24 md:pt-32">
@@ -133,21 +134,37 @@ function Hero() {
           <h1 className={`${H} text-[clamp(3.2rem,11vw,8.5rem)]`}>Refuel</h1>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="max-w-[60ch] text-[clamp(1.05rem,2.2vw,1.35rem)] leading-relaxed text-ash-light">
-            Round one reimagined the whole day. The honest note back: it was hard
-            to read my UI craft, and the concept lived a long way from today&apos;s
-            app. Both fair. So round two is the opposite move &mdash; I took one
-            real, overlooked moment you ship{" "}
-            <span className="text-paper">right now</span> and leveled it up.
+          <p className="max-w-[58ch] text-[clamp(1.05rem,2.2vw,1.35rem)] leading-relaxed text-ash-light">
+            Round one reimagined the whole day. The honest feedback: it was hard
+            to read my UI craft, and the concept sat too far from today&apos;s app.
+            Fair on both. So round two does the opposite. I took one real screen you
+            ship today and made it better.
           </p>
         </Reveal>
-        <Reveal delay={0.18}>
+        <Reveal delay={0.16}>
+          <div className="grid w-full max-w-[640px] gap-3 sm:grid-cols-2">
+            {notes.map((n) => (
+              <div
+                key={n.tag}
+                className="rounded-xl border border-white/10 bg-white/[0.03] p-4"
+              >
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-ash-dark">
+                  {n.tag}
+                </span>
+                <p className="mt-2 text-[14px] leading-snug text-ash-light">
+                  {n.q}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.2}>
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href="#prototype"
+              href="#walkthrough"
               className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
             >
-              Tap the prototype
+              See the walkthrough
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M5 12h14M13 6l6 6-6 6"
@@ -159,10 +176,10 @@ function Hero() {
               </svg>
             </a>
             <a
-              href="#before"
+              href="#approaches"
               className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-paper transition hover:border-white/45"
             >
-              See the before
+              The approaches
             </a>
           </div>
         </Reveal>
@@ -171,74 +188,28 @@ function Hero() {
   );
 }
 
-function Feedback() {
-  const quotes = [
-    {
-      q: "It\u2019s hard to benchmark your UI craft. Most of the screens are either your existing screens or concepts illustrated through AI.",
-      tag: "On craft",
-    },
-    {
-      q: "The solution is a far distance from today\u2019s app \u2014 more feasible for a startup with little to lose than a structure with real members in it.",
-      tag: "On feasibility",
-    },
-  ];
+function Goal() {
   return (
-    <section className="border-y border-white/10 bg-[#0B0B0B]">
-      <div className="mx-auto max-w-[1180px] px-6 py-20 md:py-28">
-        <Reveal>
-          <Kicker>The note I got back</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className={`${H} ${SUB} mt-5 max-w-[20ch]`}>Two fair hits</h2>
-        </Reveal>
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {quotes.map((item, i) => (
-            <Reveal key={item.tag} delay={i * 0.08}>
-              <figure className="flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-7">
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-ash-dark">
-                  {item.tag}
-                </span>
-                <blockquote className="font-ek text-[clamp(1.3rem,2.6vw,1.85rem)] leading-tight text-paper">
-                  &ldquo;{item.q}&rdquo;
-                </blockquote>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal delay={0.12}>
-          <p className="mt-10 max-w-[60ch] text-[18px] leading-relaxed text-ash-light">
-            So this round has one job: show the craft, on a surface you already
-            ship, and move the working system forward instead of replacing it.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function BeforeAfter() {
-  return (
-    <section id="before" className="bg-[#FAFAFA] text-ink">
+    <section id="goal" className="bg-[#FAFAFA] text-ink">
       <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
         <Reveal>
-          <Kicker tone="light">The overlooked moment</Kicker>
+          <Kicker tone="light">The goal</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
-            Nutrition was a card you scroll past
+            Make nutrition logging easier, right after the workout
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
           <p className="mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
             Finish a Ladder workout and you&apos;re at peak motivation, already in
-            the app. But logging what you eat is a two-line nudge wedged between
-            your medal and your stats, beside a menu of clunky entry points. The
-            best moment to build a nutrition habit, treated as an afterthought.
+            the app. But logging what you ate is a two line card wedged between your
+            medal and your stats, next to a clunky entry menu. The best moment to
+            build the habit, treated as an afterthought.
           </p>
         </Reveal>
 
         <div className="mt-14 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-8">
-          {/* Before */}
           <Reveal>
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-3">
@@ -269,17 +240,16 @@ function BeforeAfter() {
                   className="block h-auto w-full rounded-lg"
                 />
                 <p className="mt-3 px-1 text-[13px] leading-relaxed text-[#666]">
-                  The entire nutrition prompt today: one line, an Update button,
-                  easily missed.
+                  The nutrition prompt today. One line, an Update button, easily
+                  missed.
                 </p>
               </div>
             </div>
           </Reveal>
 
-          {/* Arrow */}
           <Reveal delay={0.1} className="flex justify-center">
             <div className="grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white text-ink shadow-sm">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="md:block hidden">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="hidden md:block">
                 <path
                   d="M5 12h14M13 6l6 6-6 6"
                   stroke="currentColor"
@@ -288,7 +258,7 @@ function BeforeAfter() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="md:hidden block">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="block md:hidden">
                 <path
                   d="M12 5v14M6 13l6 6 6-6"
                   stroke="currentColor"
@@ -300,7 +270,6 @@ function BeforeAfter() {
             </div>
           </Reveal>
 
-          {/* After */}
           <Reveal delay={0.16}>
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-3">
@@ -324,10 +293,9 @@ function BeforeAfter() {
               </div>
               <div className="rounded-2xl border border-black/10 bg-white p-4 shadow-sm">
                 <p className="text-[14px] leading-relaxed text-[#444]">
-                  Promoted into its own post-workout beat: rate the session, then
-                  one tap per thing you&apos;ve had. Same flow, same design system
-                  &mdash; given the room it deserves, and wired to kickstart the
-                  logging habit.
+                  I gave it its own post workout beat. Rate the session, then one
+                  tap per thing you&apos;ve had. Same flow, same design system, with
+                  the room it deserves.
                 </p>
               </div>
             </div>
@@ -338,56 +306,139 @@ function BeforeAfter() {
   );
 }
 
-const CRAFT = [
+const EXPLORE = [
+  {
+    src: "/refuel/explore-waveform.png",
+    title: "The ambient waveform",
+    d: "One expressive item at a time with a living graph. Beautiful, but the data viz was decoration, not signal, and logging one thing per screen is the opposite of a five second habit.",
+  },
+  {
+    src: "/refuel/explore-bars.png",
+    title: "Slide-to-fill columns",
+    d: "Tactile vertical sliders for amount. Playful, but it forced a number on every item and the upward drag fought the thumb. Precision pretending to be speed.",
+  },
+  {
+    src: "/refuel/explore-photos.png",
+    title: "Photo-rich rows",
+    d: "Appetite forward, with food imagery in every row. But stock photos aren\u2019t your food, and it pushed the screen toward a content feed instead of a quick check in.",
+  },
+  {
+    src: "/refuel/explore-tiles.png",
+    title: "Compact tile grid",
+    d: "The closest miss. Fast and clean, but the squares felt cramped against the headline. One more pass relaxed them into the calm full width tiles that shipped.",
+  },
+];
+
+function Approaches() {
+  return (
+    <section id="approaches" className="bg-[#0E0E0E] text-paper">
+      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
+        <Reveal>
+          <Kicker>Approaches explored</Kicker>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 className={`${H} ${HEAD} mt-5 max-w-[14ch]`}>
+            I didn&apos;t land here first
+          </h2>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className="mt-6 max-w-[60ch] text-[18px] leading-relaxed text-ash-light">
+            Showing craft is also showing judgment. I explored louder, more
+            expressive directions, then pulled back to something fast, calm, and
+            native to Ladder&apos;s system. A few that didn&apos;t make it, and why.
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2">
+          {EXPLORE.map((e, i) => (
+            <Reveal key={e.title} delay={(i % 2) * 0.08}>
+              <figure className="flex flex-col gap-5">
+                <div className="relative mx-auto w-full max-w-[260px]">
+                  <span className="absolute -left-2 -top-2 z-10 rounded-full bg-paper px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-ink">
+                    Cut
+                  </span>
+                  <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-black opacity-90 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.7)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={e.src}
+                      alt={e.title}
+                      loading="lazy"
+                      className="block h-auto w-full"
+                    />
+                  </div>
+                </div>
+                <figcaption className="flex flex-col gap-2">
+                  <h3 className="font-ek text-[1.5rem] text-paper">{e.title}</h3>
+                  <p className="max-w-[42ch] text-[15px] leading-relaxed text-ash-light">
+                    {e.d}
+                  </p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.12}>
+          <p className="mt-14 max-w-[58ch] text-[18px] leading-relaxed text-ash-light">
+            The thread through every cut: anything that added friction, vanity, or
+            distance from Ladder&apos;s system lost.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+const LANDED = [
   {
     src: "/refuel/rating.png",
     title: "Rate first, full-bleed",
-    d: "The existing rating step, reborn as a cinematic post-workout moment. Live ambient video, the stars and Complete Workout button kept exactly where members expect them.",
+    d: "The existing rating step as a full screen moment. Live ambient video, the stars and Complete Workout button where members expect them.",
   },
   {
     src: "/refuel/checkin.png",
     title: "One screen, three taps",
-    d: "Water, Protein, Meal. Binary by default \u2014 tapping one tile already counts. EK display type and the leaf accent, straight from Ladder's system. No blank fields, no friction.",
+    d: "Water, Protein, Meal. Tap one and it already counts. EK display type and the leaf accent, straight from Ladder. No blank fields.",
   },
   {
     src: "/refuel/detail.png",
     title: "Commit first, detail optional",
-    d: "Want precision? A tile expands in place. A stepped water slider (4oz \u2192 32+), a protein picker, a meal field \u2014 each a designed state, never a dead-end form.",
+    d: "Tap to log. Expand a tile for a stepped water slider or a protein picker. Each one a designed state, never a dead end form.",
   },
   {
     src: "/refuel/voice.png",
     title: "Say it, not type it",
-    d: "The meal field records your voice and parses it with Whisper + GPT into a structured log. The waveform and submit are live, not faked \u2014 the lowest-effort rung that hands off to real logging.",
+    d: "The meal field records your voice and parses it into a structured log. Live, not faked. The lowest effort rung that hands off to real logging.",
   },
   {
     src: "/refuel/payoff.png",
     title: "Feeds the payoff you already have",
-    d: "Logging flows into Ladder's real Complete Workout payoff \u2014 the medal, the share, the stats \u2014 now with a quiet \u201CRefueled today\u201D summary. One relationship, not a second scorekeeper.",
+    d: "Logging flows into Ladder\u2019s real Complete Workout payoff. The medal, the share, the stats, now with a quiet Refueled today.",
   },
 ];
 
-function Craft() {
+function LandedOn() {
   return (
-    <section className="bg-[#0E0E0E] text-paper">
+    <section className="bg-[#FAFAFA] text-ink">
       <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
         <Reveal>
-          <Kicker>The craft</Kicker>
+          <Kicker tone="light">Landed on</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>
-            Designed down to the state
+            Calm, fast, built in the system
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="mt-6 max-w-[58ch] text-[18px] leading-relaxed text-ash-light">
-            Built in Ladder&apos;s own system &mdash; the EK display type, the leaf
-            accent, the real Complete Workout payoff. Every state hand-designed and
+          <p className="mt-6 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
+            Built in Ladder&apos;s own system. Binary by default, so one tap counts.
+            Detail is there if you want it, never required. Every state designed and
             coded, not implied in a flat comp.
           </p>
         </Reveal>
 
         <div className="mt-16 flex flex-col gap-20 md:gap-28">
-          {CRAFT.map((c, i) => {
+          {LANDED.map((c, i) => {
             const flip = i % 2 === 1;
             return (
               <div
@@ -404,10 +455,10 @@ function Craft() {
                     <span className="font-ek text-[clamp(2.4rem,5vw,3.6rem)] leading-none text-leaf">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className={`${H} text-[clamp(1.7rem,3.4vw,2.4rem)]`}>
+                    <h3 className={`${H} text-[clamp(1.7rem,3.4vw,2.4rem)] text-ink`}>
                       {c.title}
                     </h3>
-                    <p className="max-w-[46ch] text-[17px] leading-relaxed text-ash-light">
+                    <p className="max-w-[46ch] text-[17px] leading-relaxed text-[#444]">
                       {c.d}
                     </p>
                   </div>
@@ -421,95 +472,10 @@ function Craft() {
   );
 }
 
-const EXPLORE = [
-  {
-    src: "/refuel/explore-waveform.png",
-    title: "The ambient waveform",
-    d: "One expressive, full-bleed item at a time with a living graph. Gorgeous \u2014 but the data viz was decoration, not signal, and logging one thing per screen is the opposite of a five-second habit.",
-  },
-  {
-    src: "/refuel/explore-bars.png",
-    title: "Slide-to-fill columns",
-    d: "Tactile vertical sliders for amount. Playful, but it forced a number on every item and the upward drag fought the thumb. Precision pretending to be speed.",
-  },
-  {
-    src: "/refuel/explore-photos.png",
-    title: "Photo-rich rows",
-    d: "Appetite-forward, with food imagery in every row. But stock photos aren\u2019t your food, and it pushed the screen toward a content feed instead of a quick check-in.",
-  },
-  {
-    src: "/refuel/explore-tiles.png",
-    title: "Compact tile grid",
-    d: "The closest miss. Fast and clean, but the small squares felt cramped against the headline and the hierarchy was off. One more pass relaxed them into the calm full-width tiles that shipped.",
-  },
-];
-
-function Explorations() {
-  return (
-    <section className="bg-[#F4F4F4] text-ink">
-      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
-        <Reveal>
-          <Kicker tone="light">The road there</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className={`${H} ${HEAD} mt-5 max-w-[14ch]`}>
-            I didn&apos;t land here first
-          </h2>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <p className="mt-6 max-w-[60ch] text-[18px] leading-relaxed text-[#444]">
-            Showing craft is also showing judgment. I explored louder, more
-            expressive directions &mdash; then deliberately pulled back to
-            something fast, calm, and native to Ladder&apos;s system. A few that
-            didn&apos;t make the cut, and why.
-          </p>
-        </Reveal>
-
-        <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2">
-          {EXPLORE.map((e, i) => (
-            <Reveal key={e.title} delay={(i % 2) * 0.08}>
-              <figure className="flex flex-col gap-5">
-                <div className="relative mx-auto w-full max-w-[260px]">
-                  <span className="absolute -left-2 -top-2 z-10 rounded-full bg-ink px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-paper">
-                    Cut
-                  </span>
-                  <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-black opacity-90 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={e.src}
-                      alt={e.title}
-                      loading="lazy"
-                      className="block h-auto w-full"
-                    />
-                  </div>
-                </div>
-                <figcaption className="flex flex-col gap-2">
-                  <h3 className="font-ek text-[1.5rem] text-ink">{e.title}</h3>
-                  <p className="max-w-[42ch] text-[15px] leading-relaxed text-[#555]">
-                    {e.d}
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.12}>
-          <p className="mt-14 max-w-[58ch] text-[18px] leading-relaxed text-[#444]">
-            The thread through every cut: anything that added friction, vanity, or
-            distance from Ladder&apos;s existing system lost. What shipped is the
-            most restrained version &mdash; on purpose.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Prototype() {
+function Walkthrough() {
   return (
     <section
-      id="prototype"
+      id="walkthrough"
       className="relative overflow-hidden border-y border-white/10 bg-[#0B0B0B]"
     >
       <div
@@ -523,16 +489,16 @@ function Prototype() {
       <div className="mx-auto flex max-w-[1180px] flex-col items-center gap-10 px-6 py-24 md:py-32">
         <div className="flex flex-col items-center gap-4 text-center">
           <Reveal>
-            <Kicker>Try it</Kicker>
+            <Kicker>Walkthrough</Kicker>
           </Reveal>
           <Reveal delay={0.06}>
-            <h2 className={`${H} ${HEAD} max-w-[18ch]`}>Not a mockup. Tap through it.</h2>
+            <h2 className={`${H} ${HEAD} max-w-[16ch]`}>Tap through it</h2>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="max-w-[54ch] text-[17px] leading-relaxed text-ash-light">
-              A real coded prototype. Rate, log, expand a tile &mdash; and the meal
-              field actually records your voice and parses it. Tap through it here,
-              or open it full-screen on your phone.
+              Not a mockup. A real coded prototype. Rate, log, expand a tile, and
+              the meal field actually records your voice and parses it. Try it here,
+              or open it full screen on your phone.
             </p>
           </Reveal>
         </div>
@@ -563,99 +529,9 @@ function Prototype() {
   );
 }
 
-const PRINCIPLES = [
-  {
-    t: "Any log is a win",
-    d: "Tapping one tile counts. No amounts, no blank screen, no friction. The goal is the ritual, not precision.",
-  },
-  {
-    t: "The lowest rung of a ladder",
-    d: "The binary tap kickstarts the habit. Want to be precise? It hands off to Ladder's existing voice, photo, and barcode logging.",
-  },
-  {
-    t: "Feed the streak you already have",
-    d: "Logging fills today's nutrition ring and bumps the existing streak \u2014 one daily relationship, not a second scorekeeper.",
-  },
-];
-
-function Principles() {
-  return (
-    <section className="bg-[#FAFAFA] text-ink">
-      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
-        <Reveal>
-          <Kicker tone="light">The thinking</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className={`${H} ${HEAD} mt-5 max-w-[16ch]`}>Simple on purpose</h2>
-        </Reveal>
-        <div className="mt-14 grid gap-4 md:grid-cols-3">
-          {PRINCIPLES.map((p, i) => (
-            <Reveal key={p.t} delay={i * 0.06}>
-              <div className="flex h-full flex-col gap-3 rounded-2xl border border-black/10 bg-white p-7">
-                <h3 className="font-ek text-[1.4rem] text-ink">{p.t}</h3>
-                <p className="text-[15px] leading-relaxed text-[#444]">{p.d}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const BETS = [
-  {
-    a: "Attaching the first log to the workout lifts logging rate.",
-    c: "High",
-    v: "Instrument tap-through on today\u2019s \u201CGet your calories right\u201D card, then ship Refuel behind a flag to a cohort and compare 7-day nutrition-log rate against control.",
-  },
-  {
-    a: "One-tap binary logging beats precise entry for forming the habit.",
-    c: "Medium",
-    v: "A/B binary-first vs. the current entry menu. Watch repeat logging D1\u2013D7, not just first-log completion.",
-  },
-  {
-    a: "Tying food to the workout you just did improves adherence.",
-    c: "Medium",
-    v: "Cohort retention and weekly active-nutrition days vs. control, plus a few qual sessions on whether the moment feels earned, not nagging.",
-  },
-];
-
-function Validate() {
-  return (
-    <section className="bg-[#0E0E0E] text-paper">
-      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
-        <Reveal>
-          <Kicker>If we shipped it</Kicker>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className={`${H} ${HEAD} mt-5 max-w-[18ch]`}>
-            The assumptions, and how I&apos;d know
-          </h2>
-        </Reveal>
-        <div className="mt-14 flex flex-col gap-px overflow-hidden rounded-3xl border border-white/10">
-          {BETS.map((b, i) => (
-            <Reveal key={b.a} delay={i * 0.06}>
-              <div className="grid gap-4 bg-white/[0.03] px-7 py-8 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.4fr)] md:items-center md:gap-10">
-                <p className="font-ek text-[1.35rem] leading-tight text-paper">
-                  {b.a}
-                </p>
-                <span className="w-fit rounded-full border border-leaf/40 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-leaf">
-                  {b.c} confidence
-                </span>
-                <p className="text-[15px] leading-relaxed text-ash-light">{b.v}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Close() {
   return (
-    <section className="relative overflow-hidden border-t border-white/10 bg-[#0E0E0E] text-paper">
+    <section className="relative overflow-hidden bg-[#0E0E0E] text-paper">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
@@ -664,26 +540,25 @@ function Close() {
             "radial-gradient(55% 50% at 50% 45%, rgba(84,244,109,0.12), transparent 70%)",
         }}
       />
-      <div className="mx-auto max-w-[1180px] px-6 py-28 text-center md:py-40">
+      <div className="mx-auto max-w-[1180px] px-6 py-28 text-center md:py-36">
         <Reveal>
-          <Kicker>On innovating off a working system</Kicker>
+          <Kicker>The job I want</Kicker>
         </Reveal>
         <Reveal delay={0.06}>
           <h2
-            className={`${H} mx-auto mt-6 max-w-[16ch] text-[clamp(2.6rem,8vw,6rem)]`}
+            className={`${H} mx-auto mt-6 max-w-[16ch] text-[clamp(2.4rem,7vw,5.2rem)]`}
             style={{ color: "var(--color-leaf)" }}
           >
-            Yes. That&apos;s the job I want.
+            Make a real screen sing
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
-          <p className="mx-auto mt-8 max-w-[62ch] text-[18px] leading-relaxed text-ash-light">
-            Round one was me showing how far I&apos;d stretch. This is me showing
-            I&apos;d rather take a screen millions already use and make it sing
-            &mdash; small, shippable, measurable moves that compound. Innovating off
-            a working system isn&apos;t the consolation prize. It&apos;s the craft I
-            want to do every day, with a design and product partner, inside the
-            constraints of real members.
+          <p className="mx-auto mt-8 max-w-[60ch] text-[18px] leading-relaxed text-ash-light">
+            Round one showed how far I&apos;d stretch. This shows I&apos;d rather take
+            a screen millions already use and make it better. Small, shippable moves
+            that compound. If we shipped it, I&apos;d put Refuel behind a flag for a
+            cohort and watch seven day nutrition logging against control. Cheapest
+            real test first.
           </p>
         </Reveal>
         <Reveal delay={0.18}>

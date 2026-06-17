@@ -87,73 +87,58 @@ Three surfaces, all on the shareable URL:
 
 ---
 
-## Loom walkthrough script (3–4 min)
+## Loom walkthrough script (about 3 min)
 
-_Record over the live deliverable. Two tabs ready: `/refuel` (case study) and `/live`
-(prototype, ideally mirrored from a phone so the voice meal logging is real on camera).
-Aim for warm and direct, not salesy. Times are cumulative._
+_Two tabs ready: `/refuel` (case study) and `/live` (prototype, ideally mirrored from a
+phone so the voice logging is real on camera). Warm and direct. Times are cumulative._
 
-### 0:00 — Open on the feedback (15s)
+### 1. Pivot from round one to two, quick (0:00)
 **On screen:** `/refuel` hero.
-> "Hey — quick round two. The note I got back on the first pass was fair: it was hard to
-> read my actual UI craft, and the concept lived a long way from today's app. So instead of
-> defending that, I did the opposite — I took one real screen you ship right now and leveled
-> it up. This is Refuel."
+> "Quick round two. The feedback on round one was fair. It was hard to read my UI craft, and
+> the concept sat too far from today's app. So I did the opposite. I took one real screen you
+> ship today and made it better. This is Refuel."
 
-### 0:15 — The overlooked moment / before (35s)
-**On screen:** scroll to the **Before → After** section. Point at the buried fuel card.
-> "Here's the moment. You finish a Ladder workout — peak motivation, already in the app — and
-> logging what you ate is *this*: a two-line card, 'Get your calories right,' wedged between
-> your medal and your stats, next to a clunky entry menu. The single best moment to build a
-> nutrition habit, treated as an afterthought."
+### 2. Make nutrition logging easier post workout (0:20)
+**On screen:** the goal section, before and after.
+> "The goal is simple. Make nutrition logging easier right after a workout. Today it's a two
+> line card wedged between your medal and your stats, easy to miss. I gave it its own beat.
+> Rate the session, then one tap per thing you've had."
 
-**On screen:** pan to the After phone.
-> "So I promoted it into its own post-workout beat. Same flow, same design system — just given
-> the room it deserves, and wired to actually kickstart logging."
+### 3. Approaches explored (0:50)
+**On screen:** the approaches section.
+> "I didn't land here first. I tried a few louder directions. An ambient waveform, slide to
+> fill columns, photo rich rows, a compact tile grid. Each one taught me something, but they
+> all added friction, vanity, or distance from Ladder's system. So they got cut."
 
-### 0:50 — The craft, state by state (50s)
-**On screen:** scroll the **Designed down to the state** section, pausing on each phone.
-> "This is where I wanted the craft to be legible. It's all built in Ladder's own system —
-> the EK display type, the leaf accent, the real Complete Workout payoff. Every state is
-> designed, not implied."
->
-> "Rate first, full-bleed. Then one screen, three taps — Water, Protein, Meal — binary by
-> default, so tapping one tile already counts. Want precision? A tile expands in place: a
-> stepped water slider, a protein picker. And the meal field — you just say it."
+### 4. Landed on (1:25)
+**On screen:** the landed on section.
+> "What shipped is calm, fast, and built in Ladder's own system. Binary by default, so one tap
+> counts. Detail is there if you want it, never required. Rate first, three taps, expand for a
+> slider or a picker, and a meal field you can just speak to."
 
-### 1:40 — Tap the live prototype (70s)
-**On screen:** switch to `/live` (or the mirrored phone). Tap through it for real.
-> "And this isn't a mockup — let me actually use it."
+### 5. Walkthrough (1:55)
+**On screen:** switch to `/live` and use it for real.
+> "Not a mockup. Let me use it."
 
 - Tap a star, hit **Complete Workout**.
-- Tap **Water**, drag the slider to show the steps.
+- Tap **Water**, drag the slider.
 - Tap **Meal**, hit **Say it**, and speak a real meal out loud.
 
-> "The meal field records my voice and parses it with Whisper and GPT into a structured log —
-> live, not faked. That's the whole bet: the lowest-effort rung on the ladder. One tap to form
-> the habit, voice when you want detail — and it hands off to Ladder's existing logging instead
-> of replacing it."
+> "The meal field records my voice and parses it into a structured log. Live, not faked. The
+> lowest effort rung that hands off to Ladder's real logging."
 
-- Finish → show the payoff.
+- Finish, show the payoff.
 
-> "And it feeds the payoff you already have — the medal, the share, the stats — now with a quiet
-> 'Refueled today.' One relationship, not a second scorekeeper."
+> "And it feeds the payoff you already have. The medal, the share, the stats, now with a quiet
+> Refueled today."
 
-### 2:50 — If we shipped it (30s)
-**On screen:** scroll to the **assumptions / validation** band.
-> "If we shipped it, here's what I'd be betting on and how I'd know — the big one being that
-> attaching the first log to the workout lifts logging rate. I'd instrument the existing card,
-> ship Refuel behind a flag to a cohort, and compare seven-day nutrition-log rate against
-> control. Cheapest real test first."
-
-### 3:20 — Close on the philosophy (25s)
+### Close (2:40)
 **On screen:** the closing statement.
-> "Round one was me showing how far I'd stretch. This is me showing I'd rather take a screen
-> millions already use and make it sing — small, shippable, measurable moves that compound.
-> Innovating off a working system isn't the consolation prize; it's the craft I want to do every
-> day. Thanks for the second look."
+> "Round one showed how far I'd stretch. This shows I'd rather take a screen millions use and
+> make it sing. If we shipped it, I'd put it behind a flag for a cohort and watch seven day
+> logging against control. Thanks for the second look."
 
-**End.** (~3:45)
+**End, about 3:00.**
 
-> **Tip:** if you can't mirror a phone, pre-record the voice meal moment on device and cut to it,
-> so the speech-to-log step is unmistakably real rather than narrated.
+> **Tip:** if you can't mirror a phone, pre-record the voice meal moment on device and cut to
+> it, so the speech to log step is clearly real.
