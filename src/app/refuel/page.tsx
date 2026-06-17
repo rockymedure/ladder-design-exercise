@@ -499,7 +499,7 @@ function Walkthrough() {
                 href={LIVE_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-2xl bg-white p-3"
+                className="hidden rounded-2xl bg-white p-3 md:block"
                 aria-label="Open the live prototype"
               >
                 <QRCodeSVG value={LIVE_URL} size={120} bgColor="#ffffff" fgColor="#0E0E0E" level="M" />
@@ -507,10 +507,28 @@ function Walkthrough() {
               <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-leaf">
                 Play it on your phone
               </p>
-              <p className="max-w-[20ch] text-center text-[13px] leading-snug text-ash-light">
+              <p className="hidden max-w-[20ch] text-center text-[13px] leading-snug text-ash-light md:block">
                 Scan the code with your camera to open the live prototype on a real
                 device.
               </p>
+              {/* On a phone you can't scan your own screen, so offer a direct open. */}
+              <a
+                href={LIVE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-6 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition active:scale-95 md:hidden"
+              >
+                Open it on this device
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 17 17 7M9 7h8v8"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
             </div>
             <div id="walkthrough-phone">
               <RefuelStage />
