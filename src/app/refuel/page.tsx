@@ -165,6 +165,12 @@ function Hero() {
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="#walkthrough"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("walkthrough-phone")
+                  ?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }}
               className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-volt px-7 py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-ink transition hover:scale-[1.03] active:scale-95"
             >
               See the walkthrough
@@ -499,7 +505,9 @@ function Walkthrough() {
                 device.
               </p>
             </div>
-            <RefuelStage />
+            <div id="walkthrough-phone">
+              <RefuelStage />
+            </div>
           </div>
         </Reveal>
       </div>
