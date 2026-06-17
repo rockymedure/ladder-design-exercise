@@ -536,6 +536,202 @@ const HANDOFF = [
   },
 ];
 
+function RedlineSpec() {
+  const RED = "#E5484D";
+  const LEAF = "#54F46D";
+  const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
+
+  const tiles = [
+    { y: 186, label: "Water", sub: "A glass, a bottle, anything", active: true },
+    { y: 272, label: "Protein", sub: "Shake, bar, or supplement", active: false },
+    { y: 358, label: "Meal", sub: "Breakfast, lunch, or dinner", active: false },
+  ];
+
+  const spec: { k?: string; v?: string; sw?: string; divider?: boolean }[] = [
+    { k: "Surface", v: "#181818", sw: "#181818" },
+    { k: "Stroke", v: "#FFFFFF1A", sw: "stroke" },
+    { k: "Active", v: "#54F46D", sw: LEAF },
+    { divider: true },
+    { k: "Radius", v: "16 px" },
+    { k: "Tile height", v: "72 px" },
+    { k: "Row gap", v: "14 px" },
+    { k: "Icon", v: "40 × 40" },
+    { k: "Label", v: "17 / Semibold" },
+    { k: "Sub", v: "13 / Regular" },
+  ];
+
+  return (
+    <svg
+      viewBox="0 0 920 560"
+      className="block h-auto w-full"
+      role="img"
+      aria-label="Redline spec of the Water, Protein and Meal check-in tiles"
+    >
+      <rect width="920" height="560" fill="#F4F4F5" />
+
+      {/* connector: this screen maps to this spec */}
+      <path
+        d="M380 250 C 425 250 430 150 470 140"
+        fill="none"
+        stroke={RED}
+        strokeWidth="1.5"
+        strokeDasharray="4 4"
+        opacity="0.45"
+      />
+
+      {/* phone screen */}
+      <rect x="120" y="40" width="280" height="480" rx="30" fill="#070707" />
+
+      {/* heading */}
+      <text x="140" y="92" fill={LEAF} fontSize="11" fontWeight="700" letterSpacing="2">
+        NUTRITION
+      </text>
+      <text x="139" y="128" fill="#F5F5F5" fontSize="23" fontWeight="800" letterSpacing="-0.5">
+        WHAT&apos;S FUELED
+      </text>
+      <text x="139" y="156" fill="#F5F5F5" fontSize="23" fontWeight="800" letterSpacing="-0.5">
+        YOU TODAY?
+      </text>
+
+      {/* tiles */}
+      {tiles.map((t) => {
+        const iconCx = 176;
+        const iconCy = t.y + 36;
+        const tint = t.active ? LEAF : "rgba(255,255,255,0.55)";
+        return (
+          <g key={t.label}>
+            <rect
+              x="140"
+              y={t.y}
+              width="240"
+              height="72"
+              rx="16"
+              fill="#181818"
+              stroke={t.active ? LEAF : "rgba(255,255,255,0.10)"}
+              strokeWidth={t.active ? 2 : 1}
+            />
+            {/* icon container */}
+            <rect
+              x="156"
+              y={t.y + 16}
+              width="40"
+              height="40"
+              rx="12"
+              fill="rgba(255,255,255,0.06)"
+            />
+            {t.label === "Water" && (
+              <path
+                d={`M${iconCx} ${iconCy - 9} C ${iconCx + 7} ${iconCy - 1} ${iconCx + 6} ${iconCy + 6} ${iconCx} ${iconCy + 6} C ${iconCx - 6} ${iconCy + 6} ${iconCx - 7} ${iconCy - 1} ${iconCx} ${iconCy - 9} Z`}
+                fill="none"
+                stroke={tint}
+                strokeWidth="1.6"
+              />
+            )}
+            {t.label === "Protein" && (
+              <rect
+                x={iconCx - 6}
+                y={iconCy - 8}
+                width="12"
+                height="17"
+                rx="3"
+                fill="none"
+                stroke={tint}
+                strokeWidth="1.6"
+              />
+            )}
+            {t.label === "Meal" && (
+              <>
+                <circle cx={iconCx} cy={iconCy} r="7" fill="none" stroke={tint} strokeWidth="1.6" />
+                <circle cx={iconCx} cy={iconCy} r="2" fill={tint} />
+              </>
+            )}
+            {/* text */}
+            <text x="210" y={t.y + 31} fill="#F2F2F2" fontSize="16" fontWeight="700">
+              {t.label}
+            </text>
+            <text x="210" y={t.y + 51} fill="#8A8A8A" fontSize="12">
+              {t.sub}
+            </text>
+            {/* radio */}
+            <circle
+              cx="355"
+              cy={t.y + 36}
+              r="9"
+              fill={t.active ? LEAF : "none"}
+              stroke={t.active ? LEAF : "rgba(255,255,255,0.25)"}
+              strokeWidth="1.6"
+            />
+            {t.active && (
+              <path
+                d={`M351 ${t.y + 36} l3 3 l5 -6`}
+                fill="none"
+                stroke="#070707"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            )}
+          </g>
+        );
+      })}
+
+      {/* ---- redlines (left margin) ---- */}
+      {/* tile height 72 */}
+      <path d="M140 186 H82 M140 258 H82" stroke={RED} strokeWidth="1" strokeDasharray="3 3" opacity="0.7" />
+      <path d="M90 186 V258 M85 186 H95 M85 258 H95" stroke={RED} strokeWidth="1.4" />
+      <text x="60" y="226" fill={RED} fontSize="14" fontWeight="600" fontFamily={MONO}>72</text>
+
+      {/* row gap 14 */}
+      <path d="M140 272 H82" stroke={RED} strokeWidth="1" strokeDasharray="3 3" opacity="0.7" />
+      <path d="M90 258 V272 M85 272 H95" stroke={RED} strokeWidth="1.4" />
+      <path d="M90 265 L60 300" stroke={RED} strokeWidth="1" opacity="0.7" />
+      <text x="34" y="312" fill={RED} fontSize="13" fontWeight="600" fontFamily={MONO}>14</text>
+
+      {/* radius */}
+      <path d="M140 186 L100 158" stroke={RED} strokeWidth="1" opacity="0.7" />
+      <text x="52" y="154" fill={RED} fontSize="13" fontWeight="600" fontFamily={MONO}>R16</text>
+
+      {/* ---- spec panel (right) ---- */}
+      <rect x="470" y="70" width="400" height="412" rx="20" fill="#FFFFFF" stroke="#E6E6E6" />
+      <rect x="492" y="92" width="12" height="12" rx="3" fill={RED} />
+      <text x="514" y="102" fill="#1A1A1A" fontSize="13" fontWeight="700" letterSpacing="1.2">
+        REDLINE SPEC
+      </text>
+      <text x="492" y="126" fill="#9A9A9A" fontSize="12">
+        Water · Protein · Meal tile
+      </text>
+
+      {spec.map((r, i) => {
+        const y = 168 + i * 31;
+        if (r.divider) {
+          return <line key={i} x1="500" y1={y - 14} x2="840" y2={y - 14} stroke="#EDEDED" strokeWidth="1" />;
+        }
+        return (
+          <g key={i}>
+            <text x="500" y={y} fill="#666" fontSize="14">
+              {r.k}
+            </text>
+            {r.sw && (
+              <rect
+                x="724"
+                y={y - 13}
+                width="18"
+                height="18"
+                rx="4"
+                fill={r.sw === "stroke" ? "#ffffff" : r.sw}
+                stroke={r.sw === "stroke" ? "#CFCFCF" : "rgba(0,0,0,0.12)"}
+              />
+            )}
+            <text x="840" y={y} fill="#111" fontSize="13" textAnchor="end" fontFamily={MONO}>
+              {r.v}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 function Handoff() {
   return (
     <section id="handoff" className="bg-[#FAFAFA] text-ink">
@@ -555,6 +751,17 @@ function Handoff() {
             that doubles as the spec, handed off in a working session, not thrown
             over a wall.
           </p>
+        </Reveal>
+
+        <Reveal delay={0.16}>
+          <figure className="mt-12 overflow-hidden rounded-3xl border border-black/10 shadow-sm">
+            <RedlineSpec />
+            <figcaption className="border-t border-black/10 bg-white px-5 py-4 text-[13px] leading-relaxed text-[#666] md:px-7">
+              A redline of the check-in list. The same values live as tokens in
+              the prototype, so eng builds from the running screen, not a
+              flattened export.
+            </figcaption>
+          </figure>
         </Reveal>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2">
