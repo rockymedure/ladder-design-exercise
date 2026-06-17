@@ -70,6 +70,7 @@ export default function RefuelPage() {
       <Walkthrough />
       <LandedOn />
       <Approaches />
+      <Handoff />
       <Footer />
     </main>
   );
@@ -505,6 +506,87 @@ function Walkthrough() {
               </p>
             </div>
             <RefuelStage />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+const HANDOFF = [
+  {
+    n: "01",
+    title: "The prototype is the spec",
+    d: "A coded prototype, not a comp. Engineers open it and read the real motion, timing, and spacing, instead of guessing from a static redline.",
+  },
+  {
+    n: "02",
+    title: "Every state, designed",
+    d: "Empty, one tap, expanded, slider, picker, recording, parse error, payoff. The states a flat comp forgets are where eng spends the most time, so they ship up front.",
+  },
+  {
+    n: "03",
+    title: "Built on your components",
+    d: "Same tokens, type scale, and patterns as the app today. The handoff is about reusing what exists and only building new where it genuinely has to be.",
+  },
+  {
+    n: "04",
+    title: "Paired, then measured",
+    d: "Walk it live with the owning engineer, ship behind a flag to one cohort, and agree the metric before code starts. Seven day logging against control.",
+  },
+];
+
+function Handoff() {
+  return (
+    <section id="handoff" className="bg-[#FAFAFA] text-ink">
+      <div className="mx-auto max-w-[1180px] px-6 py-24 md:py-32">
+        <Reveal>
+          <Kicker tone="light">Handing it to eng</Kicker>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 className={`${H} ${HEAD} mt-5 max-w-[15ch]`}>
+            Designs you can run, not just read
+          </h2>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className="mt-6 max-w-[60ch] text-[18px] leading-relaxed text-[#444]">
+            I don&apos;t hand off a picture of the design. I hand off the design
+            running. This whole page is the deliverable: an inspectable prototype
+            that doubles as the spec, handed off in a working session, not thrown
+            over a wall.
+          </p>
+        </Reveal>
+
+        <div className="mt-14 grid gap-5 sm:grid-cols-2">
+          {HANDOFF.map((c, i) => (
+            <Reveal key={c.n} delay={(i % 2) * 0.08}>
+              <div className="flex h-full flex-col gap-3 rounded-2xl border border-black/10 bg-white p-6 shadow-sm md:p-7">
+                <span className="font-ek text-[15px] tracking-[0.1em] text-leaf">
+                  {c.n}
+                </span>
+                <h3 className={`${H} text-[clamp(1.5rem,3vw,2rem)] text-ink`}>
+                  {c.title}
+                </h3>
+                <p className="max-w-[42ch] text-[16px] leading-relaxed text-[#555]">
+                  {c.d}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.12}>
+          <div className="mt-10 rounded-2xl border border-black/10 bg-[#111] p-6 text-paper md:p-8">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-leaf">
+              Honest caveat
+            </p>
+            <p className="mt-3 max-w-[68ch] text-[17px] leading-relaxed text-ash-light">
+              This prototype is web and Ladder ships native. I&apos;m not
+              pretending it&apos;s production code. Its job is to remove ambiguity
+              about behavior and feel so the native build is fast and faithful.
+              I&apos;d sit with eng to translate the spring curves and durations to
+              the platform, not assume a web build drops in.
+            </p>
           </div>
         </Reveal>
       </div>
