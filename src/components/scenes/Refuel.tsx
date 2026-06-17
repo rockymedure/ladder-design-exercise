@@ -89,9 +89,10 @@ export function RefuelApp() {
     );
   }
 
+  // On a real device the OS already draws the status bar, so we don't recreate
+  // one here. (The desktop branch above keeps it for device context in the frame.)
   return (
     <main className="relative h-[100dvh] w-full overflow-hidden bg-[#070707]">
-      <StatusBar live scrim="#070707" />
       <div className="absolute inset-0">{flow}</div>
     </main>
   );
