@@ -84,3 +84,76 @@ Three surfaces, all on the shareable URL:
   short generated coach voice line at the payoff.
 - **Real streak values.** The payoff uses placeholder week data; wire it to the real
   Figma nutrition-streak numbers.
+
+---
+
+## Loom walkthrough script (3–4 min)
+
+_Record over the live deliverable. Two tabs ready: `/refuel` (case study) and `/live`
+(prototype, ideally mirrored from a phone so the voice meal logging is real on camera).
+Aim for warm and direct, not salesy. Times are cumulative._
+
+### 0:00 — Open on the feedback (15s)
+**On screen:** `/refuel` hero.
+> "Hey — quick round two. The note I got back on the first pass was fair: it was hard to
+> read my actual UI craft, and the concept lived a long way from today's app. So instead of
+> defending that, I did the opposite — I took one real screen you ship right now and leveled
+> it up. This is Refuel."
+
+### 0:15 — The overlooked moment / before (35s)
+**On screen:** scroll to the **Before → After** section. Point at the buried fuel card.
+> "Here's the moment. You finish a Ladder workout — peak motivation, already in the app — and
+> logging what you ate is *this*: a two-line card, 'Get your calories right,' wedged between
+> your medal and your stats, next to a clunky entry menu. The single best moment to build a
+> nutrition habit, treated as an afterthought."
+
+**On screen:** pan to the After phone.
+> "So I promoted it into its own post-workout beat. Same flow, same design system — just given
+> the room it deserves, and wired to actually kickstart logging."
+
+### 0:50 — The craft, state by state (50s)
+**On screen:** scroll the **Designed down to the state** section, pausing on each phone.
+> "This is where I wanted the craft to be legible. It's all built in Ladder's own system —
+> the EK display type, the leaf accent, the real Complete Workout payoff. Every state is
+> designed, not implied."
+>
+> "Rate first, full-bleed. Then one screen, three taps — Water, Protein, Meal — binary by
+> default, so tapping one tile already counts. Want precision? A tile expands in place: a
+> stepped water slider, a protein picker. And the meal field — you just say it."
+
+### 1:40 — Tap the live prototype (70s)
+**On screen:** switch to `/live` (or the mirrored phone). Tap through it for real.
+> "And this isn't a mockup — let me actually use it."
+
+- Tap a star, hit **Complete Workout**.
+- Tap **Water**, drag the slider to show the steps.
+- Tap **Meal**, hit **Say it**, and speak a real meal out loud.
+
+> "The meal field records my voice and parses it with Whisper and GPT into a structured log —
+> live, not faked. That's the whole bet: the lowest-effort rung on the ladder. One tap to form
+> the habit, voice when you want detail — and it hands off to Ladder's existing logging instead
+> of replacing it."
+
+- Finish → show the payoff.
+
+> "And it feeds the payoff you already have — the medal, the share, the stats — now with a quiet
+> 'Refueled today.' One relationship, not a second scorekeeper."
+
+### 2:50 — If we shipped it (30s)
+**On screen:** scroll to the **assumptions / validation** band.
+> "If we shipped it, here's what I'd be betting on and how I'd know — the big one being that
+> attaching the first log to the workout lifts logging rate. I'd instrument the existing card,
+> ship Refuel behind a flag to a cohort, and compare seven-day nutrition-log rate against
+> control. Cheapest real test first."
+
+### 3:20 — Close on the philosophy (25s)
+**On screen:** the closing statement.
+> "Round one was me showing how far I'd stretch. This is me showing I'd rather take a screen
+> millions already use and make it sing — small, shippable, measurable moves that compound.
+> Innovating off a working system isn't the consolation prize; it's the craft I want to do every
+> day. Thanks for the second look."
+
+**End.** (~3:45)
+
+> **Tip:** if you can't mirror a phone, pre-record the voice meal moment on device and cut to it,
+> so the speech-to-log step is unmistakably real rather than narrated.
