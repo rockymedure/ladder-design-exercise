@@ -64,9 +64,9 @@ export default function RefuelPage() {
       <Nav />
       <Hero />
       <Goal />
+      <Walkthrough />
       <Approaches />
       <LandedOn />
-      <Walkthrough />
       <Footer />
     </main>
   );
