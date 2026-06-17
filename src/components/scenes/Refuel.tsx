@@ -338,9 +338,9 @@ function CheckIn({
           onTap={() => onToggle("water")}
           icon={<DropletIcon />}
         >
-          <DetailBlock caption="Amount" value={`${WATER_OZ[waterStep]} oz`}>
+          <DetailBlock caption="Amount" value={WATER_LABELS[waterStep]}>
             <LadderSlider
-              steps={WATER_OZ.length}
+              steps={WATER_LABELS.length}
               value={waterStep}
               onChange={setWaterStep}
             />
@@ -348,7 +348,7 @@ function CheckIn({
         </Tile>
         <Tile
           label="Protein"
-          sub="Shake, bar, or a meal"
+          sub="Shake, bar, or supplement"
           on={logged.protein}
           onTap={() => onToggle("protein")}
           icon={<ShakerIcon />}
@@ -398,7 +398,7 @@ function CheckIn({
   );
 }
 
-const WATER_OZ = [4, 8, 16, 32];
+const WATER_LABELS = ["4 oz", "8 oz", "16 oz", "32 oz", "32+ oz"];
 const PROTEIN_PICKS = ["½", "1 scoop", "2", "Bar"];
 // Full, unit-clear labels for the payoff summary chips.
 const PROTEIN_LABELS = ["½ scoop protein", "1 scoop protein", "2 scoops protein", "Protein bar"];
@@ -658,7 +658,6 @@ function MealVoice({ onResult }: { onResult?: (summary: string) => void }) {
   const [error, setError] = useState<string | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const reset = () => {
     setResult(null);
@@ -716,32 +715,10 @@ function MealVoice({ onResult }: { onResult?: (summary: string) => void }) {
     recorderRef.current = null;
   };
 
-  const onPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (file) {
-      setVia("photo");
-      void send("image", file, file.name || "meal.jpg");
-    }
-  };
-
   if (state === "prompt") {
     return (
-      <div className="mt-2.5 flex gap-2">
+      <div className="mt-2.5 flex">
         <ActionPill icon={<MicGlyph />} label="Say it" onClick={startVoice} />
-        <ActionPill
-          icon={<CameraGlyph />}
-          label="Show it"
-          onClick={() => fileRef.current?.click()}
-        />
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={onPhoto}
-          className="hidden"
-        />
       </div>
     );
   }
@@ -960,7 +937,7 @@ function Payoff({
   const fuel: { icon: ReactNode; label: string }[] = [
     logged.water && {
       icon: <DropletIcon />,
-      label: `${WATER_OZ[waterStep]} oz water`,
+      label: `${WATER_LABELS[waterStep]} water`,
     },
     logged.protein && {
       icon: <ShakerIcon />,
