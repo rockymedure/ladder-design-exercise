@@ -282,25 +282,16 @@ function Goal() {
                   A dedicated beat
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {[
-                  {
-                    src: "/refuel/detail.png",
-                    alt: "Refuel check-in with the water amount slider and meal voice field expanded",
-                  },
-                  {
-                    src: "/refuel/voice.png",
-                    alt: "Speaking a meal into the Refuel check-in, recording live",
-                  },
-                ].map((p) => (
-                  <div
-                    key={p.src}
-                    className="overflow-hidden rounded-[1.6rem] border border-black/10 bg-black shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.src} alt={p.alt} loading="lazy" className="block h-auto w-full" />
-                  </div>
-                ))}
+              <div className="mx-auto w-full max-w-[300px]">
+                <div className="overflow-hidden rounded-[2.4rem] border border-black/10 bg-black shadow-[0_30px_70px_-30px_rgba(0,0,0,0.55)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/refuel/voice.png"
+                    alt="Refuel check-in with the water amount slider open and a meal being spoken in"
+                    loading="lazy"
+                    className="block h-auto w-full"
+                  />
+                </div>
               </div>
               <div className="rounded-2xl border border-black/10 bg-white p-4 shadow-sm">
                 <p className="text-[14px] leading-relaxed text-[#444]">

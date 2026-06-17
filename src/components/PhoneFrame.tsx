@@ -104,7 +104,7 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
         style={{ background: "rgba(230,255,0,0.12)" }}
       />
       <div
-        className="relative rounded-[3.2rem] bg-black p-[10px] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.06)]"
+        className="relative rounded-[3.2rem] bg-black p-[10px] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.22),0_0_0_2px_rgba(0,0,0,0.6)]"
         style={{
           width: "min(393px, 92vw)",
           height: "min(852px, 88vh)",
