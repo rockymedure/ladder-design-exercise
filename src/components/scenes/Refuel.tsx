@@ -175,8 +175,8 @@ function RatingScreen({
       transition={{ duration: 0.35 }}
     >
       <video
-        src="/videos/inclass-hero.mp4"
-        poster="/photos/inclass-hero.png"
+        src="/videos/shelby-refuel.mp4"
+        poster="/photos/shelby-refuel.png"
         autoPlay
         loop
         muted
